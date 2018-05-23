@@ -204,8 +204,10 @@
                         <div class="article-content">
                             <div class="article-comment-top">
                                 <div class="comments-user">
+                                    <h4> 回答1 </h4>
                                     <img src="images/user.png" alt="gomac user">
                                     <div class="user-name">John Doe</div>
+
                                     <div class="comment-post-date">Posted On
                                         <span class="italics">20 May, 2016</span>
                                     </div>
@@ -254,6 +256,7 @@
                         <div class="article-content">
                             <div class="article-comment-top">
                                 <div class="comments-user">
+                                    <h4> 回答2 </h4>
                                     <img src="images/user.png" alt="gomac user">
                                     <div class="user-name">George Hocutt</div>
                                     <div class="comment-post-date">Posted On
@@ -282,6 +285,7 @@
                         <div class="article-content">
                             <div class="article-comment-top">
                                 <div class="comments-user">
+                                    <h4> 回答3 </h4>
                                     <img src="images/user.png" alt="gomac user">
                                     <div class="user-name">Deann Crim</div>
                                     <div class="comment-post-date">Posted On
@@ -308,9 +312,38 @@
                     </div>
                     <!-- END COMMENTS -->
                 </div>
+                <div id="piechart" class="text-center"></div>
+                <div class="panel-transparent">
+                            <div class="article-heading">
+                                <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
+                            </div>
+                            <form method="post" class="comment-form" >
+                            <div class="form-row align-items-center">
+                                <div class="col-auto my-1" id="add-solutions">
+                                <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" onchange="scheduleA.call(this,event,this.value)">
+                                    <option selected>Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                  </select>
+                                </div>
+
+                                <div class="col-auto my-1">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                              </div>
+                            </form>
+                        </div>
+                <div class="form-check col-md-8 padding-20 add-button">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        从公共社区隐藏
+                    </label>
+                </div>
 
             </div>
-
+            
             <!-- SIDEBAR STUFF -->
             <div class="col-md-4 padding-20">
                 <div class="row margin-bottom-30">
@@ -388,6 +421,32 @@
                         </div>
                     </div>
                 </div>
+
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                ['回答', '投票总数'],
+                ['回答1', 8],
+                ['回答2', 2],
+                ['回答3', 9],
+                
+                ]);
+
+  
+                var options = {'title':'回答意见记录', 'width':400, 'height':300};
+
+  // Display the chart inside the <div> element with id="piechart"
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+                }
+            </script>
 
                 <!-- POPULAR TAGS (SHOW MAX 20 TAGS) -->
                 <div class="row margin-top-20">

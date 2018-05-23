@@ -937,3 +937,12 @@ form.comment-form button {
 	width:100%;
 	text-align: center;
 }
+.blue{
+	color: #5DADE2;
+	font-weight: bold;
+}
+.inputCenter{
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
