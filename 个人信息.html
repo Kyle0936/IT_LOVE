@@ -1,347 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT LOVE</title>
-    <!-- LOADING STYLESHEETS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-</head>
-
-<body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <<div class="login-box border-right-1">
-                        <a href="#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IT LOVE</title>
+        <!-- LOADING STYLESHEETS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script><!--
+        <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase-firestore.js"></script> -->
+        <script>
+        // Initialize Firebase
+        var config = {
+        apiKey: "AIzaSyCixSIYh2d_wGxQA7XxYwMRs0DlTWcJpkY",
+        authDomain: "it-love.firebaseapp.com",
+        databaseURL: "https://it-love.firebaseio.com",
+        projectId: "it-love",
+        storageBucket: "it-love.appspot.com",
+        messagingSenderId: "627932021208"
+        };
+        firebase.initializeApp(config);
+        </script>
+    </head>
+    <body>
+        <div class="container-fluid featured-area-white-border">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="login-box border-right-1">
+                            <a href="个人信息.html">
                             <i class="fa fa-key"></i> 登陆</a>
-                    </div>
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="#">
+                        </div>
+                        <div class="login-box border-left-1 border-right-1">
+                            <a href="email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
-                    </div>
-                    <div class="login-box border-right-1">
-                        <a href="系统消息.html">
+                        </div>
+                        <div class="login-box border-right-1">
+                            <a href="系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="首页.html">
-                            <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="提问.html">
-                            <i class="fa fa-book"></i> 提问</a>
-                    </li>
-                    <li>
-                        <a href="回答.html">
-                            <i class="fa fa-file-text-o"></i> 回答</a>
-                    </li>
-                    
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- END TOP NAVIGATION -->
-    <!-- SEARCH FIELD AREA -->
-    <div class="searchfield bg-hed-six">
-        <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-            <div class="row text-center margin-bottom-20">
-                <h1 class="white"> IT LOVE</h1>
-                
-            </div>
-            <br>
-            <div class="row search-row">
-                <input type="text" class="search" placeholder="What do you need help with?">
-                <button class="buttonsearch btn btn-info btn-lg">Search</button>
-            </div>
-        </div>
-    </div>
-    <!-- END SEARCH FIELD AREA -->
-    <!-- MAIN SECTION -->
-    <div class="container featured-area-default padding-30">
-        <div class="row">
-            <div class="col-md-8 padding-20">
-
-                <!-- ARTICLE CATEGORIES SECTION -->
+        <!-- TOP NAVIGATION -->
+        <div class="container-fluid">
+            <div class="navigation">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="fb-heading">
-                            个人信息
-                        </div>
-                        <hr class="style-three">
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingOne">
-                                            <h4 class="panel-title">
+                    <ul class="topnav">
+                        <li></li>
+                        <li>
+                            <a href="index.html">
+                            <i class="fa fa-home"></i> 首页</a>
+                        </li>
+                        <li>
+                            <a href="提问.html">
+                            <i class="fa fa-book"></i> 提问</a>
+                        </li>
+                        <li>
+                            <a href="回答.html">
+                            <i class="fa fa-file-text-o"></i> 回答</a>
+                        </li>
+                        
+                        <li class="icon">
+                            <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END TOP NAVIGATION -->
+        <!-- SEARCH FIELD AREA -->
+        <div class="searchfield bg-hed-six">
+            <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
+                <div class="row text-center margin-bottom-20">
+                    <h1 class="white"> IT LOVE</h1>
+                    
+                </div>
+                <br>
+                <div class="row search-row">
+                    <input type="text" class="search" placeholder="What do you need help with?">
+                    <button class="buttonsearch btn btn-info btn-lg">Search</button>
+                </div>
+            </div>
+        </div>
+        <!-- END SEARCH FIELD AREA -->
+        <!-- MAIN SECTION -->
+        <div class="container featured-area-default padding-30">
+            <div class="row">
+                <div class="col-md-8 padding-20">
+                    <!-- ARTICLE CATEGORIES SECTION -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="fb-heading">
+                                个人信息
+                            </div>
+                            <hr class="style-three">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
                                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                     用户名
                                                 </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                            <div class="panel-body">
-                                                你的名字
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    你的名字:<input id="inputName"/>
+                                                    <button onclick="storeName()"> try </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingTwo">
-                                            <h4 class="panel-title">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingTwo">
+                                                <h4 class="panel-title">
                                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
                                                     aria-controls="collapseTwo">
                                                     简介
                                                 </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                            <div class="panel-body">
-                                                死宅
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                <div class="panel-body">
+                                                    死宅
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingThree">
-                                            <h4 class="panel-title">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingThree">
+                                                <h4 class="panel-title">
                                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
                                                     aria-controls="collapseThree">
                                                     虚拟货币
                                                 </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                            <div class="panel-body">
-                                                15 = 
+                                                </h4>
+                                            </div>
+                                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                <div class="panel-body">
+                                                    15 =
                                                     3 个提案被采纳 * 2 +
                                                     9 个提案被选择 * 1
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- END ARTICLES CATEOGIRES SECTION -->
-            <!-- SIDEBAR STUFF -->
-            <div class="col-md-4 padding-20">
-                <div class="row margin-bottom-30">
-                    <div class="col-md-12 ">
-                        <div class="support-container">
-                            <h2 class="support-heading">Need more Support?</h2>
-                            If you cannot find an answer in the knowledgebase, you can
-                            <a href="#">contact us</a> for further help.
+                <!-- END ARTICLES CATEOGIRES SECTION -->
+                <!-- SIDEBAR STUFF -->
+                <div class="col-md-4 padding-20">
+                    <div class="row margin-bottom-30">
+                        <div class="col-md-12 ">
+                            <div class="support-container">
+                                <h2 class="support-heading">Need more Support?</h2>
+                                If you cannot find an answer in the knowledgebase, you can
+                                <a href="#">contact us</a> for further help.
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Popular Articles
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
+                    <div class="row margin-top-20">
+                        <div class="col-md-12">
+                            <div class="fb-heading-small">
+                                Popular Articles
+                            </div>
+                            <hr class="style-three">
+                            <div class="fat-content-small padding-left-10">
+                                <ul>
+                                    <li>
+                                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                                    </li>
+                                    <li>
+                                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                                    </li>
+                                    <li>
+                                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> Add new user</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                                    </li>
+                                    <li>
+                                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> Change customer details</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                                    </li>
+                                    <li>
+                                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-top-20">
+                        <div class="col-md-12">
+                            <div class="fb-heading-small">
+                                Latest Articles
+                            </div>
+                            <hr class="style-three">
+                            <div class="fat-content-small padding-left-10">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to change username?</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to change currency in gomac?</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to print stock barcode?</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to generate barcode?</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POPULAR TAGS (SHOW MAX 20 TAGS) -->
+                    <div class="row margin-top-20">
+                        <div class="col-md-12">
+                            <div class="fb-heading-small">
+                                Popular Tags
+                            </div>
+                            <hr class="style-three">
+                            <div class="fat-content-tags padding-left-10">
+                                <a href="#" class="btn btn-default btn-o btn-sm">password</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">settings</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">sign up</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">currency</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">payment</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">user</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">database</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">storage</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">export</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">email</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">import</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">campaign</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">edit</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">orders</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">help</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">billing</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">user</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">configure</a>
+                                <a href="#" class="btn btn-default btn-o btn-sm">customer</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END POPULAR TAGS (SHOW MAX 20 TAGS) -->
+                </div>
+                <!-- END SIDEBAR STUFF -->
+            </div>
+        </div>
+        <!-- END MAIN SECTION -->
+        <!-- FOOTER -->
+        <div class="container-fluid footer marg30">
+            <div class="container">
+                <!-- FOOTER COLUMN ONE -->
+                <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
+                    <div class="panel-transparent">
+                        <div class="footer-heading">How it works</div>
+                        <div class="footer-body">
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
+                            ut laoreet dolore magna aliquam erat volutpat.</p>
+                            <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
+                            ex ea commodo consequat. </p>
                         </div>
                     </div>
                 </div>
-
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Latest Articles
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
+                <!-- END FOOTER COLUMN ONE -->
+                <!-- FOOTER COLUMN TWO -->
+                <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
+                    <div class="panel-transparent">
+                        <div class="footer-heading">Categories</div>
+                        <div class="footer-body">
                             <ul>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change username?</a>
+                                    <a href="single-category.html">General</a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change currency in gomac?</a>
+                                    <a href="single-category.html">Getting Started</a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
+                                    <a href="single-category.html">Account Support</a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to print stock barcode?</a>
+                                    <a href="single-category.html">Guides</a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to generate barcode?</a>
+                                    <a href="single-category.html">Payment &amp; Billing</a>
+                                </li>
+                                <li>
+                                    <a href="single-category.html">Misc</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
-                <!-- POPULAR TAGS (SHOW MAX 20 TAGS) -->
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Popular Tags
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-tags padding-left-10">
-                            <a href="#" class="btn btn-default btn-o btn-sm">password</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">settings</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">sign up</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">currency</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">payment</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">database</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">storage</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">export</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">email</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">import</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">campaign</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">edit</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">orders</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">help</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">billing</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">configure</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">customer</a>
+                <!-- END FOOTER COLUMN TWO -->
+                <!-- FOOTER COLUMN THREE -->
+                <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
+                    <div class="panel-transparent">
+                        <div class="footer-heading">Popular Articles</div>
+                        <div class="footer-body">
+                            <ul>
+                                <li>
+                                    <a href="single-article.html">How to change account password</a>
+                                </li>
+                                <li>
+                                    <a href="single-article.html">How to edit order details</a>
+                                </li>
+                                <li>
+                                    <a href="single-article.html">Add new user</a>
+                                </li>
+                                <li>
+                                    <a href="single-article.html">Change customer details</a>
+                                </li>
+                                <li>
+                                    <a href="single-article.html">Lookup existing customer in order form</a>
+                                </li>
+                                <li>
+                                    <a href="single-article.html">How do I reset my password</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <!-- END POPULAR TAGS (SHOW MAX 20 TAGS) -->
+                <!-- END FOOTER COLUMN THREE -->
             </div>
-            <!-- END SIDEBAR STUFF -->
         </div>
-    </div>
-    <!-- END MAIN SECTION -->
-    <!-- FOOTER -->
-    <div class="container-fluid footer marg30">
-        <div class="container">
-            <!-- FOOTER COLUMN ONE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">How it works</div>
-                    <div class="footer-body">
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
-                            ut laoreet dolore magna aliquam erat volutpat.</p>
-                        <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
-                            ex ea commodo consequat. </p>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN ONE -->
-            <!-- FOOTER COLUMN TWO -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Categories</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-category.html">General</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Getting Started</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Account Support</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Guides</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Payment &amp; Billing</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Misc</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN TWO -->
-            <!-- FOOTER COLUMN THREE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Popular Articles</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-article.html">How to change account password</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How to edit order details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Add new user</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Change customer details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Lookup existing customer in order form</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How do I reset my password</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN THREE -->
-        </div>
-    </div>
-    <!-- END FOOTER -->
-
-    <!-- COPYRIGHT INFO -->
-    <div class="container-fluid footer-copyright marg30">
-        <div class="container">
-            <div class="pull-left">
+        <!-- END FOOTER -->
+        <!-- COPYRIGHT INFO -->
+        <div class="container-fluid footer-copyright marg30">
+            <div class="container">
+                <div class="pull-left">
                 Copyright © 2018 Sunny Gohil</a>
             </div>
             <div class="pull-right">
@@ -352,12 +357,35 @@
         </div>
     </div>
     <!-- END COPYRIGHT INFO -->
-
     <!-- LOADING MAIN JAVASCRIPT -->
+    <script>
+    /**
+    * init firestone
+    */
+    // Initialize Cloud Firestore through Firebase
+    function storeName(){
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        var email = "" + user.email;
+        var db = firebase.firestore();
+        var ref = db.collection("user");
+        ref.doc(email).set({name: "" + document.getElementById("inputName").value, state: "CA", country: "USA"});
+        db.collection("user").get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+    // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+            });
+        });
+    // User is signed in.
+    } else {
+    // No user is signed in.
+    }
+    });
+}
+    </script>
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
 </body>
-
 </html>
