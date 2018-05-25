@@ -122,6 +122,8 @@
                             <h6>选择文件</h6>
                             <button type="button" onclick="addAnotherFile()">添加聊天记录</button>
                             <input type="file" id="file" name="file"/>
+
+                            <button type="button" onclick="uploadImage()">Submit</button>
                           <!--   <input type="file" id="file" name="file"/> -->
                             <h6>文件地址:</h6>
                             <span id="linkbox"></span>
@@ -362,17 +364,28 @@
 
   <script>
     var auth = firebase.auth();
-    firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    console.log(user.email);
-    console.log("test");
-    console.log(user.uid);
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-});
+    // firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     console.log(user.email);
+//     console.log("test");
+//     console.log(user.uid);
+//     // User is signed in.
+//   } else {
+//     // No user is signed in.
+//   }
+// });
+
+    var imageUrl;
     var storageRef = firebase.storage().ref();
+    var db = firebase.firestore();
+    var ref;
+    var email;
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+    email = "" + user.email;
+    
+    ref = db.collection("user").doc(email).collection("Questions").doc().collection("Images");
+                } else{}});
 
     function handleFileSelect(evt) {
       evt.stopPropagation();
@@ -399,6 +412,8 @@
         // Let's get a download URL for the file.
         snapshot.ref.getDownloadURL().then(function(url) {
           console.log('File available at', url);
+          imageUrl = url;
+
           // [START_EXCLUDE]
           document.getElementById('linkbox').innerHTML = '<a href="' +  url + '">Click For File</a>';
           // [END_EXCLUDE]
@@ -411,10 +426,46 @@
       // [END oncomplete]
     }
 
+    function uploadImage(){
+        firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+
+            //var ref = db.collection("user").doc(email).collection("Questions").doc().collection("Images").doc();
+            //var setWithMerge = ref.doc(email).collections("Questions").doc().set({URL:""+url},{ merge: true });
+            // var setWithMerge = ref.doc(email).collection("Questions").add({URL:""+url},{ merge: true });
+            ref.add({URL:""+imageUrl});
+            //ref.doc(email).set({name: "" + document.getElementById("inputName").value, state: "CA", country: "USA"});
+        
+
+            db.collection("user").get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+    // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data().name);
+            });
+
+        });
+            ref.collection("Images").get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+    // doc.data() is never undefined for query doc snapshots
+
+                console.log(doc.id, " => ", doc.data().URL);
+                var test = doc.data().URL;
+                console.log(test);
+                document.querySelector('img').src = test;
+
+            });
+        });
+    // User is signed in.
+    } else {
+    // No user is signed in.
+        }
+        });
+        }
+
     window.onload = function() {
       document.getElementById('file').addEventListener('change', handleFileSelect, false);
       document.getElementById('file').disabled = false;
-
+    }
       // auth.onAuthStateChanged(function(user) {
       //   if (user) {
       //     console.log('Anonymous user signed-in.', user);
@@ -430,7 +481,7 @@
       //     });
       //   }
       // });
-    }
+
 
         function addAnotherFile(){
             // <button id="clickMe" onclick="addAnotherFile()">添加聊天记录</button>
@@ -443,7 +494,7 @@
         // btn.text = "test";
         i.setAttribute('type',"file");
         i.setAttribute('name',"file"); 
-        i.setAttribute('id',"file"); 
+        // i.setAttribute('id',"file"); 
         div.appendChild(i);
         // div.appendChild(btn);
 
@@ -457,6 +508,7 @@
         //     initApp();
         // };
     </script>
+    <img height="125" width="50"/>
 </body>
 
 </html>
