@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="utf-8">
@@ -10,6 +10,224 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+    <script>
+    var config = {
+        apiKey: "AIzaSyBZUz6V1Mkmwxpe781P8X6ZC7fPTUyiBIg",
+        authDomain: "it-love1.firebaseapp.com",
+        databaseURL: "https://it-love1.firebaseio.com",
+        projectId: "it-love1",
+        storageBucket: "it-love1.appspot.com",
+        messagingSenderId: "782043275132"
+    };
+    firebase.initializeApp(config);
+    </script>
+    <!--         <script src="js/msg.js"></script> -->
+    <script>
+    var db = firebase.firestore();
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            var email = "" + user.email;
+            console.log(email);
+            var ref = db.collection("user").doc(email).collection("Questions");
+            ref.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    // add all asked questions
+                    var bigdic = doc.data();
+                    var descrip = bigdic["Description"];
+                    var number = bigdic["NumberOfAnswers"];
+                    var public = bigdic["Public"];
+                    var time1 = bigdic["Time"];
+                    var publicChild = document.createElement("div");
+                    publicChild.innerHTML = "Public? : " + public;
+                    var numberChild = document.createElement("div");
+                    numberChild.innerHTML = "Number of Answers: " + number;
+                    var ahref1 = document.createElement("a");
+                    ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myquestions/' + doc.id);
+                    var father1 = document.createElement("div");
+                    father1.setAttribute('class', 'panel panel-default');
+                    var infoChild1 = document.createElement("div");
+                    infoChild1.setAttribute('class', 'article-info');
+                    var descChild1 = document.createElement("div");
+                    descChild1.setAttribute('class', 'article-content');
+                    var contentChild1 = document.createElement("p");
+                    contentChild1.setAttribute('class', 'block-with-text');
+                    contentChild1.innerHTML = descrip;
+                    var timeChild1 = document.createElement("div");
+                    timeChild1.innerHTML = time1;
+                    timeChild1.setAttribute('class', 'art-date');
+                    infoChild1.appendChild(timeChild1);
+                    descChild1.appendChild(contentChild1);
+                    father1.appendChild(infoChild1);
+                    father1.appendChild(descChild1);
+                    father1.appendChild(publicChild);
+                    father1.appendChild(numberChild);
+                    ahref1.appendChild(father1);
+                    var fafather1 = document.createElement("div");
+                    fafather1.appendChild(ahref1);
+                    var grandfather1 = document.getElementById("history");
+                    grandfather1.appendChild(fafather1);
+
+                    // add all unapproved proposals
+                    var secondRef = ref.doc(doc.id).collection("Answers");
+                    var query = secondRef.where("Approved", "==", false);
+                    query.get().then(function(querySnapshot1) {
+                        querySnapshot1.forEach(function(doc1) {
+                            var dic = doc1.data();
+                            var thirdRef = secondRef.doc(doc1.id);
+                            var author = dic["Author"];
+                            var content = dic["Content"];
+                            var time = dic["Time"];
+                            var ahref = document.createElement("a");
+                            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myquestions/' + doc.id);
+                            var father = document.createElement("div");
+                            father.setAttribute('class', 'panel panel-default');
+                            var infoChild = document.createElement("div");
+                            infoChild.setAttribute('class', 'article-info');
+                            var authorChild = document.createElement("p");
+                            authorChild.innerHTML = author;
+                            var descChild = document.createElement("div");
+                            descChild.setAttribute('class', 'article-content');
+                            var contentChild = document.createElement("p");
+                            contentChild.setAttribute('class', 'block-with-text');
+                            contentChild.innerHTML = content;
+                            var timeChild = document.createElement("div");
+                            timeChild.innerHTML = time;
+                            timeChild.setAttribute('class', 'art-date');
+                            var buttonsChild = document.createElement("div");
+                            buttonsChild.setAttribute('class', 'article-read-more');
+                            var buttonChild1 = document.createElement("button");
+                            buttonChild1.setAttribute('class', 'btn btn-default btn-sm');
+                            buttonChild1.innerHTML = "通过";
+                            buttonChild1.onclick = function() {
+
+                                return thirdRef.update({ Approved: true })
+                                    .then(function() {
+                                        console.log("Document successfully approved!");
+                                        window.location.reload();
+                                    }).catch(function(error) {
+                                        console.error("Error removing document: ", error);
+                                    });
+                            }
+                            var buttonChild2 = document.createElement("button");
+                            buttonChild2.setAttribute('class', 'btn btn-default btn-sm');
+                            buttonChild2.innerHTML = "不通过";
+                            buttonChild2.onclick = function() {
+                                thirdRef.delete().then(function() {
+                                    console.log("Document successfully deleted!");
+                                    window.location.reload();
+                                }).catch(function(error) {
+                                    console.error("Error removing document: ", error);
+                                });
+
+                            }
+                            buttonsChild.appendChild(buttonChild1);
+                            buttonsChild.appendChild(buttonChild2);
+                            infoChild.appendChild(timeChild);
+                            infoChild.appendChild(authorChild);
+                            descChild.appendChild(contentChild);
+                            father.appendChild(infoChild);
+                            father.appendChild(descChild);
+                            ahref.appendChild(father);
+                            var fafather = document.createElement("div");
+                            fafather.appendChild(ahref);
+                            fafather.appendChild(buttonsChild);
+
+                            var grandfather = document.getElementById("solutions");
+                            grandfather.appendChild(fafather);
+
+                        });
+                    });
+                });
+            });
+
+        } else {
+            // No user is signed in.
+        }
+        // add all answered
+        var ref1 = db.collection("user").doc(email).collection("Answers");
+        ref1.get().then(function(querySnapshot2) {
+            querySnapshot2.forEach(function(doc2) {
+                var dic1 = doc2.data();
+                var author1 = dic1["Author"]; // an email address
+                var likes1 = dic1["Likes"];
+                var status = dic1["Status"];
+                var time2 = dic1["Time"];
+                var selfWritten = dic1["Self"]; // use this to judege and generate two diff types
+                var question = dic1["QuestionID"]; //id from root colletion(questions)
+                var content1 = dic1["Content"];
+
+
+                // show all answers
+                var authorChild2 = document.createElement("p");
+                if (selfWritten == false) { authorChild2.innerHTML = author1; } else { authorChild2.innerHTML = "Clever Me"; }
+                authorChild2.setAttribute('class', 'art-date');
+                var statusChild = document.createElement("div");
+                statusChild.innerHTML = "Status: " + status;
+
+                var likeChild2 = document.createElement("div");
+                likeChild2.innerHTML = "Number of Likes: " + likes1;
+                var ahref2 = document.createElement("a");
+                ahref2.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + question);
+                var father2 = document.createElement("div");
+                father2.setAttribute('class', 'panel panel-default');
+                var infoChild2 = document.createElement("div");
+                infoChild2.setAttribute('class', 'article-info');
+                var descChild2 = document.createElement("div");
+                descChild2.setAttribute('class', 'article-content');
+                var contentChild2 = document.createElement("p");
+                contentChild2.setAttribute('class', 'block-with-text');
+                contentChild2.innerHTML = content1;
+                var timeChild2 = document.createElement("div");
+                timeChild2.innerHTML = time2;
+                timeChild2.setAttribute('class', 'art-date');
+                infoChild2.appendChild(timeChild2);
+                infoChild2.appendChild(authorChild2);
+                descChild2.appendChild(contentChild2);
+                father2.appendChild(infoChild2);
+                father2.appendChild(descChild2);
+                father2.appendChild(statusChild);
+                father2.appendChild(likeChild2);
+                ahref2.appendChild(father2);
+                var fafather2 = document.createElement("div");
+                fafather2.appendChild(ahref2);
+                var grandfather2 = document.getElementById("answers");
+                grandfather2.appendChild(fafather2);
+
+            });
+        });
+
+
+    });
+    </script>
+    <!--                         <div class="panel panel-default">
+                        <div class="article-heading-abb">
+                            <a href="single-article.html">
+                                <i class="fa fa-pencil-square-o"></i> How to generate barcode?</a>
+                        </div>
+                        <div class="article-info">
+                            <div class="art-date">
+                                <a href="#">
+                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
+                            </div>
+                            <div class="art-category">
+                                <a href="#">
+                                    <i class="fa fa-folder"></i> Stocks </a>
+                            </div>
+                            <div class="art-comments">
+                                <a href="#">
+                                    <i class="fa fa-comments-o"></i> 7 Comments </a>
+                            </div>
+                        </div>
+                        <div class="article-content">
+                            <p class="block-with-text">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
+                            </p>
+                        </div>
+                        <div class="article-read-more">
+                            <a href="single-article.html" class="btn btn-default btn-wide">Read more...</a>
+                        </div>
+                    </div> -->
 </head>
 
 <body>
@@ -18,8 +236,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="login-box border-right-1">
-                        <a href="#">
-                            <i class="fa fa-key"></i> 登陆</a>
+                        <a href="个人信息.html">
+                            <i class="fa fa-key"></i> 登录</a>
                     </div>
                     <div class="login-box border-left-1 border-right-1">
                         <a href="email-password.html">
@@ -64,18 +282,16 @@
         <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
             <div class="row text-center margin-bottom-20">
                 <h1 class="white"> IT LOVE</h1>
-            
             </div>
             <br>
             <div class="row search-row">
-                <input type="text" class="search" placeholder="What do you need help with?">
-                <button class="buttonsearch btn btn-info btn-lg">Search</button>
+                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
+                <button onclick="search()">搜索</button>
             </div>
         </div>
     </div>
     <!-- END SEARCH FIELD AREA -->
     <!-- MAIN SECTION -->
-
     <div class="container featured-area-default padding-30">
         <div class="row">
             <!-- ARTICLE OVERVIEW SECTION -->
@@ -92,50 +308,14 @@
                             <li>
                                 <a href="knowledge-base.html">IT LOVE</a>
                             </li>
-                        
                         </ol>
                     </div>
                     <div class="fb-heading">
-                        <i class="fa fa-folder"></i> 审核更多方案
+                        <i class="fa fa-folder"></i> 审核方案
                         <span class="cat-count">(10)</span>
                     </div>
                     <hr class="style-three">
-                    <div class="panel panel-default">
-                        <div class="article-info">
-                            <div class="art-date">
-                                <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                            </div>
-                            <div class="art-category">
-                                <a href="#">
-                                    <i class="fa fa-folder"></i> Account Settings </a>
-                            </div>
-                            <div class="art-comments">
-                                <a href="#">
-                                    <i class="fa fa-comments-o"></i> 4 Comments </a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <a href="单个问题.html">
-                            <p class="block-with-text">
-
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-                                non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-                                molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-                                sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-                                hendrerit efficitur.
-                            </p></a>
-                        </div>
-                        <div class="article-read-more">
-                            <a href="single-article.html" class="btn btn-default btn-wide">Read more...</a>
-                        </div>
-                        <div class="article-read-more">
-                                <button class="btn btn-default btn-sm">
-                                    <i class="fa fa-reply"></i> 通过</button>
-                                <button class="btn btn-default btn-sm">
-                                    <i class="fa fa-reply"></i> 不通过</button>
-                        </div>
+                    <div id="solutions">
                     </div>
                     <!-- END BREADCRUMBS -->
                     <!-- ARTICLES -->
@@ -144,176 +324,16 @@
                         <span class="cat-count">(10)</span>
                     </div>
                     <hr class="style-three">
-                    <div class="panel panel-default">
-                        <div class="article-info">
-                            <div class="art-date">
-                                <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                            </div>
-                            <div class="art-category">
-                                <a href="#">
-                                    <i class="fa fa-folder"></i> Account Settings </a>
-                            </div>
-                            <div class="art-comments">
-                                <a href="#">
-                                    <i class="fa fa-comments-o"></i> 4 Comments </a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <a href="单个问题.html">
-                            <p class="block-with-text">
-
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-                                non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-                                molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-                                sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-                                hendrerit efficitur.
-                            </p></a>
-                        </div>
-                        <div class="article-read-more">
-                            <a href="single-article.html" class="btn btn-default btn-wide">Read more...</a>
-                        </div>
-                        
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="article-heading-abb">
-                            <a href="single-article.html">
-                                <i class="fa fa-pencil-square-o"></i> How to change currency in gomac?</a>
-                        </div>
-                        <div class="article-info">
-                            <div class="art-date">
-                                <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                            </div>
-                            <div class="art-category">
-                                <a href="#">
-                                    <i class="fa fa-folder"></i> Admin Panel </a>
-                            </div>
-                            <div class="art-comments">
-                                <a href="#">
-                                    <i class="fa fa-comments-o"></i> 10 Comments </a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <p class="block-with-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-                                non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-                                molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-                                sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-                                hendrerit efficitur.
-                            </p>
-                        </div>
-                        <div class="article-read-more">
-                            <a href="single-article.html" class="btn btn-default btn-wide">Read more...</a>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="article-heading-abb">
-                            <a href="single-article.html">
-                                <i class="fa fa-pencil-square-o"></i> How to edit order details?</a>
-                        </div>
-                        <div class="article-info">
-                            <div class="art-date">
-                                <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                            </div>
-                            <div class="art-category">
-                                <a href="#">
-                                    <i class="fa fa-folder"></i> Orders </a>
-                            </div>
-                            <div class="art-comments">
-                                <a href="#">
-                                    <i class="fa fa-comments-o"></i> 0 Comments </a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <p class="block-with-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-                                non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-                                molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-                                sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-                                hendrerit efficitur.
-                            </p>
-                        </div>
-                        <div class="article-read-more">
-                            <a href="single-article.html" class="btn btn-default btn-wide">Read more...</a>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="article-heading-abb">
-                            <a href="single-article.html">
-                                <i class="fa fa-pencil-square-o"></i> How to print stock barcode?</a>
-                        </div>
-                        <div class="article-info">
-                            <div class="art-date">
-                                <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                            </div>
-                            <div class="art-category">
-                                <a href="#">
-                                    <i class="fa fa-folder"></i> Stocks </a>
-                            </div>
-                            <div class="art-comments">
-                                <a href="#">
-                                    <i class="fa fa-comments-o"></i> 12 Comments </a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <p class="block-with-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-                                non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-                                molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-                                sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-                                hendrerit efficitur.
-                            </p>
-                        </div>
-                        <div class="article-read-more">
-                            <a href="single-article.html" class="btn btn-default btn-wide">Read more...</a>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="article-heading-abb">
-                            <a href="single-article.html">
-                                <i class="fa fa-pencil-square-o"></i> How to generate barcode?</a>
-                        </div>
-                        <div class="article-info">
-                            <div class="art-date">
-                                <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                            </div>
-                            <div class="art-category">
-                                <a href="#">
-                                    <i class="fa fa-folder"></i> Stocks </a>
-                            </div>
-                            <div class="art-comments">
-                                <a href="#">
-                                    <i class="fa fa-comments-o"></i> 7 Comments </a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <p class="block-with-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-                                non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-                                molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-                                sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-                                hendrerit efficitur.
-                            </p>
-                        </div>
-                        <div class="article-read-more">
-                            <a href="single-article.html" class="btn btn-default btn-wide">Read more...</a>
-                        </div>
-                    </div>
+                    <div id="history"></div>
                     <!-- END ARTICLES -->
-
+                    <!-- ANSWERS -->
+                    <div class="fb-heading">
+                        <i class="fa fa-folder"></i> 历史答案
+                        <span class="cat-count">(10)</span>
+                    </div>
+                    <hr class="style-three">
+                    <div id="answers"></div>
+                    <!-- END ARTICLES -->
                     <!-- PAGINATION -->
                     <nav class="text-center">
                         <ul class="pagination">
@@ -353,20 +373,10 @@
             <!-- END ARTICLES OVERVIEW SECTION-->
             <!-- SIDEBAR STUFF -->
             <div class="col-md-4 padding-20">
-                <div class="row margin-bottom-30">
-                    <div class="col-md-12 ">
-                        <div class="support-container">
-                            <h2 class="support-heading">Need more Support?</h2>
-                            If you cannot find an answer in the knowledgebase, you can
-                            <a href="#">contact us</a> for further help.
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row margin-top-20">
                     <div class="col-md-12">
                         <div class="fb-heading-small">
-                            Popular Articles
+                            最火的问题
                         </div>
                         <hr class="style-three">
                         <div class="fat-content-small padding-left-10">
@@ -395,181 +405,26 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Latest Articles
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change username?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change currency in gomac?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to print stock barcode?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to generate barcode?</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- POPULAR TAGS (SHOW MAX 20 TAGS) -->
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Popular Tags
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-tags padding-left-10">
-                            <a href="#" class="btn btn-default btn-o btn-sm">password</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">settings</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">sign up</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">currency</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">payment</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">database</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">storage</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">export</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">email</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">import</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">campaign</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">edit</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">orders</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">help</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">billing</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">configure</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">customer</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- END POPULAR TAGS (SHOW MAX 20 TAGS) -->
             </div>
             <!-- END SIDEBAR STUFF -->
         </div>
     </div>
     <!-- END MAIN SECTION -->
-
     <div>
-
         <canvas id="pieChart"></canvas>
     </div>
-
-
-    <!-- FOOTER -->
-    <div class="container-fluid footer marg30">
-        <div class="container">
-            <!-- FOOTER COLUMN ONE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">How it works</div>
-                    <div class="footer-body">
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
-                            ut laoreet dolore magna aliquam erat volutpat.</p>
-                        <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
-                            ex ea commodo consequat. </p>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN ONE -->
-            <!-- FOOTER COLUMN TWO -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Categories</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-category.html">General</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Getting Started</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Account Support</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Guides</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Payment &amp; Billing</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Misc</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN TWO -->
-            <!-- FOOTER COLUMN THREE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Popular Articles</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-article.html">How to change account password</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How to edit order details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Add new user</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Change customer details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Lookup existing customer in order form</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How do I reset my password</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN THREE -->
-        </div>
-    </div>
-    <!-- END FOOTER -->
-
-    <!-- COPYRIGHT INFO -->
-    <div class="container-fluid footer-copyright marg30">
-        <div class="container">
-            <div class="pull-left">
-                Copyright © 2018 Sunny Gohil</a>
-            </div>
-            <div class="pull-right">
-                <i class="fa fa-facebook"></i> &nbsp;
-                <i class="fa fa-twitter"></i> &nbsp;
-                <i class="fa fa-linkedin"></i>
-            </div>
-        </div>
-    </div>
-    <!-- END COPYRIGHT INFO -->
-
     <!-- LOADING MAIN JAVASCRIPT -->
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
+    <script>
+    function search() {
+        var content = "" + document.getElementById("searchcontent").value;
+        console.log(content);
+        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
+    }
+    </script>
 </body>
 
 </html>

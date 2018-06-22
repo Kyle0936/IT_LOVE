@@ -1,22 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
-
-    
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyCixSIYh2d_wGxQA7XxYwMRs0DlTWcJpkY",
-        authDomain: "it-love.firebaseapp.com",
-        databaseURL: "https://it-love.firebaseio.com",
-        projectId: "it-love",
-        storageBucket: "gs://it-love.appspot.com/",
-        messagingSenderId: "627932021208"
-      };
-      firebase.initializeApp(config);
-    </script>
+    <script src="js/init.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,8 +14,18 @@
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+    <script>
+    var config = {
+        apiKey: "AIzaSyBZUz6V1Mkmwxpe781P8X6ZC7fPTUyiBIg",
+        authDomain: "it-love1.firebaseapp.com",
+        databaseURL: "https://it-love1.firebaseio.com",
+        projectId: "it-love1",
+        storageBucket: "it-love1.appspot.com",
+        messagingSenderId: "782043275132"
+    };
+    firebase.initializeApp(config);
+    </script>
 </head>
 
 <body>
@@ -52,8 +49,7 @@
             </div>
         </div>
     </div>
- 
-<!--   <script src="/__/firebase/5.0.0/firebase-app.js"></script>
+    <!--   <script src="/__/firebase/5.0.0/firebase-app.js"></script>
   <script src="/__/firebase/5.0.0/firebase-auth.js"></script>
   <script src="/__/firebase/5.0.0/firebase-storage.js"></script>
   <script src="/__/firebase/init.js"></script> -->
@@ -75,8 +71,6 @@
                         <a href="回答.html">
                             <i class="fa fa-file-text-o"></i> 回答</a>
                     </li>
-                    
-                
                     <li class="icon">
                         <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
                     </li>
@@ -93,8 +87,8 @@
             </div>
             <br>
             <div class="row search-row">
-                <input type="text" class="search" placeholder="What do you need help with?">
-                <button class="buttonsearch btn btn-info btn-lg">Search</button>
+                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
+                <button onclick="search()">搜索</button>
             </div>
         </div>
     </div>
@@ -103,66 +97,50 @@
     <div class="container featured-area-default padding-30">
         <div class="row">
             <div class="col-md-8 padding-20">
-            <form>
-            <div class="form-row">
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="问题描述">
-                </div>
-                  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-                    <main class="mdl-layout__content ">
-                      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-
-                        <!-- Container for the demo -->
-                        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                          <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-                            <h2 class="mdl-card__title-text">上传聊天记录</h2>
-                          </div>
-                          <div class="mdl-card__supporting-text mdl-color-text--grey-600" id="messagesDiv">
-                            <p>选择聊天截图，当它成功上传，你可以看到图片链接。</p>
-                            <h6>选择文件</h6>
-                            <button type="button" onclick="addAnotherFile()">添加聊天记录</button>
-                            <input type="file" id="file" name="file"/>
-
-                            <button type="button" onclick="uploadImage()">Submit</button>
-                          <!--   <input type="file" id="file" name="file"/> -->
-                            <h6>文件地址:</h6>
-                            <span id="linkbox"></span>
-                          </div>
+                <form>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="问题描述">
                         </div>
-                      </div>
-                    </main>
-                  </div>
-                
-                <div class="form-check col-md-8 padding-20 add-button">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        发布到公共社区
-                    </label>
-                </div>
-                
-            </div>
-            </form>
-            <div id="add-solution">
-                    <button onclick="myButtonFunction()">提出解决方案</button>
-            </div>
-            </div>
-
-            <!-- SIDEBAR STUFF -->
-            <div class="col-md-4 padding-20">
-                <div class="row margin-bottom-30">
-                    <div class="col-md-12 ">
-                        <div class="support-container">
-                            <h2 class="support-heading">Need more Support?</h2>
-                            If you cannot find an answer in the knowledgebase, you can
-                            <a href="#">contact us</a> for further help.
+                        <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+                            <main class="mdl-layout__content ">
+                                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+                                    <!-- Container for the demo -->
+                                    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                                        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+                                            <h2 class="mdl-card__title-text">上传聊天记录</h2>
+                                        </div>
+                                        <div class="mdl-card__supporting-text mdl-color-text--grey-600" id="messagesDiv">
+                                            <p>选择聊天截图，当它成功上传，你可以看到图片链接。</p>
+                                            <h6>选择文件</h6>
+                                            <button type="button" onclick="addAnotherFile()">添加聊天记录</button>
+                                            <input type="file" id="files" name="files[]" multiple />
+                                            <!--   <input type="file" id="file" name="file"/> -->
+                                            <h6>文件地址:</h6>
+                                            <span id="linkbox"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </main>
+                        </div>
+                        <div class="form-check col-md-8 padding-20 add-button">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                发布到公共社区
+                            </label>
                         </div>
                     </div>
+                </form>
+                <div id="add-solution">
+                    <button onclick="myButtonFunction()">提出解决方案</button>
                 </div>
-
+            </div>
+            <!-- SIDEBAR STUFF -->
+            <div class="col-md-4 padding-20">
                 <div class="row margin-top-20">
                     <div class="col-md-12">
                         <div class="fb-heading-small">
-                            Popular Articles
+                            最火的问题
                         </div>
                         <hr class="style-three">
                         <div class="fat-content-small padding-left-10">
@@ -191,324 +169,131 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Latest Articles
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change username?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change currency in gomac?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to print stock barcode?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to generate barcode?</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- POPULAR TAGS (SHOW MAX 20 TAGS) -->
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Popular Tags
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-tags padding-left-10">
-                            <a href="#" class="btn btn-default btn-o btn-sm">gomac</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">password</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">settings</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">sign up</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">currency</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">payment</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">database</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">storage</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">export</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">email</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">import</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">campaign</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">edit</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">orders</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">help</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">billing</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">configure</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">customer</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- END POPULAR TAGS (SHOW MAX 20 TAGS) -->
             </div>
             <!-- END SIDEBAR STUFF -->
         </div>
     </div>
     <!-- END MAIN SECTION -->
-
-    <!-- FOOTER -->
-    <div class="container-fluid footer marg30">
-        <div class="container">
-            <!-- FOOTER COLUMN ONE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">How it works</div>
-                    <div class="footer-body">
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
-                            ut laoreet dolore magna aliquam erat volutpat.</p>
-                        <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
-                            ex ea commodo consequat. </p>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN ONE -->
-            <!-- FOOTER COLUMN TWO -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Categories</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-category.html">General</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Getting Started</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Account Support</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Guides</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Payment &amp; Billing</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Misc</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN TWO -->
-            <!-- FOOTER COLUMN THREE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Popular Articles</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-article.html">How to change account password</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How to edit order details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Add new user</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Change customer details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Lookup existing customer in order form</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How do I reset my password</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN THREE -->
-        </div>
-    </div>
-    <!-- END FOOTER -->
-
-    <!-- COPYRIGHT INFO -->
-    <div class="container-fluid footer-copyright marg30">
-        <div class="container">
-            <div class="pull-left">
-                Copyright © 2018 Sunny Gohil
-            </div>
-            <div class="pull-right">
-                <i class="fa fa-facebook"></i> &nbsp;
-                <i class="fa fa-twitter"></i> &nbsp;
-                <i class="fa fa-linkedin"></i>
-            </div>
-        </div>
-    </div>
-    <!-- END COPYRIGHT INFO -->
-
     <!-- LOADING MAIN JAVASCRIPT -->
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
-
-  <script>
+    <script>
     var auth = firebase.auth();
-    // firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     console.log(user.email);
-//     console.log("test");
-//     console.log(user.uid);
-//     // User is signed in.
-//   } else {
-//     // No user is signed in.
-//   }
-// });
 
-    var imageUrl;
     var storageRef = firebase.storage().ref();
-    var db = firebase.firestore();
-    var ref;
-    var email;
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-    email = "" + user.email;
-    
-    ref = db.collection("user").doc(email).collection("Questions").doc().collection("Images");
-                } else{}});
 
     function handleFileSelect(evt) {
-      evt.stopPropagation();
-      evt.preventDefault();
-      var file = evt.target.files[0];
+        console.log("test");
+        evt.stopPropagation();
+        evt.preventDefault();
+        var file = evt.target.files[0];
 
-      var metadata = {
-        'contentType': file.type
-  //       customMetadata: {
-  //           'user': auth.currentUser,
-  //           'question': 'Hiking',
-  //           'index': 3,
-  //           'contentType': file.type
-  // }
-      };
+        var metadata = {
+            'contentType': file.type
 
-      // Push to child path.
-      // [START oncomplete]
-      // console.log(user.uid);
-      storageRef.child('image/' + file.name).put(file, metadata).then(function(snapshot) {
-        console.log("test1");
-        console.log('Uploaded', snapshot.totalBytes, 'bytes.');
-        console.log('File metadata:', snapshot.metadata);
-        // Let's get a download URL for the file.
-        snapshot.ref.getDownloadURL().then(function(url) {
-          console.log('File available at', url);
-          imageUrl = url;
+        };
 
-          // [START_EXCLUDE]
-          document.getElementById('linkbox').innerHTML = '<a href="' +  url + '">Click For File</a>';
-          // [END_EXCLUDE]
-        });
-      }).catch(function(error) {
-        // [START onfailure]
-        console.error('Upload failed:', error);
-        // [END onfailure]
-      });
-      // [END oncomplete]
-    }
-
-    function uploadImage(){
+        // Push to child path.
+        // [START oncomplete]
+        // console.log(user.uid);
         firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-
-            //var ref = db.collection("user").doc(email).collection("Questions").doc().collection("Images").doc();
-            //var setWithMerge = ref.doc(email).collections("Questions").doc().set({URL:""+url},{ merge: true });
-            // var setWithMerge = ref.doc(email).collection("Questions").add({URL:""+url},{ merge: true });
-            ref.add({URL:""+imageUrl});
-            //ref.doc(email).set({name: "" + document.getElementById("inputName").value, state: "CA", country: "USA"});
-        
-
-            db.collection("user").get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-    // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data().name);
-            });
-
+            if (user) {
+                var email = "" + user.email;
+                storageRef.child('image/' + file.name).put(file, metadata).then(function(snapshot) {
+                    console.log('Uploaded', snapshot.totalBytes, 'bytes.');
+                    console.log('File metadata:', snapshot.metadata);
+                    // Let's get a download URL for the file.
+                    snapshot.ref.getDownloadURL().then(function(url) {
+                        console.log('File available at', url);
+                        var db = firebase.firestore();
+                        var ref = db.collection("user");
+                        ref.doc(email).collection("Questions").doc().set({ image: "" + url });
+                    });
+                }).catch(function(error) {
+                    // [START onfailure]
+                    console.error('Upload failed:', error);
+                    // [END onfailure]
+                });
+            } else {
+                // No user is signed in.
+            }
         });
-            ref.collection("Images").get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-    // doc.data() is never undefined for query doc snapshots
-
-                console.log(doc.id, " => ", doc.data().URL);
-                var test = doc.data().URL;
-                console.log(test);
-                document.querySelector('img').src = test;
-
-            });
-        });
-    // User is signed in.
-    } else {
-    // No user is signed in.
-        }
-        });
-        }
-
-    window.onload = function() {
-      document.getElementById('file').addEventListener('change', handleFileSelect, false);
-      document.getElementById('file').disabled = false;
     }
-      // auth.onAuthStateChanged(function(user) {
-      //   if (user) {
-      //     console.log('Anonymous user signed-in.', user);
-      //     document.getElementById('file').disabled = false;
-      //   } else {
-      //     console.log('There was no anonymous session. Creating a new anonymous user.');
-      //     // Sign the user in anonymously since accessing Storage requires the user to be authorized.
-      //     auth.signInAnonymously().catch(function(error) {
-      //       if (error.code === 'auth/operation-not-allowed') {
-      //         window.alert('Anonymous Sign-in failed. Please make sure that you have enabled anonymous ' +
-      //             'sign-in on your Firebase project.');
-      //       }
-      //     });
-      //   }
-      // });
+    // });
+    //       storageRef.child('image/' + file.name).put(file, metadata).then(function(snapshot) {
+    //         console.log("test1");
+    //         console.log('Uploaded', snapshot.totalBytes, 'bytes.');
+    //         console.log('File metadata:', snapshot.metadata);
+    //         // Let's get a download URL for the file.
+    //         snapshot.ref.getDownloadURL().then(function(url) {
+    //           console.log('File available at', url);
+    //           // [START_EXCLUDE]
+    //           document.getElementById('linkbox').innerHTML = '<a href="' +  url + '">Click For File</a>';
+    //           // [END_EXCLUDE]
+    //         });
+    //       }).catch(function(error) {
+    //         // [START onfailure]
+    //         console.error('Upload failed:', error);
+    //         // [END onfailure]
+    //       });
+    //       // [END oncomplete]
+    //     }
 
+    // window.onload = function() {
+    //   document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    //   document.getElementById('file').disabled = false;
 
-        function addAnotherFile(){
-            // <button id="clickMe" onclick="addAnotherFile()">添加聊天记录</button>
-            // <input type="file" id="file" name="file"/>
+    // auth.onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     console.log('Anonymous user signed-in.', user);
+    //     document.getElementById('file').disabled = false;
+    //   } else {
+    //     console.log('There was no anonymous session. Creating a new anonymous user.');
+    //     // Sign the user in anonymously since accessing Storage requires the user to be authorized.
+    //     auth.signInAnonymously().catch(function(error) {
+    //       if (error.code === 'auth/operation-not-allowed') {
+    //         window.alert('Anonymous Sign-in failed. Please make sure that you have enabled anonymous ' +
+    //             'sign-in on your Firebase project.');
+    //       }
+    //     });
+    //   }
+    // });
+
+    function addAnotherFile() {
+        // <button id="clickMe" onclick="addAnotherFile()">添加聊天记录</button>
+        // <input type="file" id="file" name="file"/>
+        //<input type="file" id="files" name="files[]" multiple />
 
         var div = document.createElement('div');
         // var btn = document.createElement("button");
         var i = document.createElement("input");
         // btn.setAttribute('onclick',"addAnotherFile()");
         // btn.text = "test";
-        i.setAttribute('type',"file");
-        i.setAttribute('name',"file"); 
-        // i.setAttribute('id',"file"); 
+        i.setAttribute('type', "file");
+        i.setAttribute('name', "file");
+        i.setAttribute('id', "file");
         div.appendChild(i);
         // div.appendChild(btn);
 
         document.getElementById("messagesDiv").appendChild(div);
         console.log("Test");
-        }
-        // function initApp(){
-        //     document.getElementById("clickMe").addEventListener('click', addAnotherFile, false);
-        // }
-        // window.onload = function() {
-        //     initApp();
-        // };
+    }
+    // function initApp(){
+    //     document.getElementById("clickMe").addEventListener('click', addAnotherFile, false);
+    // }
+    // window.onload = function() {
+    //     initApp();
+    // };
     </script>
-    <img height="125" width="50"/>
+    <script>
+    function search() {
+        var content = "" + document.getElementById("searchcontent").value;
+        console.log(content);
+        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
+    }
+    </script>
 </body>
 
 </html>

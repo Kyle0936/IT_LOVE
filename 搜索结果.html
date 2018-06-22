@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IT LOVE回答</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -23,14 +23,44 @@
     firebase.initializeApp(config);
     </script>
     <script>
+    function check(des, string) {
+        var index = 0;
+        var changingstring;
+        for (var i = 0; i < string.length; i++) {
+            for (var k = 0; k <= i; k++) {
+                changingstring = string.substring(k, k + string.length - i);
+                //if(des.includes(changingstring)) index ++;
+                for (var j = 0; j <= des.length - changingstring.length; j++) {
+                    if (des.substring(j, j + changingstring.length) == changingstring) index++;
+                }
+            }
+
+        }
+        return index;
+
+
+    }
+
     var db = firebase.firestore();
     var ref = db.collection("Questions");
     ref.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
+
             console.log("test" + doc.id);
             // doc.data() is never undefined for query doc snapshots
 
             //console.log(doc.id, " => ", doc.data());
+            var dic = doc.data();
+
+            var desc = dic["Description"];
+
+            return ref.doc(doc.id).update({ index: check(desc, "${req.params.searchcontent}") });
+        });
+    });
+
+    var newRef = ref.where("index", ">", 0).orderBy("index");
+    newRef.get().then(function(querySnapshot3) {
+        querySnapshot3.forEach(function(doc) {
             var dic = doc.data();
             //console.log(author["Author"]);
             var author = dic["Author"];
@@ -39,7 +69,7 @@
             var public = dic["Public"];
             var time = dic["Time"];
 
-            //add html
+
             var ahref = document.createElement("a");
             ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
             var father = document.createElement("div");
@@ -59,54 +89,59 @@
 
             var grandfather = document.getElementById("allQ");
             grandfather.appendChild(ahref);
-
-
-            // <div class="panel panel-default">
-            //                         <div class="article-heading-abb">
-            //                             <a href="单个回答.html">
-            //                                 <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
-            //                         </div>
-            //                         <div class="article-info">
-            //                             <div class="art-date">
-            //                                 <a href="#">
-            //                                     <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-            //                             </div>
-            //                             <div class="art-category">
-            //                                 <a href="#">
-            //                                     <i class="fa fa-folder"></i> Account Settings </a>
-            //                             </div>
-            //                             <div class="art-comments">
-            //                                 <a href="#">
-            //                                     <i class="fa fa-comments-o"></i> 4 Comments </a>
-            //                             </div>
-            //                         </div>
-            //                         <div class="article-content">
-            //                             <p class="block-with-text">
-            //                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-            //                                 non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-            //                                 nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-            //                                 molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-            //                                 sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-            //                                 hendrerit efficitur.
-            //                             </p>
-            //                         </div>
-            //                         <div class="article-read-more">
-            //                             <a href="单个回答.html" class="btn btn-default btn-wide">Read more...</a>
-            //                         </div>
-            //                     </div>
-
-            //add answers
-            // var answers = dic["Answers"].get().then(function(querySnapshot1){
-            //     querySnapshot1.forEach(function(doc1){
-            //         var dic1 = doc1.data();
-            //         var author1 = dic1["Author"];
-            //         var content = dic1["Content"];
-            //         var likes = dic1["Likes"];
-            //         var approve = dic1["Approved"];
-            //     });
-            // });
         });
     });
+
+    //if(dic["Description"].includes("${req.params.searchcontent}")){
+
+    //add html
+
+    //} 
+
+    // <div class="panel panel-default">
+    //                         <div class="article-heading-abb">
+    //                             <a href="单个回答.html">
+    //                                 <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
+    //                         </div>
+    //                         <div class="article-info">
+    //                             <div class="art-date">
+    //                                 <a href="#">
+    //                                     <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
+    //                             </div>
+    //                             <div class="art-category">
+    //                                 <a href="#">
+    //                                     <i class="fa fa-folder"></i> Account Settings </a>
+    //                             </div>
+    //                             <div class="art-comments">
+    //                                 <a href="#">
+    //                                     <i class="fa fa-comments-o"></i> 4 Comments </a>
+    //                             </div>
+    //                         </div>
+    //                         <div class="article-content">
+    //                             <p class="block-with-text">
+    //                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
+    //                                 non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
+    //                                 nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
+    //                                 molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
+    //                                 sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
+    //                                 hendrerit efficitur.
+    //                             </p>
+    //                         </div>
+    //                         <div class="article-read-more">
+    //                             <a href="单个回答.html" class="btn btn-default btn-wide">Read more...</a>
+    //                         </div>
+    //                     </div>
+
+    //add answers
+    // var answers = dic["Answers"].get().then(function(querySnapshot1){
+    //     querySnapshot1.forEach(function(doc1){
+    //         var dic1 = doc1.data();
+    //         var author1 = dic1["Author"];
+    //         var content = dic1["Content"];
+    //         var likes = dic1["Likes"];
+    //         var approve = dic1["Approved"];
+    //     });
+    // });
     </script>
 </head>
 
@@ -305,9 +340,9 @@
     </div>
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
-    <script src="js/jquery-2.2.4.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/jquery-2.2.4.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
     <script>
     function search() {

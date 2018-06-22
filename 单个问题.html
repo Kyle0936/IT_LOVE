@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="utf-8">
@@ -7,9 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IT LOVE</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+    var config = {
+        apiKey: "AIzaSyBZUz6V1Mkmwxpe781P8X6ZC7fPTUyiBIg",
+        authDomain: "it-love1.firebaseapp.com",
+        databaseURL: "https://it-love1.firebaseio.com",
+        projectId: "it-love1",
+        storageBucket: "it-love1.appspot.com",
+        messagingSenderId: "782043275132"
+    };
+    firebase.initializeApp(config);
+    </script>
 </head>
 
 <body>
@@ -18,22 +30,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <<div class="login-box border-right-1">
-                        <a href="#">
+                        <a href="个人信息.html">
                             <i class="fa fa-key"></i> 登陆</a>
-                    </div>
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="#">
-                            <i class="fa fa-pencil"></i> 注册</a>
-                    </div>
-                    <div class="login-box border-right-1">
-                        <a href="系统消息.html">
-                            <i class="fa fa-bell"></i> 系统消息</a>
-                    </div>
+                </div>
+                <div class="login-box border-left-1 border-right-1">
+                    <a href="email-password.html">
+                                <i class="fa fa-pencil"></i> 注册</a>
+                </div>
+                <div class="login-box border-right-1">
+                    <a href="系统消息.html">
+                                    <i class="fa fa-bell"></i> 系统消息</a>
                 </div>
             </div>
         </div>
     </div>
-    
+    </div>
     <!-- TOP NAVIGATION -->
     <div class="container-fluid">
         <div class="navigation">
@@ -41,18 +52,17 @@
                 <ul class="topnav">
                     <li></li>
                     <li>
-                        <a href="首页.html">
-                            <i class="fa fa-home"></i> 首页</a>
+                        <a href="index.html">
+                                        <i class="fa fa-home"></i> 首页</a>
                     </li>
                     <li>
                         <a href="提问.html">
-                            <i class="fa fa-book"></i> 提问</a>
+                                            <i class="fa fa-book"></i> 提问</a>
                     </li>
                     <li>
                         <a href="回答.html">
-                            <i class="fa fa-file-text-o"></i> 回答</a>
+                                                <i class="fa fa-file-text-o"></i> 回答</a>
                     </li>
-                    
                     <li class="icon">
                         <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
                     </li>
@@ -66,12 +76,11 @@
         <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
             <div class="row text-center margin-bottom-20">
                 <h1 class="white"> IT LOVE</h1>
-                
             </div>
             <br>
             <div class="row search-row">
-                <input type="text" class="search" placeholder="What do you need help with?">
-                <button class="buttonsearch btn btn-info btn-lg">Search</button>
+                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
+                <button onclick="search()">搜索</button>
             </div>
         </div>
     </div>
@@ -86,8 +95,8 @@
                         <ol class="breadcrumb">
                             <li>
                                 <a href="首页.html">
-                                    <i class="fa fa-home"></i>
-                                </a>
+                                                            <i class="fa fa-home"></i>
+                                                        </a>
                             </li>
                             <li>
                                 <a href="回答.html">回答</a>
@@ -100,91 +109,39 @@
                     </div>
                     <!-- END BREADCRUMBS -->
                     <!-- ARTICLE  -->
+                    <div id="displayQues"> HI</div>
+                    <div id="solutions"></div>
                     <div class="panel panel-default">
                         <div class="article-heading margin-bottom-5">
                             <a href="#">
-                                <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
+                                                        <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
                         </div>
                         <div class="article-info">
                             <div class="art-date">
                                 <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
+                                                                <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
                             </div>
                             <div class="art-category">
                                 <a href="#">
-                                    <i class="fa fa-folder"></i> Account Settings </a>
+                                                                    <i class="fa fa-folder"></i> Account Settings </a>
                             </div>
                             <div class="art-comments">
                                 <a href="#">
-                                    <i class="fa fa-comments-o"></i> 4 解决方案 </a>
+                                                                        <i class="fa fa-comments-o"></i> 4 解决方案 </a>
                             </div>
                         </div>
                         <div class="article-content">
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-                                non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-                                molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-                                sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-                                hendrerit efficitur.
-                            </p>
-                            <p>
-                                Phasellus tempor justo id urna congue tempor. In ut porta ex. Nullam mi orci, volutpat ut placerat eget, feugiat id sem.
-                                Morbi porta, magna in molestie dignissim, metus neque pellentesque nibh, eget fermentum nunc
-                                ipsum eu ligula. Duis ultricies magna erat, elementum tempus mi faucibus vel. Nullam luctus
-                                sem nec ipsum venenatis, id feugiat ipsum mollis. Sed vel velit vel metus scelerisque hendrerit
-                                quis et libero. Duis non lectus mi. Fusce mollis dui ut nunc semper, ut iaculis tellus vestibulum.
-                                Etiam placerat nibh et luctus fermentum. Vestibulum ac sagittis erat. Quisque tempor felis
-                                nisl, et fringilla nibh viverra ac. Nulla ac aliquam orci.
-                            </p>
-
-                            <hr class="style-transparent">
-
-                            <h2>H2 Heading
-                                <small>Secondary text</small>
-                            </h2>
-                            <p>
-                                Sed elit ipsum, porta sed ex sit amet, fermentum viverra nulla. Nullam cursus tincidunt elit, vel hendrerit diam scelerisque
-                                non. Nulla finibus hendrerit libero, consequat iaculis enim interdum commodo. Nulla ultrices,
-                                dolor id congue ornare, lorem ex porta magna, et elementum leo augue id felis. Donec ullamcorper
-                                nisi quis dui bibendum gravida. Nulla facilisi. Pellentesque a dolor quam. Sed interdum auctor
-                                ante, id auctor sem imperdiet in. Pellentesque et posuere turpis, ac vestibulum dui.
-                            </p>
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                <footer>Someone famous in
-                                    <cite title="Source Title">Source Title</cite>
-                                </footer>
-                            </blockquote>
-                            <p>
-                                Sed elit ipsum, porta sed ex sit amet, fermentum viverra nulla. Nullam cursus tincidunt elit, vel hendrerit diam scelerisque
-                                non. Nulla finibus hendrerit libero, consequat iaculis enim interdum commodo. Nulla ultrices,
-                                dolor id congue ornare, lorem ex porta magna, et elementum leo augue id felis. Donec ullamcorper
-                                nisi quis dui bibendum gravida. Nulla facilisi. Pellentesque a dolor quam. Sed interdum auctor
-                                ante, id auctor sem imperdiet in. Pellentesque et posuere turpis, ac vestibulum dui.
-                            </p>
-                            <p>
-                                Nulla rhoncus dolor sit amet mi euismod molestie. Mauris velit nisi, vestibulum sagittis pharetra ut, fermentum vitae magna.
-                                Aliquam ut dolor a est molestie fringilla. Mauris at dui volutpat, tincidunt arcu in, semper
-                                neque. Aenean sodales venenatis semper. Praesent tincidunt dapibus diam. Morbi pellentesque
-                                justo at interdum vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
                             </p>
                         </div>
                         <div class="article-content">
-                            <div class="article-tags">
-                                <b>Tags:</b>
-                                <a href="#" class="btn btn-default btn-o btn-sm">gomac</a>
-                                <a href="#" class="btn btn-default btn-o btn-sm">password</a>
-                                <a href="#" class="btn btn-default btn-o btn-sm">settings</a>
-                                <a href="#" class="btn btn-default btn-o btn-sm">sign up</a>
-                                <a href="#" class="btn btn-default btn-o btn-sm">currency</a>
-                            </div>
                         </div>
                         <hr class="style-three">
                         <div class="article-feedback">
                             <h2>
-                                <small>Was This Article Helpful?</small>
-                            </h2>
+                                                                        <small>Was This Article Helpful?</small>
+                                                                    </h2>
                             <button type="button" class="btn btn-success btn-o btn-wide">
                                 <i class="fa fa-thumbs-o-up"></i> Yes</button>
                             <button type="button" class="btn btn-danger btn-o btn-wide">No
@@ -193,13 +150,11 @@
                         </div>
                     </div>
                     <!-- END ARTICLE -->
-
                     <!-- COMMENTS  -->
                     <div class="panel panel-default">
                         <div class="article-heading">
                             <i class="fa fa-comments-o"></i> 解决方案 (4)
                         </div>
-
                         <!-- FIRST LEVEL COMMENT 1 -->
                         <div class="article-content">
                             <div class="article-comment-top">
@@ -207,26 +162,19 @@
                                     <h4> 回答1 </h4>
                                     <img src="images/user.png" alt="gomac user">
                                     <div class="user-name">John Doe</div>
-
                                     <div class="comment-post-date">Posted On
                                         <span class="italics">20 May, 2016</span>
                                     </div>
                                 </div>
                                 <div class="comments-content">
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc
-                                        lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae
-                                        ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum
-                                        a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent
-                                        taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus
-                                        fermentum facilisis pellentesque.
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
                                     </p>
                                     <div class="article-read-more">
                                         <button class="btn btn-default btn-sm">
                                             <i class="fa fa-reply"></i> Reply</button>
                                     </div>
                                 </div>
-
                                 <!-- SECOND LEVEL COMMENT -->
                                 <div class="article-comment-second">
                                     <div class="comments-user">
@@ -238,12 +186,7 @@
                                     </div>
                                     <div class="comments-content">
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc
-                                            lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris
-                                            vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla
-                                            condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat
-                                            a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-                                            himenaeos. Vivamus fermentum facilisis pellentesque.
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
                                         </p>
                                     </div>
                                 </div>
@@ -251,338 +194,351 @@
                             </div>
                         </div>
                         <!-- END FIRST LEVEL COMMENT 1 -->
-
-                        <!-- FIRST LEVEL COMMENT 2 -->
-                        <div class="article-content">
-                            <div class="article-comment-top">
-                                <div class="comments-user">
-                                    <h4> 回答2 </h4>
-                                    <img src="images/user.png" alt="gomac user">
-                                    <div class="user-name">George Hocutt</div>
-                                    <div class="comment-post-date">Posted On
-                                        <span class="italics">20 May, 2016</span>
-                                    </div>
-                                </div>
-                                <div class="comments-content">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc
-                                        lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae
-                                        ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum
-                                        a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent
-                                        taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus
-                                        fermentum facilisis pellentesque.
-                                    </p>
-                                    <div class="article-read-more">
-                                        <button class="btn btn-default btn-sm">
-                                            <i class="fa fa-reply"></i> Reply</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END FIRST LEVEL COMMENT 2 -->
-
-                        <!-- FIRST LEVEL COMMENT 3 -->
-                        <div class="article-content">
-                            <div class="article-comment-top">
-                                <div class="comments-user">
-                                    <h4> 回答3 </h4>
-                                    <img src="images/user.png" alt="gomac user">
-                                    <div class="user-name">Deann Crim</div>
-                                    <div class="comment-post-date">Posted On
-                                        <span class="italics">20 May, 2016</span>
-                                    </div>
-                                </div>
-                                <div class="comments-content">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc
-                                        lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae
-                                        ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum
-                                        a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent
-                                        taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus
-                                        fermentum facilisis pellentesque.
-                                    </p>
-                                    <div class="article-read-more">
-                                        <button class="btn btn-default btn-sm">
-                                            <i class="fa fa-reply"></i> Reply</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                     </div>
                     <!-- END COMMENTS -->
                 </div>
-                <div id="piechart" class="text-center"></div>
+                <div id="myChart"></div>
+                <!-- <div id="piechart" class="text-center"></div> -->
                 <div class="panel-transparent">
-                            <div class="article-heading">
-                                <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
-                            </div>
-                            <form method="post" class="comment-form" >
-                            <div class="form-row align-items-center">
-                                <div class="col-auto my-1" id="add-solutions">
+                    <div class="article-heading">
+                        <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
+                    </div>
+                    <form method="post" class="comment-form">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto my-1" id="add-solutions">
                                 <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
                                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" onchange="scheduleA.call(this,event,this.value)">
                                     <option selected>Choose...</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
-                                  </select>
-                                </div>
-
-                                <div class="col-auto my-1">
-                                  <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                              </div>
-                            </form>
+                                </select>
+                            </div>
+                            <div class="col-auto my-1">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
+                    </form>
+                </div>
                 <div class="form-check col-md-8 padding-20 add-button">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">
                         从公共社区隐藏
                     </label>
                 </div>
-
             </div>
-            
-            <!-- SIDEBAR STUFF -->
-            <div class="col-md-4 padding-20">
-                <div class="row margin-bottom-30">
-                    <div class="col-md-12 ">
-                        <div class="support-container">
-                            <h2 class="support-heading">Need more Support?</h2>
-                            If you cannot find an answer in the knowledgebase, you can
-                            <a href="#">contact us</a> for further help.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Popular Articles
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Add new user</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Latest Articles
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change username?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change currency in gomac?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to print stock barcode?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to generate barcode?</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <!--                 <script type="text/javascript">
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawChart);
 
 
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['回答', '投票总数'],
+                        ['回答1', 8],
+                        ['回答2', 2],
+                        ['回答3', 9],
 
-            google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
+                    ]);
 
 
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                ['回答', '投票总数'],
-                ['回答1', 8],
-                ['回答2', 2],
-                ['回答3', 9],
-                
-                ]);
+                    var options = { 'title': '回答意见记录', 'width': 400, 'height': 300 };
 
-  
-                var options = {'title':'回答意见记录', 'width':400, 'height':300};
-
-  // Display the chart inside the <div> element with id="piechart"
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                chart.draw(data, options);
+                    // Display the chart inside the <div> element with id="piechart"
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart.draw(data, options);
                 }
-            </script>
+                </script> -->
+            <!-- <script type="text/javascript">
+                var auth1 = firebase.auth();
+                firebase.auth().onAuthStateChanged(function(user){
+                    var email1 = ""+user.email;
+                    var db = firebase.firestore();
+                    var ref1 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
 
-                <!-- POPULAR TAGS (SHOW MAX 20 TAGS) -->
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            Popular Tags
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-tags padding-left-10">
-                            <a href="#" class="btn btn-default btn-o btn-sm">password</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">settings</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">sign up</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">currency</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">payment</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">database</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">storage</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">export</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">email</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">import</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">campaign</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">edit</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">orders</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">help</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">billing</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">user</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">configure</a>
-                            <a href="#" class="btn btn-default btn-o btn-sm">customer</a>
-                        </div>
+
+
+                });
+            </script> -->
+        </div>
+        <!-- SIDEBAR STUFF -->
+        <div class="col-md-4 padding-20">
+            <div class="row margin-top-20">
+                <div class="col-md-12">
+                    <div class="fb-heading-small">
+                        最火的问题
+                    </div>
+                    <hr class="style-three">
+                    <div class="fat-content-small padding-left-10">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Add new user</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <!-- END POPULAR TAGS (SHOW MAX 20 TAGS) -->
             </div>
-            <!-- END SIDEBAR STUFF -->
         </div>
+        <!-- END SIDEBAR STUFF -->
+    </div>
     </div>
     <!-- END MAIN SECTION -->
-
-    <!-- FOOTER -->
-    <div class="container-fluid footer marg30">
-        <div class="container">
-            <!-- FOOTER COLUMN ONE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">How it works</div>
-                    <div class="footer-body">
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
-                            ut laoreet dolore magna aliquam erat volutpat.</p>
-                        <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
-                            ex ea commodo consequat. </p>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN ONE -->
-            <!-- FOOTER COLUMN TWO -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Categories</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-category.html">General</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Getting Started</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Account Support</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Guides</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Payment &amp; Billing</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">Misc</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN TWO -->
-            <!-- FOOTER COLUMN THREE -->
-            <div class="col-xs-12 col-sm-4 col-md-4 margin-top-20">
-                <div class="panel-transparent">
-                    <div class="footer-heading">Popular Articles</div>
-                    <div class="footer-body">
-                        <ul>
-                            <li>
-                                <a href="single-article.html">How to change account password</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How to edit order details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Add new user</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Change customer details</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">Lookup existing customer in order form</a>
-                            </li>
-                            <li>
-                                <a href="single-article.html">How do I reset my password</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- END FOOTER COLUMN THREE -->
-        </div>
-    </div>
-    <!-- END FOOTER -->
-
-    <!-- COPYRIGHT INFO -->
-    <div class="container-fluid footer-copyright marg30">
-        <div class="container">
-            <div class="pull-left">
-                Copyright © 2018 Sunny Gohil</a>
-            </div>
-            <div class="pull-right">
-                <i class="fa fa-facebook"></i> &nbsp;
-                <i class="fa fa-twitter"></i> &nbsp;
-                <i class="fa fa-linkedin"></i>
-            </div>
-        </div>
-    </div>
-    <!-- END COPYRIGHT INFO -->
-
     <!-- LOADING MAIN JAVASCRIPT -->
-    <script src="js/jquery-2.2.4.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/jquery-2.2.4.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
+    <script type="text/javascript">
+    var auth = firebase.auth();
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            //ref = db.collection("user").doc(email).collection("Questions").doc().collection("Images");
+            var db = firebase.firestore();
+            var email = "" + user.email;
+            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
+            var ref1 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
+
+            ref1.get().then(function(doc) {
+                var description1 = doc.data().Description;
+                var link1 = doc.data().LinkToImage;
+                console.log(link1);
+                var public1 = doc.data().Public;
+                console.log(public1);
+                console.log(description1);
+                var time1 = doc.data().Time;
+                var child1 = document.createElement("div");
+                child1.setAttribute('class', 'comments-user');
+                var publicChild = document.createElement("div");
+                publicChild.setAttribute('class', 'comment-post-date');
+                var desChild1 = document.createElement("div");
+                desChild1.setAttribute('class', 'comment-post-date');
+                desChild1.innerHTML = "Description: " + description1;
+                var dateChild1 = document.createElement("div");
+                dateChild1.setAttribute('class', 'comment-post-date');
+                dateChild1.innerHTML = "Posted on " + time1;
+
+                var lineChild1 = document.createElement("hr");
+                lineChild1.setAttribute('class', 'style-three');
+                var father1 = document.createElement("div");
+                father1.setAttribute('class', 'article-content');
+                var son1 = document.createElement("div");
+                son1.setAttribute('class', 'article-comment-top');
+                var grandfather1 = document.getElementById("displayQues");
+                child1.appendChild(publicChild);
+                child1.appendChild(desChild1);
+                child1.appendChild(dateChild1);
+
+
+                ref1.collection("Images").get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        var link2 = doc.data().URL;
+                        console.log(link2);
+                        var imageChild = document.createElement("img");
+                        imageChild.setAttribute('src', link2);
+                        child1.appendChild(imageChild);
+                    });
+                });
+
+                //imageChild.setAttribute('src','link1');
+                son1.appendChild(child1);
+                father1.appendChild(son1);
+                father1.appendChild(lineChild1);
+                grandfather1.appendChild(father1);
+
+
+
+            });
+
+
+
+
+            //         ref1.get().then(function(querySnapshot) {
+            //         querySnapshot.forEach(function(doc) {
+
+            //         console.log("test111");
+            //         console.log( " ==> ", doc.data().Description);
+            //         console.log( " link ==> ", doc.data().LinkToImage);
+            //         var description = doc.data().Description;
+            //         var public = doc.data().Public;
+            //         var time = doc.data().Time;
+
+            // var child = document.createElement("div");
+            // child.setAttribute('class', 'comments-user');
+
+
+            // var desChild = document.createElement("div");
+            // dateChild.setAttribute('class', 'comment-post-date');
+            // dateChild.innerHTML = "Description " + description;
+            // var dateChild = document.createElement("div");
+            // dateChild.setAttribute('class', 'comment-post-date');
+            // dateChild.innerHTML = "Posted on " + time;
+            // var contentChild = document.createElement("div");
+            // contentChild.setAttribute('class', 'comments-content');
+            // contentChild.innerHTML = content;
+            // var lineChild = document.createElement("hr");
+            // lineChild.setAttribute('class', 'style-three');
+            // var father = document.createElement("div");
+            // father.setAttribute('class', 'article-content');
+            // var son = document.createElement("div");
+            // son.setAttribute('class', 'article-comment-top');
+            // var grandfather = document.getElementById("displayQues");
+            // child.appendChild(nameChild);
+            // child.appendChild(dateChild);
+            // son.appendChild(child);
+            // son.appendChild(contentChild);
+            // son.appendChild(likeChild); 
+            // father.appendChild(son);
+            // father.appendChild(lineChild);
+            // grandfather.appendChild(father);
+
+
+            //     });
+
+            // });
+            ref.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+
+                    console.log("test111");
+                    console.log(" ==> ", doc.data().Approved);
+                    var approved = doc.data().Approved;
+                    var author = doc.data().Author;
+                    var content = doc.data().Content;
+                    var likes = doc.data().Likes;
+                    var time = doc.data().Time;
+
+                    var child = document.createElement("div");
+                    child.setAttribute('class', 'comments-user');
+
+
+                    var nameChild = document.createElement("div");
+                    nameChild.setAttribute('class', 'user-name');
+                    nameChild.innerHTML = author;
+                    var dateChild = document.createElement("div");
+                    dateChild.setAttribute('class', 'comment-post-date');
+                    dateChild.innerHTML = "Posted on " + time;
+                    var contentChild = document.createElement("div");
+                    contentChild.setAttribute('class', 'comments-content');
+                    contentChild.innerHTML = content;
+                    var likeChild = document.createElement("p");
+                    likeChild.innerHTML = "Number of people chose this: " + likes;
+                    var lineChild = document.createElement("hr");
+                    lineChild.setAttribute('class', 'style-three');
+                    var father = document.createElement("div");
+                    father.setAttribute('class', 'article-content');
+                    var son = document.createElement("div");
+                    son.setAttribute('class', 'article-comment-top');
+                    var grandfather = document.getElementById("solutions");
+                    child.appendChild(nameChild);
+                    child.appendChild(dateChild);
+                    son.appendChild(child);
+                    son.appendChild(contentChild);
+                    son.appendChild(likeChild);
+                    father.appendChild(son);
+                    father.appendChild(lineChild);
+                    grandfather.appendChild(father);
+
+
+                });
+
+            });
+
+
+        } else {}
+    });
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    var data;
+    var chart;
+
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+        // Create our data table.
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Solutions');
+        data.addColumn('number', 'Likes');
+        var auth = firebase.auth();
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+
+                var db = firebase.firestore();
+                var email = "" + user.email;
+                //var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
+                var ref2 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
+                ref2.get().then(function(doc) {
+                    ref2.collection("Answers").get().then(function(querySnapshot) {
+                        querySnapshot.forEach(function(doc) {
+                            console.log(typeof(doc.data()["Name"]));
+                            console.log(typeof(doc.data()["Likes"]));
+                            data.addRow([doc.data()["Name"], doc.data()["Likes"]]);
+                        });
+                        var options = {
+                            'title': 'How many likes each solution has?',
+                            'width': 400,
+                            'height': 300
+                        };
+
+                        // Instantiate and draw our chart, passing in some options.
+                        chart = new google.visualization.BarChart(document.getElementById('myChart'));
+                        google.visualization.events.addListener(chart, 'select', selectHandler);
+                        chart.draw(data, options);
+                    });
+                });
+            } else {}
+        });
+
+        //         ''+
+
+        // data.addRows([          
+        //   ['Mushrooms', 3],
+        //   ['Onions', 1],
+        //   ['Olives', 1],
+        //   ['Zucchini', 1],
+        //   ['Pepperoni', 2]
+        // ]);
+
+        // Set chart options
+
+    }
+
+    function selectHandler() {
+        var selectedItem = chart.getSelection()[0];
+        var value = data.getValue(selectedItem.row, 0);
+        alert('The user selected ' + value);
+    }
+    </script>
+    <script>
+    function search() {
+        var content = "" + document.getElementById("searchcontent").value;
+        console.log(content);
+        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
+    }
+    </script>
 </body>
 
 </html>
