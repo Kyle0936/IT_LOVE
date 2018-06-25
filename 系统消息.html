@@ -43,7 +43,7 @@
                     var numberChild = document.createElement("div");
                     numberChild.innerHTML = "Number of Answers: " + number;
                     var ahref1 = document.createElement("a");
-                    ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myquestions/' + doc.id);
+                    ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
                     var father1 = document.createElement("div");
                     father1.setAttribute('class', 'panel panel-default');
                     var infoChild1 = document.createElement("div");
@@ -79,7 +79,7 @@
                             var content = dic["Content"];
                             var time = dic["Time"];
                             var ahref = document.createElement("a");
-                            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myquestions/' + doc.id);
+                            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
                             var father = document.createElement("div");
                             father.setAttribute('class', 'panel panel-default');
                             var infoChild = document.createElement("div");
@@ -277,39 +277,12 @@
         </div>
     </div>
     <!-- END TOP NAVIGATION -->
-    <!-- SEARCH FIELD AREA -->
-    <div class="searchfield bg-hed-six">
-        <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-            <div class="row text-center margin-bottom-20">
-                <h1 class="white"> IT LOVE</h1>
-            </div>
-            <br>
-            <div class="row search-row">
-                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
-                <button onclick="search()">搜索</button>
-            </div>
-        </div>
-    </div>
-    <!-- END SEARCH FIELD AREA -->
     <!-- MAIN SECTION -->
     <div class="container featured-area-default padding-30">
         <div class="row">
             <!-- ARTICLE OVERVIEW SECTION -->
             <div class="col-md-8 padding-20">
                 <div class="row">
-                    <!-- BREADCRUMBS -->
-                    <div class="breadcrumb-container">
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="index.html">
-                                    <i class="fa fa-home"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="knowledge-base.html">IT LOVE</a>
-                            </li>
-                        </ol>
-                    </div>
                     <div class="fb-heading">
                         <i class="fa fa-folder"></i> 审核方案
                         <span class="cat-count">(10)</span>
@@ -371,42 +344,6 @@
                 </div>
             </div>
             <!-- END ARTICLES OVERVIEW SECTION-->
-            <!-- SIDEBAR STUFF -->
-            <div class="col-md-4 padding-20">
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            最火的问题
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Add new user</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END SIDEBAR STUFF -->
         </div>
     </div>
     <!-- END MAIN SECTION -->
@@ -418,13 +355,6 @@
     <script src="js/main.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
-    <script>
-    function search() {
-        var content = "" + document.getElementById("searchcontent").value;
-        console.log(content);
-        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
-    }
-    </script>
 </body>
 
 </html>
