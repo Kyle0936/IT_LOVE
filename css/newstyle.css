@@ -1,0 +1,231 @@
+
+/* LINK */
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+/* end of LINK */
+
+/* NAVIGATION */
+/* Remove margins and padding from the list, and add a black background color */
+.topnav-outline{
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+ul.topnav {
+	width: 100%;
+	position: relative;
+	margin-top: 20px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #26303a;
+	text-align: center;
+}
+/* Float the list items side by side */
+ul.topnav li {
+	display: inline;
+}
+/* Style the links inside the list items */
+ul.topnav li a {
+	display: inline-block;
+	color: #ffffff;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	transition: 0.4s;
+	font-size: 17px;
+	border-bottom: 1px solid #323f4c;
+}
+/* Style the font awesome icons inside links */
+ul.topnav li i {
+	color: #ffffff;
+	margin: 0;
+}
+/* Change background color of links on hover */
+ul.topnav li a:hover {
+	background-color: #223953;
+}
+/* Hide the list item that contains the link that should open and close the topnav on small screens */
+ul.topnav li.icon {display: none;}
+/* When the screen is less than 680 pixels wide, hide all list items, except for the first one ("Home"). Show the list item that contains the link to open and close the topnav (li.icon) */
+@media screen and (max-width:680px) {
+  ul.topnav li:not(:first-child) {display: none;}
+  ul.topnav li.icon {
+    float: right;
+    display: inline-block;
+  }
+}
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens */
+@media screen and (max-width:680px) {
+  ul.topnav.responsive {position: relative;}
+  ul.topnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  ul.topnav.responsive li {
+    float: none;
+    display: inline;
+  }
+  ul.topnav.responsive li a {
+    display: block;
+    text-align: left;
+  }
+}
+/* end of NAVIGATION */
+
+/* HEADER OF THE PAGE: <h1 class="pageheader"> </h1> */
+.pageheader{
+	text-align: left;
+	margin-left: 20px;
+	margin-bottom: 5px;
+}
+/* end of HEADER OF THE PAGE */
+
+/* Article */
+.article{
+	border:1px solid;
+	border-radius:10px;
+}
+
+/* ARTICLE-CONTENT: class="article-content" */
+.article-content {
+	padding: 15px 35px 10px 15px;
+}
+/* end of ARTICLE-CONTENT */
+
+/* ARTICLE-INFO which includes those tags above: class="article-info" */
+.article-info {
+	padding: 5px 10px 5px 5px;
+	border-top: 1px solid #f0eeee;
+	border-bottom: 1px solid #f0eeee;
+	border-radius: 10px;
+	background-color: #f9f8f8;
+}
+.article-info a {
+	margin-left: 5px;
+	color: #676767;
+	text-decoration: none;
+}
+/* end of ARTICLE-INFO */
+/* end of ARTICLE */
+
+/* Center */
+.text-center {
+	text-align: center;
+}
+/* end of CENTER */
+
+/* LOGIN-BOX contains 系统消息 注册 登陆: class="login-box"; */
+.login-box {
+	display: inline-block;
+	float: right;
+	padding: 7px 15px 7px 15px;
+	font-size: 13px;
+}
+.login-box:hover {
+	background-color: #eaeaea;
+}
+.login-box a{
+	color: #323232;
+	text-decoration: none;
+}
+.login-box a:hover {
+	color: #2558ca;
+	text-decoration: none;
+}
+/* end of LOGIN-BOX */
+
+/* PARAGRAPH: <p class="block-with-text"> */
+.block-with-text {
+  overflow: hidden;
+  position: relative;
+  text-indent: 40px;
+  line-height: 1.2em;
+  max-height: 3.6em;
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  margin-top: -7px;
+  margin-bottom: -7px;
+}
+.block-with-text:before {
+  content: '...';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.block-with-text:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: white;
+}
+/* end of PARAGRAPH */
+
+/* TAGS including number of comments, author, time: class="tag" */
+.tag{
+	display: inline-block;
+	margin-left: 10px;
+}
+/* end of TAG */
+
+/* BUTTON: class="btn" */
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  min-width: 120px;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.btn:hover,
+.btn:focus,
+.btn.focus {
+  color: #333;
+  text-decoration: none;
+}
+.btn:active,
+.btn.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+/* end of BUTTON */
+
+
