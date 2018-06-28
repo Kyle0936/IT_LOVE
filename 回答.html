@@ -26,7 +26,8 @@
     <script>
     var db = firebase.firestore();
     var ref = db.collection("Questions");
-    ref.get().then(function(querySnapshot) {
+    var publicRef = ref.where("Public", "==", true);
+    publicRef.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             console.log("test" + doc.id);
             // doc.data() is never undefined for query doc snapshots
@@ -37,64 +38,68 @@
             var author = dic["Author"];
             var desc = dic["Description"];
             var link = dic["LinkToImage"];
-            var public = dic["Public"];
             var time = dic["Time"];
+            var number = dic["NumberOfAnswers"];
 
             //add html
             var ahref = document.createElement("a");
             ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            ahref.style.color = "black";
             var father = document.createElement("div");
-            father.setAttribute('class', 'panel panel-default');
-            var authorChild = document.createElement("p");
-            authorChild.innerHTML = author;
-            var descChild = document.createElement("div");
+            father.setAttribute('class', 'article');
+            // var authorChild = document.createElement("p");
+            // authorChild.innerHTML = author;
+            // authorChild.setAttribute('class', 'article');
+            var contentChild = document.createElement("div");
+            contentChild.setAttribute('class', 'article-content');
+            var descChild = document.createElement("p");
             descChild.innerHTML = desc;
-            descChild.setAttribute('class', 'article-content');
-            var timeChild = document.createElement("div");
-            timeChild.innerHTML = time;
-            timeChild.setAttribute('class', 'art-date');
-            father.appendChild(authorChild);
-            father.appendChild(descChild);
-            father.appendChild(timeChild);
+            descChild.setAttribute('class', 'block-with-text');
+            contentChild.appendChild(descChild);
+            var infoChild = document.createElement("div");
+            infoChild.setAttribute('class', 'article-info');
+            // time
+            var timeTag = document.createElement("i");
+            timeTag.setAttribute('class', 'fa fa-calendar-o');
+            var timeTime = document.createElement("div");
+            timeTime.setAttribute('class', 'tag');
+            timeTime.innerHTML = time;
+            // answers
+            var answersTag = document.createElement("i");
+            answersTag.setAttribute('class', 'fa fa-comments-o');
+            answersTag.style.margin = "0 0 0 10px";
+            var answersAns = document.createElement("div");
+            answersAns.setAttribute('class', 'tag');
+            answersAns.innerHTML = number + " Answers";
+            // add answers and time
+            infoChild.appendChild(timeTag);
+            infoChild.appendChild(timeTime);
+            infoChild.appendChild(answersTag);
+            infoChild.appendChild(answersAns);
+
+            father.appendChild(contentChild);
+            father.appendChild(infoChild);
             ahref.appendChild(father);
 
             var grandfather = document.getElementById("allQ");
             grandfather.appendChild(ahref);
 
 
-            // <div class="panel panel-default">
-            //                         <div class="article-heading-abb">
-            //                             <a href="单个回答.html">
-            //                                 <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
-            //                         </div>
-            //                         <div class="article-info">
-            //                             <div class="art-date">
-            //                                 <a href="#">
-            //                                     <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-            //                             </div>
-            //                             <div class="art-category">
-            //                                 <a href="#">
-            //                                     <i class="fa fa-folder"></i> Account Settings </a>
-            //                             </div>
-            //                             <div class="art-comments">
-            //                                 <a href="#">
-            //                                     <i class="fa fa-comments-o"></i> 4 Comments </a>
-            //                             </div>
-            //                         </div>
-            //                         <div class="article-content">
-            //                             <p class="block-with-text">
-            //                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula
-            //                                 non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes,
-            //                                 nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis
-            //                                 molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum,
-            //                                 sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget
-            //                                 hendrerit efficitur.
-            //                             </p>
-            //                         </div>
-            //                         <div class="article-read-more">
-            //                             <a href="单个回答.html" class="btn btn-default btn-wide">Read more...</a>
-            //                         </div>
-            //                     </div>
+            // <div class="article">
+            //     <div class="article-content">
+            //         <p class="block-with-text">
+            //             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
+            //         </p>
+            //     </div>
+            //     <div class="article-info">
+            //         <div class="tag">
+            //             <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
+            //         </div>
+            //         <div class="tag">
+            //             <i class="fa fa-comments-o"></i> 4 Comments </a>
+            //         </div>
+            //     </div>
+            // </div>
 
             //add answers
             // var answers = dic["Answers"].get().then(function(querySnapshot1){
@@ -156,16 +161,20 @@
     <!-- MAIN SECTION -->
     <!-- ARTICLE OVERVIEW SECTION -->
     <h1 class=pageheader>所有问题</h1>
+
+<!-- UNDECIDED    
     <div class="sort">
         <button id=# class="btn"> 升序</a>
             <button id=# class="btn"> 降序</a>
-    </div>
+    </div> -->
+
+
     <!-- ARTICLES -->
     <div class="questions">
         <div id="allQ">
             <!-- Used to generate questions from database -->
             <hr class="style-three">
-            <div class="article">
+            <!-- <div class="article">
                 <div class="article-content">
                     <p class="block-with-text">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
@@ -179,7 +188,7 @@
                         <i class="fa fa-comments-o"></i> 4 Comments </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- END ARTICLES OVERVIEW SECTION-->
         <!-- SIDEBAR STUFF -->

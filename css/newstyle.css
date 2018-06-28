@@ -89,8 +89,11 @@ ul.topnav li.icon {display: none;}
 
 /* Article */
 .article{
-	border:1px solid;
+	border:1px solid #CDCDCD;
 	border-radius:10px;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	margin-left: 25px;
 }
 
 /* ARTICLE-CONTENT: class="article-content" */
@@ -102,8 +105,8 @@ ul.topnav li.icon {display: none;}
 /* ARTICLE-INFO which includes those tags above: class="article-info" */
 .article-info {
 	padding: 5px 10px 5px 5px;
-	border-top: 1px solid #f0eeee;
-	border-bottom: 1px solid #f0eeee;
+/* 	border-top: 1px solid #f0eeee;
+	border-bottom: 1px solid #f0eeee; */
 	border-radius: 10px;
 	background-color: #f9f8f8;
 }
@@ -174,7 +177,7 @@ ul.topnav li.icon {display: none;}
 /* TAGS including number of comments, author, time: class="tag" */
 .tag{
 	display: inline-block;
-	margin-left: 10px;
+	margin-left: 5px;
 }
 /* end of TAG */
 

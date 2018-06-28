@@ -58,37 +58,88 @@
         });
     });
 
-    var newRef = ref.where("index", ">", 0).orderBy("index");
+    var newRef = ref.where("index", ">", 0).where("Public", "==", true).orderBy("index");
     newRef.get().then(function(querySnapshot3) {
         querySnapshot3.forEach(function(doc) {
-            var dic = doc.data();
+            // var dic = doc.data();
+            // //console.log(author["Author"]);
+            // var author = dic["Author"];
+            // var desc = dic["Description"];
+            // var link = dic["LinkToImage"];
+            // var public = dic["Public"];
+            // var time = dic["Time"];
+
+
+            // var ahref = document.createElement("a");
+            // ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            // var father = document.createElement("div");
+            // father.setAttribute('class', 'panel panel-default');
+            // var authorChild = document.createElement("p");
+            // authorChild.innerHTML = author;
+            // var descChild = document.createElement("div");
+            // descChild.innerHTML = desc;
+            // descChild.setAttribute('class', 'article-content');
+            // var timeChild = document.createElement("div");
+            // timeChild.innerHTML = time;
+            // timeChild.setAttribute('class', 'art-date');
+            // father.appendChild(authorChild);
+            // father.appendChild(descChild);
+            // father.appendChild(timeChild);
+            // ahref.appendChild(father);
+
+            // var grandfather = document.getElementById("allQ");
+            // grandfather.appendChild(ahref);
+             var dic = doc.data();
             //console.log(author["Author"]);
             var author = dic["Author"];
             var desc = dic["Description"];
             var link = dic["LinkToImage"];
-            var public = dic["Public"];
             var time = dic["Time"];
+            var number = dic["NumberOfAnswers"];
 
-
+            //add html
             var ahref = document.createElement("a");
             ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            ahref.style.color = "black";
             var father = document.createElement("div");
-            father.setAttribute('class', 'panel panel-default');
-            var authorChild = document.createElement("p");
-            authorChild.innerHTML = author;
-            var descChild = document.createElement("div");
+            father.setAttribute('class', 'article');
+            // var authorChild = document.createElement("p");
+            // authorChild.innerHTML = author;
+            // authorChild.setAttribute('class', 'article');
+            var contentChild = document.createElement("div");
+            contentChild.setAttribute('class', 'article-content');
+            var descChild = document.createElement("p");
             descChild.innerHTML = desc;
-            descChild.setAttribute('class', 'article-content');
-            var timeChild = document.createElement("div");
-            timeChild.innerHTML = time;
-            timeChild.setAttribute('class', 'art-date');
-            father.appendChild(authorChild);
-            father.appendChild(descChild);
-            father.appendChild(timeChild);
+            descChild.setAttribute('class', 'block-with-text');
+            contentChild.appendChild(descChild);
+            var infoChild = document.createElement("div");
+            infoChild.setAttribute('class', 'article-info');
+            // time
+            var timeTag = document.createElement("i");
+            timeTag.setAttribute('class', 'fa fa-calendar-o');
+            var timeTime = document.createElement("div");
+            timeTime.setAttribute('class', 'tag');
+            timeTime.innerHTML = time;
+            // answers
+            var answersTag = document.createElement("i");
+            answersTag.setAttribute('class', 'fa fa-comments-o');
+            answersTag.style.margin = "0 0 0 10px";
+            var answersAns = document.createElement("div");
+            answersAns.setAttribute('class', 'tag');
+            answersAns.innerHTML = number + " Answers";
+            // add answers and time
+            infoChild.appendChild(timeTag);
+            infoChild.appendChild(timeTime);
+            infoChild.appendChild(answersTag);
+            infoChild.appendChild(answersAns);
+
+            father.appendChild(contentChild);
+            father.appendChild(infoChild);
             ahref.appendChild(father);
 
             var grandfather = document.getElementById("allQ");
             grandfather.appendChild(ahref);
+
         });
     });
 
@@ -146,209 +197,128 @@
 </head>
 
 <body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="login-box border-right-1">
-                        <a href="个人信息.html">
+    <div class="toppest">
+        <div class="login-box">
+            <a href="个人信息.html">
                             <i class="fa fa-key"></i> 登陆</a>
-                    </div>
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="email-password.html">
+        </div>
+        <div class="login-box">
+            <a href="email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
-                    </div>
-                    <div class="login-box border-right-1">
-                        <a href="系统消息.html">
+        </div>
+        <div class="login-box">
+            <a href="系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="index.html">
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="index.html">
                             <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="提问.html">
+            </li>
+            <li>
+                <a href="提问.html">
                             <i class="fa fa-book"></i> 提问</a>
+            </li>
+            <li>
+                <a href="回答.html">
+                            <i class="fa fa-file-text-o"></i> 回答</a>
+            </li>
+            <li class="icon">
+                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END TOP NAVIGATION -->
+    <!-- SEARCH FIELD AREA -->
+    <div class="searchfield">
+        <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
+        <button class="btn buttonsearch" onclick="search()">搜索</button>
+    </div>
+    <!-- END SEARCH FIELD AREA -->
+    <!-- MAIN SECTION -->
+    <!-- ARTICLE OVERVIEW SECTION -->
+    <h1 class=pageheader>所有问题</h1>
+
+<!-- UNDECIDED    
+    <div class="sort">
+        <button id=# class="btn"> 升序</a>
+            <button id=# class="btn"> 降序</a>
+    </div> -->
+
+
+    <!-- ARTICLES -->
+    <div class="questions">
+        <div id="allQ">
+            <!-- Used to generate questions from database -->
+            <hr class="style-three">
+            <!-- <div class="article">
+                <div class="article-content">
+                    <p class="block-with-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
+                    </p>
+                </div>
+                <div class="article-info">
+                    <div class="tag">
+                        <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
+                    </div>
+                    <div class="tag">
+                        <i class="fa fa-comments-o"></i> 4 Comments </a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- END ARTICLES OVERVIEW SECTION-->
+        <!-- SIDEBAR STUFF -->
+        <div class="sidenav">
+            <div class="fb-heading-small">
+                最火的问题
+            </div>
+            <hr class="style-three">
+            <div class="fat-content-small padding-left-10">
+                <ul>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
                     </li>
                     <li>
-                        <a href="回答.html">
-                            <i class="fa fa-file-text-o"></i> 回答</a>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
                     </li>
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Add new user</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
-    <!-- END TOP NAVIGATION -->
-    <!-- SEARCH FIELD AREA -->
-    <div class="searchfield bg-hed-six">
-        <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-            <div class="row text-center margin-bottom-20">
-                <h1 class="white"> IT LOVE</h1>
-            </div>
-            <br>
-            <div class="row search-row">
-                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
-                <button onclick="search()">搜索</button>
-            </div>
-        </div>
-    </div>
-    <!-- END SEARCH FIELD AREA -->
-    <!-- MAIN SECTION -->
-    <div class="container featured-area-default padding-30">
-        <div class="row">
-            <!-- ARTICLE OVERVIEW SECTION -->
-            <div class="col-md-8 padding-20">
-                <div class="row">
-                    <!-- BREADCRUMBS -->
-                    <div class="breadcrumb-container">
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="index.html">
-                                    <i class="fa fa-home"></i>
-                                </a>
-                            </li>
-                            <li class="active"> 所有问题</li>
-                        </ol>
-                        <div class="sort">
-                            <a href=# class="btn btn-default btn-wide"> 升序</a>
-                            <a href=# class="btn btn-default btn-wide"> 降序</a>
-                        </div>
-                    </div>
-                    <!-- END BREADCRUMBS -->
-                    <!-- ARTICLES -->
-                    <div id="allQ">
-                        <div class="fb-heading">
-                            所有问题
-                        </div>
-                        <hr class="style-three">
-                        <div class="panel panel-default">
-                            <div class="article-heading-abb">
-                                <a href="单个回答.html">
-                                <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
-                            </div>
-                            <div class="article-info">
-                                <div class="art-date">
-                                    <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                                </div>
-                                <div class="art-category">
-                                    <a href="#">
-                                    <i class="fa fa-folder"></i> Account Settings </a>
-                                </div>
-                                <div class="art-comments">
-                                    <a href="#">
-                                    <i class="fa fa-comments-o"></i> 4 Comments </a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <p class="block-with-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
-                                </p>
-                            </div>
-                            <div class="article-read-more">
-                                <a href="单个回答.html" class="btn btn-default btn-wide">Read more...</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- PAGINATION -->
-                    <nav class="text-center">
-                        <ul class="pagination">
-                            <li class="disabled">
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">
-                                        <i class="fa fa-arrow-circle-left"></i> 上一页</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="#">1
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="enabled">
-                                <a href="#">2
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="enabled">
-                                <a href="#">3
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="enabled">
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">下一页
-                                        <i class="fa fa-arrow-circle-right"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- END PAGINATION -->
-                </div>
-            </div>
-            <!-- END ARTICLES OVERVIEW SECTION-->
-            <!-- SIDEBAR STUFF -->
-            <div class="col-md-4 padding-20">
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            最火的问题
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Add new user</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END SIDEBAR STUFF -->
-        </div>
+        <!-- END SIDEBAR STUFF -->
     </div>
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
-    <script src="../js/jquery-2.2.4.min.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
     <script>
     function search() {
         var content = "" + document.getElementById("searchcontent").value;
         console.log(content);
-        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
+        if (content != "") {
+            window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
+        } else {
+            window.open('https://it-love1.firebaseapp.com/回答.html', "_self");
+        }
     }
     </script>
 </body>
