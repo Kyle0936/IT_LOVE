@@ -231,4 +231,18 @@ ul.topnav li.icon {display: none;}
 }
 /* end of BUTTON */
 
+/* FOOTER */
+footer{
+  position: absolute;
+  top: 100%;
+  background-color: #f3f3f3;
+}
+/* end of FOOTER */
+
+/* h4 */
+h4{
+  margin-bottom:  -5px;
+}
+/* end of h4 */
+
 
