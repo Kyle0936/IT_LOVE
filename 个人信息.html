@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT LOVE</title>
+    <title>IT LOVE 个人信息</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/newstyle.css" rel="stylesheet">
+    <link href="css/personal-info.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase-firestore.js"></script>
     <script>
     var config = {
         apiKey: "AIzaSyBZUz6V1Mkmwxpe781P8X6ZC7fPTUyiBIg",
@@ -26,95 +26,77 @@
 </head>
 
 <body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="login-box border-right-1">
-                        <a href="个人信息.html">
+    <div class="toppest">
+        <div class="login-box">
+            <a href="个人信息.html">
                             <i class="fa fa-key"></i> 登陆</a>
-                    </div>
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="email-password.html">
+        </div>
+        <div class="login-box">
+            <a href="email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
-                    </div>
-                    <div class="login-box border-right-1">
-                        <a href="系统消息.html">
+        </div>
+        <div class="login-box">
+            <a href="系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="index.html">
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="index.html">
                             <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="提问.html">
+            </li>
+            <li>
+                <a href="提问.html">
                             <i class="fa fa-book"></i> 提问</a>
-                    </li>
-                    <li>
-                        <a href="回答.html">
+            </li>
+            <li>
+                <a href="回答.html">
                             <i class="fa fa-file-text-o"></i> 回答</a>
-                    </li>
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+            </li>
+            <li class="icon">
+                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
     </div>
     <!-- END TOP NAVIGATION -->
     <!-- MAIN SECTION -->
     <!-- ARTICLE CATEGORIES SECTION -->
-    <div>
-        个人信息
-    </div>
+    <h1 class="pageheader">个人信息</h1>
     <hr>
-    <div>
-        <h4>
-                                                    
-         用户名
-                                                    
-        </h4>
-    </div>
-    <div>
-        <div>
+    <div class="article">
+        <div class="gray">
+            <strong>用户名</strong>
+        </div>
+        <div class="article-content">
             你的名字:
-            <input id="inputName" />
-            <button onclick="storeName()"> try </button>
-        </div>
-    </div>
-    <div>
-        <h4>
-                                                    
-        简介
-                                                    
-        </h4>
-    </div>
-    <div>
-        <div>
-            死宅
-        </div>
-    </div>
-    <div>
-        <div>
-            <h4>
-                                                   
-            虚拟货币
-            </h4>
-        </div>
-        <div>
-            <div>
-                15 = 3 个提案被采纳 * 2 + 9 个提案被选择 * 1
+            <!-- Store as Name -->
+            <div id="nameDiv" style="display: inline-block;">
+                <input id="inputName" />
             </div>
+            <button disabled id="name-submit"> 保存 </button>
+        </div>
+    </div>
+    <div class="article">
+        <div class="gray">
+            简介
+            <!-- Store as Type -->
+        </div>
+        <div class="article-content">
+            你的属性：
+            <div id="typeDiv" style="display: inline-block;">
+                <input id="inputType" />
+            </div>
+            <button disabled id="type-submit"> 保存 </button>
+        </div>
+    </div>
+    <div class="article">
+        <div class="gray">
+            虚拟货币
+        </div>
+        <div class="article-content">
+            15 = 3 个提案被采纳 * 2 + 9 个提案被选择 * 1
         </div>
     </div>
     <!-- END MAIN SECTION -->
@@ -124,25 +106,128 @@
      * init firestone
      */
     // Initialize Cloud Firestore through Firebase
+    function initApp() {
+        // Listening for auth state changes.
+        // [START authstatelistener]
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                document.getElementById('name-submit').disabled = false;
+                document.getElementById('type-submit').disabled = false;
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email);
+                ref.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            if (dic["Name"] != null) {
+                                document.getElementById('nameDiv').innerHTML = dic["Name"];
+                                document.getElementById('name-submit').textContent = '编辑';
+                            }
+                            if (dic["Type"] != null) {
+                                document.getElementById('typeDiv').innerHTML = dic["Type"];
+                                document.getElementById('type-submit').textContent = '编辑';
+                            }
+                        }
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                }).catch(function(error) {
+                    console.log("Error getting document:", error);
+                });
+            } else {
+                document.getElementById('name-submit').disabled = true;
+                document.getElementById('type-submit').disabled = true;
+                // window.location.replace('https://it-love1.firebaseapp.com/email-password.html');
+            }
+            document.getElementById('name-submit').addEventListener('click', storeName, false);
+            document.getElementById('type-submit').addEventListener('click', storeType, false);
+        });
+    }
+
+    // storename function
     function storeName() {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 var email = "" + user.email;
                 var db = firebase.firestore();
                 var ref = db.collection("user");
-                ref.doc(email).set({ name: "" + document.getElementById("inputName").value, state: "CA", country: "USA" });
-                db.collection("user").get().then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
-                        // doc.data() is never undefined for query doc snapshots
-                        console.log(doc.id, " => ", doc.data());
-                    });
+                ref.doc(email).get().then(function(documentSnapshot) {
+                    if (typeof documentSnapshot.data == 'function' && documentSnapshot.data()["Name"] != null) {
+                        console.log("test");
+                        if (document.getElementById('name-submit').textContent == '编辑') {
+                            document.getElementById('nameDiv').innerHTML = "<input />";
+                            document.getElementById('nameDiv').children[0].setAttribute('id', 'inputName');
+                            document.getElementById('nameDiv').children[0].setAttribute('value', documentSnapshot.data()["Name"]);
+                            document.getElementById('name-submit').textContent = '保存';
+                        } else if (document.getElementById('name-submit').textContent == '保存') {
+                            var name = document.getElementById("inputName").value;
+                            return ref.doc(email).update({
+                                    Name: name
+                                })
+                                .then(function() {
+                                    console.log("Document successfully updated!");
+                                    document.getElementById('name-submit').disabled = true;
+                                    location.reload();
+                                })
+                                .catch(function(error) {
+                                    // The document probably doesn't exist.
+                                    console.error("Error updating document: ", error);
+                                });
+                        } else { console.log("Error: other text on the button."); }
+                    } else {
+                        ref.doc(email).set({ Name: "" + document.getElementById("inputName").value }, { merge: true }).then(function(){location.reload();});
+                        
+                    }
                 });
-                // User is signed in.
-            } else {
-                // No user is signed in.
-            }
+            } else {}
         });
     }
+
+    // storetype function
+    function storeType() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user");
+                ref.doc(email).get().then(function(documentSnapshot) {
+                    if (typeof documentSnapshot.data == 'function' && documentSnapshot.data()["Type"] != null) {
+                        console.log("test");
+                        if (document.getElementById('type-submit').textContent == '编辑') {
+                            document.getElementById('typeDiv').innerHTML = "<input />";
+                            document.getElementById('typeDiv').children[0].setAttribute('id', 'inputType');
+                            document.getElementById('typeDiv').children[0].setAttribute('value', documentSnapshot.data()["Type"]);
+                            document.getElementById('type-submit').textContent = '保存';
+                        } else if (document.getElementById('type-submit').textContent == '保存') {
+                            var type = document.getElementById("inputType").value;
+                            return ref.doc(email).update({
+                                    Type: type
+                                })
+                                .then(function() {
+                                    console.log("Document successfully updated!");
+                                    document.getElementById('type-submit').disabled = true;
+                                    location.reload();
+                                })
+                                .catch(function(error) {
+                                    // The document probably doesn't exist.
+                                    console.error("Error updating document: ", error);
+                                });
+                        } else { console.log("Error: other text on the button."); }
+                    } else {
+                        ref.doc(email).set({ Type: "" + document.getElementById("inputType").value }, { merge: true });
+                        location.reload();
+                    }
+                });
+            } else {}
+        });
+    }
+
+
+    window.onload = function() {
+        initApp();
+    };
     </script>
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/main.js"></script>
