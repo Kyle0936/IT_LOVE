@@ -245,4 +245,14 @@ h4{
 }
 /* end of h4 */
 
+/* HEADING: class="heading" */
+.heading {
+  font-size: 25px;
+  padding: 15px 15px 10px 20px;
+  text-overflow: ellipsis;
+  color: #303030;
+  font-weight: bold;
+}
+/* end of HEADING */
+
 

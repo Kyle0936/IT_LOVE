@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT LOVE</title>
+    <title>IT LOVE 历史问题</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!--     <link href="../css/style.css" rel="stylesheet"> -->
+    <link href="css/newstyle.css" rel="stylesheet">
+    <link href="css/history-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script>
     var config = {
@@ -25,79 +27,50 @@
 </head>
 
 <body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <<div class="login-box border-right-1">
-                        <a href="个人信息.html">
+    <div class="toppest">
+        <div class="login-box">
+            <a href="个人信息.html">
                             <i class="fa fa-key"></i> 登陆</a>
-                </div>
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="email-password.html">
-                                <i class="fa fa-pencil"></i> 注册</a>
-                </div>
-                <div class="login-box border-right-1">
-                    <a href="系统消息.html">
-                                    <i class="fa fa-bell"></i> 系统消息</a>
-                </div>
-            </div>
         </div>
-    </div>
+        <div class="login-box">
+            <a href="email-password.html">
+                            <i class="fa fa-pencil"></i> 注册</a>
+        </div>
+        <div class="login-box">
+            <a href="系统消息.html">
+                            <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
     </div>
     <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="index.html">
-                                        <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="提问.html">
-                                            <i class="fa fa-book"></i> 提问</a>
-                    </li>
-                    <li>
-                        <a href="回答.html">
-                                                <i class="fa fa-file-text-o"></i> 回答</a>
-                    </li>
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="index.html">
+                            <i class="fa fa-home"></i> 首页</a>
+            </li>
+            <li>
+                <a href="提问.html">
+                            <i class="fa fa-book"></i> 提问</a>
+            </li>
+            <li>
+                <a href="回答.html">
+                            <i class="fa fa-file-text-o"></i> 回答</a>
+            </li>
+            <li class="icon">
+                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
     </div>
     <!-- END TOP NAVIGATION -->
-    <!-- SEARCH FIELD AREA -->
-    <div class="searchfield bg-hed-six">
-        <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-            <div class="row text-center margin-bottom-20">
-                <h1 class="white"> IT LOVE</h1>
-            </div>
-            <br>
-            <div class="row search-row">
-                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
-                <button onclick="search()">搜索</button>
-            </div>
-        </div>
-    </div>
-    <!-- END SEARCH FIELD AREA -->
     <!-- MAIN SECTION -->
-    <div class="container featured-area-default padding-30">
+    <div class="question">
         <div class="row">
             <div class="col-md-8 padding-20">
                 <div class="row">
                     <!-- ARTICLE  -->
-                    <div id="displayQues"> HI</div>
+                    <div id="displayQues"></div>
                     <div id="solutions"></div>
                     <div class="panel panel-default">
-                        <div class="article-heading margin-bottom-5">
-                            <a href="#">
-                                                        <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
-                        </div>
                         <div class="article-info">
                             <div class="art-date">
                                 <a href="#">
@@ -118,17 +91,6 @@
                             </p>
                         </div>
                         <div class="article-content">
-                        </div>
-                        <hr class="style-three">
-                        <div class="article-feedback">
-                            <h2>
-                                                                        <small>Was This Article Helpful?</small>
-                                                                    </h2>
-                            <button type="button" class="btn btn-success btn-o btn-wide">
-                                <i class="fa fa-thumbs-o-up"></i> Yes</button>
-                            <button type="button" class="btn btn-danger btn-o btn-wide">No
-                                <i class="fa fa-thumbs-o-down"></i>
-                            </button>
                         </div>
                     </div>
                     <!-- END ARTICLE -->
@@ -179,10 +141,9 @@
                     </div>
                     <!-- END COMMENTS -->
                 </div>
-                <div id="myChart"></div>
-                <!-- <div id="piechart" class="text-center"></div> -->
-                <div class="panel-transparent">
-                    <div class="article-heading">
+                <div class="sidenav">
+                    <div id="myChart"></div>
+                    <div class="heading">
                         <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
                     </div>
                     <form method="post" class="comment-form">
@@ -201,12 +162,12 @@
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="form-check col-md-8 padding-20 add-button">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        从公共社区隐藏
-                    </label>
+                    <div class="form-check col-md-8 padding-20 add-button">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            从公共社区隐藏
+                        </label>
+                    </div>
                 </div>
             </div>
             <!--                 <script type="text/javascript">
@@ -243,42 +204,6 @@
                 });
             </script> -->
         </div>
-        <!-- SIDEBAR STUFF -->
-        <div class="col-md-4 padding-20">
-            <div class="row margin-top-20">
-                <div class="col-md-12">
-                    <div class="fb-heading-small">
-                        最火的问题
-                    </div>
-                    <hr class="style-three">
-                    <div class="fat-content-small padding-left-10">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Add new user</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END SIDEBAR STUFF -->
     </div>
     </div>
     <!-- END MAIN SECTION -->
