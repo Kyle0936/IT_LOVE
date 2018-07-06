@@ -1,0 +1,17 @@
+/* USED ONLY IN single-question */
+.sidenav {
+    width: 28%;
+    position: fixed;
+    z-index: 1;
+    top: 40%;
+    left: 70%;
+    right: 5%;
+    overflow-x: hidden;
+    padding: 8px 0;
+}
+
+.question{
+    position: relative;
+    width: 66%;
+    left: 1%;
+}

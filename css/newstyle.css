@@ -247,12 +247,68 @@ h4{
 
 /* HEADING: class="heading" */
 .heading {
-  font-size: 25px;
-  padding: 15px 15px 10px 20px;
+  font-size: 20px;
+  padding: 5px 5px 5px 5px;
   text-overflow: ellipsis;
   color: #303030;
   font-weight: bold;
 }
 /* end of HEADING */
 
+/* COMMENTS */
+/* COMMENTS-USER: class="comments-user" */
+.comments-user {
+  display: block;
+}
+.comments-user img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: inline-block;
+  float: left;
+  border: 1px solid #f3f3f3;
+  padding: 5px;
+}
+/* end of COMMENTS-USER */
 
+/* USER-NAME: class="user-name" */
+.user-name {
+  display: inline-block;
+  font-size: 16px;
+  padding-left: 20px;
+  margin-top: 13px;
+  color: #2c2d2d;
+  font-weight: bold;
+}
+/* end of USER-NAME */
+
+.comment-post-date {
+  display: block;
+  font-size: 14px;
+  padding-left: 90px;
+  margin-top: 2px;
+  color: #626262
+}
+.comments-content {
+  display: block;
+  margin-top: 10px;
+  padding: 0px 5px 10px 90px;
+}
+
+.article-comment-top {
+  padding: 10px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.article-comment-second {
+  padding: 10px 10px 10px 90px;
+}
+/* end of COMMENTS
+
+/* HR LINE: <hr class="style-three"> */
+hr.style-three {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+/* end of HR LIEN */
