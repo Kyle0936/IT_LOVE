@@ -3,3 +3,17 @@
     width: 66%;
     left: 1%;
 }
+
+/* drop zone */
+.drop{
+  margin-top:  50px;
+  margin-bottom: 50px;
+  margin-left: 30%;
+  width: 40%;
+  height: 20%;
+  border: 4px dashed #000;
+}
+
+
+
+/* end of Drop Zone */
