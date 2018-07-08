@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>系统消息</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+   <!--  <link href="css/bootstrap.css" rel="stylesheet"> -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/newstyle.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -142,7 +142,7 @@
             });
 
         } else {
-            // No user is signed in.
+            window.open('登录.html', "_self");
         }
         // add all answered
         var ref1 = db.collection("user").doc(email).collection("Answers");
@@ -200,6 +200,44 @@
 
     });
     </script>
+    <script>
+    /**
+     * init firestone
+     */
+    // Initialize Cloud Firestore through Firebase
+    function initApp() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                document.getElementById('signintop').textContent = '';
+                var tag = document.createElement("i");
+                tag.setAttribute('class', 'fa fa-key');
+                document.getElementById('signintop').appendChild(tag);
+                var text = document.createElement("div");
+                text.setAttribute('style', 'display: inline;');
+                text.textContent = '注销';
+                document.getElementById('signintop').appendChild(text);
+            } else {
+                window.open('登录.html', "_self");
+            }
+        });
+        document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+    }
+
+    function toggleSignIn() {
+        if (firebase.auth().currentUser) {
+            // [START signout]
+            firebase.auth().signOut();
+            window.open('登录.html', "_self");
+            // [END signout]
+        } else {
+            window.open('登录.html', "_self");
+        }
+    }
+
+    window.onload = function() {
+        initApp();
+    };
+    </script>
     <!--                         <div class="panel panel-default">
                         <div class="article-heading-abb">
                             <a href="single-article.html">
@@ -231,50 +269,39 @@
 </head>
 
 <body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="login-box border-right-1">
-                        <a href="个人信息.html">
-                            <i class="fa fa-key"></i> 登录</a>
-                    </div>
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="email-password.html">
+    <div class="toppest">
+        <div class="login-box">
+            <div id="signintop">
+                <i class="fa fa-key"></i> 登陆</div>
+        </div>
+        <div class="login-box">
+            <a href="email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
-                    </div>
-                    <div class="login-box border-right-1">
-                        <a href="系统消息.html">
+        </div>
+        <div class="login-box">
+            <a href="系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="index.html">
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="index.html">
                             <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="提问.html">
+            </li>
+            <li>
+                <a href="提问.html">
                             <i class="fa fa-book"></i> 提问</a>
-                    </li>
-                    <li>
-                        <a href="回答.html">
+            </li>
+            <li>
+                <a href="回答.html">
                             <i class="fa fa-file-text-o"></i> 回答</a>
-                    </li>
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+            </li>
+            <li class="icon">
+                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
     </div>
     <!-- END TOP NAVIGATION -->
     <!-- MAIN SECTION -->
@@ -308,7 +335,6 @@
                     <div id="answers"></div>
                     <!-- END ARTICLES -->
                     <!-- PAGINATION -->
-                    
                     <!-- END PAGINATION -->
                 </div>
             </div>

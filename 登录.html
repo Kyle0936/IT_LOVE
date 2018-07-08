@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>登录</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/newstyle.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+    <script>
+    var config = {
+        apiKey: "AIzaSyBZUz6V1Mkmwxpe781P8X6ZC7fPTUyiBIg",
+        authDomain: "it-love1.firebaseapp.com",
+        databaseURL: "https://it-love1.firebaseio.com",
+        projectId: "it-love1",
+        storageBucket: "it-love1.appspot.com",
+        messagingSenderId: "782043275132"
+    };
+    firebase.initializeApp(config);
+    </script>
+    <script type="text/javascript">
+    function toggleSignIn() {
+      if (firebase.auth().currentUser) {
+        // [START signout]
+        firebase.auth().signOut();
+        // [END signout]
+      } else {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        if (email.length < 4) {
+          alert('Please enter an email address.');
+          return;
+        }
+        if (password.length < 4) {
+          alert('Please enter a password.');
+          return;
+        }
+        // Sign in with email and pass.
+        // [START authwithemail]
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+          document.getElementById('quickstart-sign-in').disabled = false;
+          // [END_EXCLUDE]
+        });
+        // [END authwithemail]
+      }
+      document.getElementById('quickstart-sign-in').disabled = true;
+    }
+
+    // function signout() {
+    //     if (firebase.auth().currentUser) {
+    //         // [START signout]
+    //         firebase.auth().signOut();
+    //         // [END signout]
+    //     }
+    // }
+
+    function initApp() {
+        // Listening for auth state changes.
+        // [START authstatelistener]
+        firebase.auth().onAuthStateChanged(function(user) {
+            // [START_EXCLUDE silent]
+            // document.getElementById('quickstart-verify-email').disabled = true;
+            // [END_EXCLUDE]
+            if (user) {
+                window.open('个人信息.html', "_self");
+                // User is signed in.
+                // var displayName = user.displayName;
+                // var email = user.email;
+                // var emailVerified = user.emailVerified;
+                // var photoURL = user.photoURL;
+                // var isAnonymous = user.isAnonymous;
+                // var uid = user.uid;
+                // var providerData = user.providerData;
+                // // [START_EXCLUDE]
+                // document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+                // document.getElementById('signintop').textContent = '';
+                // var tag = document.createElement("i");
+                // tag.setAttribute('class', 'fa fa-key');
+                // document.getElementById('signintop').appendChild(tag);
+                // var text = document.createElement("div");
+                // text.setAttribute('style', 'display: inline;');
+                // text.textContent = '注销';
+                // document.getElementById('signintop').appendChild(text);
+
+                // document.getElementById('signintop').onclick = signout();
+
+                //document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+                // if (!emailVerified) {
+                //     document.getElementById('quickstart-verify-email').disabled = false;
+                // }
+                // [END_EXCLUDE]
+            } else {
+                // User is signed out.
+                // [START_EXCLUDE]
+                document.getElementById('quickstart-sign-in-status').textContent = '注销';
+                document.getElementById('quickstart-sign-in').textContent = '登录';
+                //document.getElementById('quickstart-account-details').textContent = 'null';
+                // [END_EXCLUDE]
+            }
+            // [START_EXCLUDE silent]
+            document.getElementById('quickstart-sign-in').disabled = false;
+            // [END_EXCLUDE]
+        });
+        // [END authstatelistener]
+
+        document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+        // document.getElementById('quickstart-sign-up').addEventListener('click', handleSignUp, false);
+        // document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
+        // document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
+        // document.getElementById('quickstart-email-update').addEventListener('click', updateEmail, false);
+        // document.getElementById('quickstart-anonymously').addEventListener('click', handleAnon, false);
+    }
+
+    window.onload = function() {
+        initApp();
+    };
+    </script>
+</head>
+
+<body>
+    <div class="toppest">
+        <div class="login-box">
+            <a id="signintop" href="登录.html">
+                            <i class="fa fa-key"></i> 登录</a>
+        </div>
+        <div class="login-box">
+            <a href="email-password.html">
+                            <i class="fa fa-pencil"></i> 注册</a>
+        </div>
+        <div class="login-box">
+            <a href="系统消息.html">
+                            <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
+    </div>
+    <!-- TOP NAVIGATION -->
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="index.html">
+                            <i class="fa fa-home"></i> 首页</a>
+            </li>
+            <li>
+                <a href="提问.html">
+                            <i class="fa fa-book"></i> 提问</a>
+            </li>
+            <li>
+                <a href="回答.html">
+                            <i class="fa fa-file-text-o"></i> 回答</a>
+            </li>
+            <li class="icon">
+                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END TOP NAVIGATION -->
+    <!-- SEARCH FIELD AREA -->
+<!--     <div class="searchfield">
+        <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
+        <button class="btn buttonsearch" onclick="search()">搜索</button>
+    </div> -->
+    <!-- END SEARCH FIELD AREA -->
+    <!-- MAIN SECTION -->
+    <!-- ARTICLE OVERVIEW SECTION -->
+    <div class="login text-center">
+        <h1>登录</h1>
+        <div class="loginfield">
+            <input type="text" id="email" name="email" class="email" placeholder="邮箱" />
+            <br/>
+            <input type="password" id="password" name="password" placeholder="密码" />
+            <br/>
+            <br/>
+            <button disabled id="quickstart-sign-in" name="signin" class="button1">登录</button>
+            <br/>
+            <div class="text-center">
+                没有账号？ <a href="email-password.html"> 注册 </a>
+            </div>
+        </div>
+    </div>
+    <div class="quickstart-user-details-container">
+        Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+        <div>Firebase auth <code>currentUser</code> object value:</div>
+        <pre><code id="quickstart-account-details">null</code></pre>
+    </div>
+</body>
+
+</html>

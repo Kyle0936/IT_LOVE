@@ -9,7 +9,7 @@
     <!-- LOADING STYLESHEETS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/newstyle.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -194,13 +194,49 @@
     //     });
     // });
     </script>
+    <script>
+    /**
+     * init firestone
+     */
+    // Initialize Cloud Firestore through Firebase
+    function initApp() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                document.getElementById('signintop').textContent = '';
+                var tag = document.createElement("i");
+                tag.setAttribute('class', 'fa fa-key');
+                document.getElementById('signintop').appendChild(tag);
+                var text = document.createElement("div");
+                text.setAttribute('style', 'display: inline;');
+                text.textContent = '注销';
+                document.getElementById('signintop').appendChild(text);
+            } else {
+            }
+        });
+        document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+    }
+
+    function toggleSignIn() {
+        if (firebase.auth().currentUser) {
+            // [START signout]
+            firebase.auth().signOut();
+            window.open('登录.html', "_self");
+            // [END signout]
+        } else {
+        }
+    }
+
+    window.onload = function() {
+        initApp();
+    };
+    </script>
 </head>
 
 <body>
     <div class="toppest">
         <div class="login-box">
-            <a href="个人信息.html">
-                            <i class="fa fa-key"></i> 登陆</a>
+            <div id="signintop">
+                            <i class="fa fa-key"></i> 登陆</div>
         </div>
         <div class="login-box">
             <a href="email-password.html">
