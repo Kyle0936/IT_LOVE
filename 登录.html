@@ -123,6 +123,30 @@
         // document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
         // document.getElementById('quickstart-email-update').addEventListener('click', updateEmail, false);
         // document.getElementById('quickstart-anonymously').addEventListener('click', handleAnon, false);
+
+        var emailinput = document.getElementById('email');
+        // Execute a function when the user releases a key on the keyboard
+        emailinput.addEventListener("keyup", function(event) {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Number 13 is the "Enter" key on the keyboard
+          if (event.keyCode === 13) {
+            // Trigger the button element with a click
+            document.getElementById('quickstart-sign-in').click();
+          }
+        });
+
+        var passwordinput = document.getElementById('password');
+        // Execute a function when the user releases a key on the keyboard
+        passwordinput.addEventListener("keyup", function(event) {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Number 13 is the "Enter" key on the keyboard
+          if (event.keyCode === 13) {
+            // Trigger the button element with a click
+            document.getElementById('quickstart-sign-in').click();
+          }
+        });
     }
 
     window.onload = function() {

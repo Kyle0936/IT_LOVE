@@ -6,14 +6,33 @@
 
 /* drop zone */
 .drop{
-  margin-top:  50px;
-  margin-bottom: 50px;
-  margin-left: 30%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+  padding-top: -30px;
   width: 40%;
   height: 20%;
   border: 4px dashed #000;
 }
 
-
-
 /* end of Drop Zone */
+
+/* description zone */
+.desc{
+  width: 40%;
+  margin: 0 auto;
+  height: auto;
+}
+/* end of sescription zone */
+
+/* decoration bar */
+.bar{
+  width: 40.5%;
+  margin: 0 auto;
+  height: 20%;
+  background-color: #A9A6B1;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+/* end of decoration bar */
+
+textarea { font-size: 18px; }

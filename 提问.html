@@ -104,30 +104,24 @@
     <h1 class="pageheader text-center">提问</h1>
     <!-- MAIN SECTION -->
     <div class="text-center">
+        <div class="bar">&nbsp;</div>
         <form>
-            <input type="text" placeholder="问题描述">
+            <textarea rows="5" name="text" placeholder="问题描述" class="desc"></textarea>
             <!-- Container for the demo -->
-            <div>
-                <div>
-                    <h2 class="mdl-card__title-text">上传聊天记录</h2>
-                </div>
-                <div class="drop">
-                    <!--                            <input type='file' onchange="readURL(this);" />
+            <div class="drop">
+                <!--       <input type='file' onchange="readURL(this);" />
                            <img id="blah" src=# alt="your image" /> -->
-                    <h6>选择文件</h6>
-                    <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button>
-                    <div id="messagesDiv">
-                        <input type="file" id="files" name="files[]" multiple />
-                    </div>
-                    <!--   <input type="file" id="file" name="file"/> -->
-                    <h6>文件地址:</h6>
-                    <span id="linkbox"></span>
+                <h4 style="margin-top: 0px;">上传聊天记录</h4>
+                <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button>
+                <div id="messagesDiv">
+                    <input type="file" id="files" name="files[]" multiple />
                 </div>
-                <input type="checkbox" value="" id="defaultCheck1">
-                <label for="defaultCheck1">
-                    发布到公共社区
-                </label>
+                <!--   <input type="file" id="file" name="file"/> -->
             </div>
+            <input type="checkbox" value="" id="defaultCheck1">
+            <label for="defaultCheck1">
+                发布到公共社区
+            </label>
         </form>
         <button onclick="myButtonFunction()" class="btn">提出解决方案</button>
     </div>
