@@ -184,7 +184,7 @@
                 var db = firebase.firestore();
                 var ref = db.collection("user");
                 ref.doc(email).get().then(function(documentSnapshot) {
-                    if (typeof documentSnapshot.data == 'function' && documentSnapshot.data()["Name"] != null) {
+                    if (documentSnapshot.exists && typeof documentSnapshot.data == 'function' && documentSnapshot.data()["Name"] != null) {
                         console.log("test");
                         if (document.getElementById('name-submit').textContent == '编辑') {
                             document.getElementById('nameDiv').innerHTML = "<input />";
