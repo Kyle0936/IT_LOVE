@@ -68,6 +68,30 @@
     //     }
     // }
 
+
+    function sendPasswordReset() {
+        var email = document.getElementById('email').value;
+        // [START sendpasswordemail]
+        firebase.auth().sendPasswordResetEmail(email).then(function() {
+            // Password Reset Email Sent!
+            // [START_EXCLUDE]
+            alert('Password Reset Email Sent!');
+            // [END_EXCLUDE]
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // [START_EXCLUDE]
+            if (errorCode == 'auth/invalid-email') {
+                alert(errorMessage);
+            } else if (errorCode == 'auth/user-not-found') {
+                alert(errorMessage);
+            }
+            console.log(error);
+            // [END_EXCLUDE]
+        });
+        // [END sendpasswordemail];
+    }
     function initApp() {
         // Listening for auth state changes.
         // [START authstatelistener]
@@ -120,7 +144,7 @@
         document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
         // document.getElementById('quickstart-sign-up').addEventListener('click', handleSignUp, false);
         // document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
-        // document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
+        document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
         // document.getElementById('quickstart-email-update').addEventListener('click', updateEmail, false);
         // document.getElementById('quickstart-anonymously').addEventListener('click', handleAnon, false);
 
@@ -211,6 +235,13 @@
             <br/>
             <div class="text-center">
                 没有账号？ <a href="email-password.html"> 注册 </a>
+            </div>
+
+            <div class="text-center">
+                忘记密码？ <br>
+                <button class="button2" id="quickstart-password-reset">
+                    重置密码
+                </button>
             </div>
         </div>
     </div>
