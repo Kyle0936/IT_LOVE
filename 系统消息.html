@@ -216,8 +216,24 @@
                 text.setAttribute('style', 'display: inline;');
                 text.textContent = '注销';
                 document.getElementById('signintop').appendChild(text);
+
+                document.getElementById('signuptop').style.display = "none";
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email);
+                ref.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                        }
+                    } else{
+                        console.log("No such document!");
+                        document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                    }});
             } else {
                 window.open('登录.html', "_self");
+                document.getElementById('system').style.display = "none";
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
@@ -274,13 +290,17 @@
             <div id="signintop">
                 <i class="fa fa-key"></i> 登陆</div>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="signintop">
             <a href="email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="system">
             <a href="系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
+        <div class="login-box nohover">
+            <div id="welcome">
+            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->

@@ -132,6 +132,13 @@ ul.topnav li.icon {display: none;}
 }
 /* end of CENTER */
 
+
+/* TOPPEST contains LOGIN-BOX */
+.toppest{
+  margin-top: -7px;
+}
+/* end of TOPPEST */
+
 /* LOGIN-BOX contains 系统消息 注册 登陆: class="login-box"; */
 .login-box {
 	display: inline-block;
@@ -139,7 +146,7 @@ ul.topnav li.icon {display: none;}
 	padding: 7px 15px 7px 15px;
 	font-size: 13px;
 }
-.login-box:hover {
+.login-box:not(.nohover):hover {
 	background-color: #eaeaea;
 }
 .login-box a{
@@ -253,6 +260,13 @@ h4{
 }
 /* end of h4 */
 
+/* h1 */
+h1 {
+  margin: .67em 0;
+  font-size: 2em;
+}
+/* end of h1 */
+
 /* HEADING: class="heading" */
 .heading {
   font-size: 20px;
@@ -320,3 +334,9 @@ hr.style-three {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 /* end of HR LIEN */
+
+/* SIGNINTOP */
+#signintop{
+  cursor: pointer;
+}
+/* end of SIGNINTOP */

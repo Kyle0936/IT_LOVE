@@ -8,10 +8,10 @@
     <title>IT LOVE 历史问题</title>
     <!-- LOADING STYLESHEETS -->
     <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
     <!--     <link href="../css/style.css" rel="stylesheet"> -->
-    <link href="css/newstyle.css" rel="stylesheet">
-    <link href="css/history-question.css" rel="stylesheet">
+    <link href="../css/newstyle.css" rel="stylesheet">
+    <link href="../css/history-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script>
     var config = {
@@ -41,7 +41,23 @@
                 text.setAttribute('style', 'display: inline;');
                 text.textContent = '注销';
                 document.getElementById('signintop').appendChild(text);
+
+                document.getElementById('signuptop').style.display = "none";
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email);
+                ref.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                        }
+                    } else{
+                        console.log("No such document!");
+                        document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                    }});
             } else {
+                document.getElementById('system').style.display = "none";
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
@@ -51,7 +67,7 @@
         if (firebase.auth().currentUser) {
             // [START signout]
             firebase.auth().signOut();
-            window.open('登录.html', "_self");
+            window.open('../登录.html', "_self");
             // [END signout]
         } else {
         }
@@ -69,28 +85,32 @@
             <div id="signintop">
                             <i class="fa fa-key"></i> 登陆</div>
         </div>
-        <div class="login-box">
-            <a href="email-password.html">
+        <div class="login-box" id="signuptop">
+            <a href="../email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
         </div>
-        <div class="login-box">
-            <a href="系统消息.html">
+        <div class="login-box" id="system">
+            <a href="../系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
+        <div class="login-box">
+            <div id="welcome">
+            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
     <div class="topnav-outline">
         <ul class="topnav">
             <li>
-                <a href="index.html">
+                <a href="../index.html">
                             <i class="fa fa-home"></i> 首页</a>
             </li>
             <li>
-                <a href="提问.html">
+                <a href="../提问.html">
                             <i class="fa fa-book"></i> 提问</a>
             </li>
             <li>
-                <a href="回答.html">
+                <a href="../回答.html">
                             <i class="fa fa-file-text-o"></i> 回答</a>
             </li>
             <li class="icon">

@@ -63,9 +63,11 @@ input.search {
     background:rgba(187, 210, 220, 0.8);
     border-radius: 5px;
     width: 30%;
-    height: 55%;
-    position: absolute;
-    top: 30%;
+    height: auto;
+    position: relative;
+    padding-bottom: 3%;
+    padding-top: 1%;
+    margin-top: 8%;
     left: 35%;
    /*  margin: 0 auto; */
 }

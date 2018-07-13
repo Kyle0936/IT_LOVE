@@ -31,13 +31,17 @@
         <div id="signintop">
                             <i class="fa fa-key"></i> 登陆</div>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="signuptop">
             <a href="email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="system">
             <a href="系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
+        <div class="login-box">
+            <div id="welcome">
+            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
@@ -141,10 +145,12 @@
                                 document.getElementById('typeDiv').innerHTML = dic["Type"];
                                 document.getElementById('type-submit').textContent = '编辑';
                             }
+                            document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
                         }
                     } else {
                         // doc.data() will be undefined in this case
                         console.log("No such document!");
+                        document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
                     }
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
@@ -161,10 +167,22 @@
                 document.getElementById('signintop').appendChild(text);
 
 
-
-
-
+                document.getElementById('signuptop').style.display = "none";
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email);
+                ref.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                        }
+                    } else{
+                        console.log("No such document!");
+                        document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                    }});
             } else {
+                document.getElementById('system').style.display = "none";
                 document.getElementById('name-submit').disabled = true;
                 document.getElementById('type-submit').disabled = true;
                 // window.location.replace('https://it-love1.firebaseapp.com/email-password.html');
