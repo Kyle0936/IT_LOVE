@@ -11,11 +11,13 @@ app1.get('/myQuestions/:questionid', (req, res) => {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT LOVE</title>
+    <title>IT LOVE 历史问题</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
+    <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <!--     <link href="../css/style.css" rel="stylesheet"> -->
+    <link href="../css/newstyle.css" rel="stylesheet">
+    <link href="../css/history-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script>
     var config = {
@@ -28,212 +30,185 @@ app1.get('/myQuestions/:questionid', (req, res) => {
     };
     firebase.initializeApp(config);
     </script>
+
+    <script>
+    /**
+     * init firestone
+     */
+    // Initialize Cloud Firestore through Firebase
+    function initApp() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                document.getElementById('signintop').textContent = '';
+                var tag = document.createElement("i");
+                tag.setAttribute('class', 'fa fa-key');
+                document.getElementById('signintop').appendChild(tag);
+                var text = document.createElement("div");
+                text.setAttribute('style', 'display: inline;');
+                text.textContent = '注销';
+                document.getElementById('signintop').appendChild(text);
+            } else {
+            }
+        });
+        document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+    }
+
+    function toggleSignIn() {
+        if (firebase.auth().currentUser) {
+            // [START signout]
+            firebase.auth().signOut();
+            window.open('../登录.html', "_self");
+            // [END signout]
+        } else {
+        }
+    }
+
+    window.onload = function() {
+        initApp();
+    };
+    </script>
 </head>
 
 <body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <<div class="login-box border-right-1">
-                        <a href="../个人信息.html">
-                            <i class="fa fa-key"></i> 登陆</a>
-                </div>
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="../email-password.html">
-                                <i class="fa fa-pencil"></i> 注册</a>
-                </div>
-                <div class="login-box border-right-1">
-                    <a href="../系统消息.html">
-                                    <i class="fa fa-bell"></i> 系统消息</a>
-                </div>
-            </div>
+    <div class="toppest">
+        <div class="login-box">
+            <div id="signintop">
+                            <i class="fa fa-key"></i> 登陆</div>
         </div>
-    </div>
+        <div class="login-box">
+            <a href="../email-password.html">
+                            <i class="fa fa-pencil"></i> 注册</a>
+        </div>
+        <div class="login-box">
+            <a href="../系统消息.html">
+                            <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
     </div>
     <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="../index.html">
-                                        <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="../提问.html">
-                                            <i class="fa fa-book"></i> 提问</a>
-                    </li>
-                    <li>
-                        <a href="../回答.html">
-                                                <i class="fa fa-file-text-o"></i> 回答</a>
-                    </li>
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="../index.html">
+                            <i class="fa fa-home"></i> 首页</a>
+            </li>
+            <li>
+                <a href="../提问.html">
+                            <i class="fa fa-book"></i> 提问</a>
+            </li>
+            <li>
+                <a href="../回答.html">
+                            <i class="fa fa-file-text-o"></i> 回答</a>
+            </li>
+            <li class="icon">
+                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
     </div>
     <!-- END TOP NAVIGATION -->
-    <!-- SEARCH FIELD AREA -->
-    <div class="searchfield bg-hed-six">
-        <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-            <div class="row text-center margin-bottom-20">
-                <h1 class="white"> IT LOVE</h1>
+    <!-- MAIN SECTION -->
+    <div class="question">
+        <div class="row">
+            <!-- ARTICLE  -->
+            <div id="displayQues"></div>
+            <div id="solutions"></div>
+            <div class="panel panel-default">
+                <div class="article-info">
+                    <div class="art-date">
+                        <a href="#">
+                                                                <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
+                    </div>
+                    <div class="art-category">
+                        <a href="#">
+                                                                    <i class="fa fa-folder"></i> Account Settings </a>
+                    </div>
+                    <div class="art-comments">
+                        <a href="#">
+                                                                        <i class="fa fa-comments-o"></i> 4 解决方案 </a>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
+                    </p>
+                </div>
+                <div class="article-content">
+                </div>
             </div>
-            <br>
-            <div class="row search-row">
-                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
-                <button onclick="search()">搜索</button>
+            <!-- END ARTICLE -->
+            <!-- COMMENTS  -->
+            <div class="panel panel-default">
+                <div class="article-heading">
+                    <i class="fa fa-comments-o"></i> 解决方案 (4)
+                </div>
+                <!-- FIRST LEVEL COMMENT 1 -->
+                <div class="article-content">
+                    <div class="article-comment-top">
+                        <div class="comments-user">
+                            <h4> 回答1 </h4>
+                            <div class="user-name">John Doe</div>
+                            <div class="comment-post-date">Posted On
+                                <span class="italics">20 May, 2016</span>
+                            </div>
+                        </div>
+                        <div class="comments-content">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
+                            </p>
+                            <div class="article-read-more">
+                                <button class="btn btn-default btn-sm">
+                                    <i class="fa fa-reply"></i> Reply</button>
+                            </div>
+                        </div>
+                        <!-- SECOND LEVEL COMMENT -->
+                        <div class="article-comment-second">
+                            <div class="comments-user">
+                                <div class="user-name">Quinn Demma</div>
+                                <div class="comment-post-date">Posted On
+                                    <span class="italics">20 May, 2016</span>
+                                </div>
+                            </div>
+                            <div class="comments-content">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- END SECOND LEVEL COMMENT -->
+                    </div>
+                </div>
+                <!-- END FIRST LEVEL COMMENT 1 -->
+            </div>
+            <!-- END COMMENTS -->
+        </div>
+        <div class="sidenav">
+            <div id="myChart"></div>
+            <div class="heading">
+                <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
+            </div>
+            <form method="post" class="comment-form">
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1" id="add-solutions">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" onchange="scheduleA.call(this,event,this.value)">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+            <div class="form-check col-md-8 padding-20 add-button">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    从公共社区隐藏
+                </label>
             </div>
         </div>
-    </div>
-    <!-- END SEARCH FIELD AREA -->
-    <!-- MAIN SECTION -->
-    <div class="container featured-area-default padding-30">
-        <div class="row">
-            <div class="col-md-8 padding-20">
-                <div class="row">
-                    <!-- BREADCRUMBS -->
-                    <div class="breadcrumb-container">
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="首页.html">
-                                                            <i class="fa fa-home"></i>
-                                                        </a>
-                            </li>
-                            <li>
-                                <a href="回答.html">回答</a>
-                            </li>
-                            <li>
-                                <a href="single-category.html">General</a>
-                            </li>
-                            <li class="active">How to change account password?</li>
-                        </ol>
-                    </div>
-                    <!-- END BREADCRUMBS -->
-                    <!-- ARTICLE  -->
-                    <div id="displayQues"> HI</div>
-                    <div id="solutions"></div>
-                    <div class="panel panel-default">
-                        <div class="article-heading margin-bottom-5">
-                            <a href="#">
-                                                        <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
-                        </div>
-                        <div class="article-info">
-                            <div class="art-date">
-                                <a href="#">
-                                                                <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                            </div>
-                            <div class="art-category">
-                                <a href="#">
-                                                                    <i class="fa fa-folder"></i> Account Settings </a>
-                            </div>
-                            <div class="art-comments">
-                                <a href="#">
-                                                                        <i class="fa fa-comments-o"></i> 4 解决方案 </a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
-                            </p>
-                        </div>
-                        <div class="article-content">
-                        </div>
-                        <hr class="style-three">
-                        <div class="article-feedback">
-                            <h2>
-                                                                        <small>Was This Article Helpful?</small>
-                                                                    </h2>
-                            <button type="button" class="btn btn-success btn-o btn-wide">
-                                <i class="fa fa-thumbs-o-up"></i> Yes</button>
-                            <button type="button" class="btn btn-danger btn-o btn-wide">No
-                                <i class="fa fa-thumbs-o-down"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- END ARTICLE -->
-                    <!-- COMMENTS  -->
-                    <div class="panel panel-default">
-                        <div class="article-heading">
-                            <i class="fa fa-comments-o"></i> 解决方案 (4)
-                        </div>
-                        <!-- FIRST LEVEL COMMENT 1 -->
-                        <div class="article-content">
-                            <div class="article-comment-top">
-                                <div class="comments-user">
-                                    <h4> 回答1 </h4>
-                                    <img src="images/user.png" alt="gomac user">
-                                    <div class="user-name">John Doe</div>
-                                    <div class="comment-post-date">Posted On
-                                        <span class="italics">20 May, 2016</span>
-                                    </div>
-                                </div>
-                                <div class="comments-content">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
-                                    </p>
-                                    <div class="article-read-more">
-                                        <button class="btn btn-default btn-sm">
-                                            <i class="fa fa-reply"></i> Reply</button>
-                                    </div>
-                                </div>
-                                <!-- SECOND LEVEL COMMENT -->
-                                <div class="article-comment-second">
-                                    <div class="comments-user">
-                                        <img src="images/user.png" alt="gomac user">
-                                        <div class="user-name">Quinn Demma</div>
-                                        <div class="comment-post-date">Posted On
-                                            <span class="italics">20 May, 2016</span>
-                                        </div>
-                                    </div>
-                                    <div class="comments-content">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- END SECOND LEVEL COMMENT -->
-                            </div>
-                        </div>
-                        <!-- END FIRST LEVEL COMMENT 1 -->
-                    </div>
-                    <!-- END COMMENTS -->
-                </div>
-                <div id="myChart"></div>
-                <!-- <div id="piechart" class="text-center"></div> -->
-                <div class="panel-transparent">
-                    <div class="article-heading">
-                        <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
-                    </div>
-                    <form method="post" class="comment-form">
-                        <div class="form-row align-items-center">
-                            <div class="col-auto my-1" id="add-solutions">
-                                <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
-                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" onchange="scheduleA.call(this,event,this.value)">
-                                    <option selected>Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="col-auto my-1">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="form-check col-md-8 padding-20 add-button">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        从公共社区隐藏
-                    </label>
-                </div>
-            </div>
-            <!--                 <script type="text/javascript">
+        <!--                 <script type="text/javascript">
                 google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(drawChart);
 
@@ -255,7 +230,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                     chart.draw(data, options);
                 }
                 </script> -->
-            <!-- <script type="text/javascript">
+        <!-- <script type="text/javascript">
                 var auth1 = firebase.auth();
                 firebase.auth().onAuthStateChanged(function(user){
                     var email1 = ""+user.email;
@@ -266,44 +241,6 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
                 });
             </script> -->
-        </div>
-        <!-- SIDEBAR STUFF -->
-        <div class="col-md-4 padding-20">
-            <div class="row margin-top-20">
-                <div class="col-md-12">
-                    <div class="fb-heading-small">
-                        最火的问题
-                    </div>
-                    <hr class="style-three">
-                    <div class="fat-content-small padding-left-10">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Add new user</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END SIDEBAR STUFF -->
-    </div>
     </div>
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
@@ -318,17 +255,24 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             //ref = db.collection("user").doc(email).collection("Questions").doc().collection("Images");
             var db = firebase.firestore();
             var email = "" + user.email;
+            //WHY THERE ARE TWO COMMENTS QUES????
             var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
             var ref1 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
 
             ref1.get().then(function(doc) {
-                var description1 = doc.data().Description;
-                var link1 = doc.data().LinkToImage;
-                console.log(link1);
-                var public1 = doc.data().Public;
-                console.log(public1);
-                console.log(description1);
-                var time1 = doc.data().Time;
+                // var description1 = doc.data().Description;
+                // var link1 = doc.data().LinkToImage;
+                // console.log(link1);
+                // var public1 = doc.data().Public;
+                // console.log(public1);
+                // console.log(description1);
+                // var time1 = doc.data().Time;
+                var dic = doc.data();
+                var description1 = dic["Description"];
+                var link1 = dic["LinkToImage"];
+                var time1 = dic["Time"];
+                var number = dic["NumberOfAnswers"];
+
                 var child1 = document.createElement("div");
                 child1.setAttribute('class', 'comments-user');
                 var publicChild = document.createElement("div");
@@ -538,13 +482,6 @@ app1.get('/myQuestions/:questionid', (req, res) => {
         alert('The user selected ' + value);
     }
     </script>
-    <script>
-    function search() {
-        var content = "" + document.getElementById("searchcontent").value;
-        console.log(content);
-        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
-    }
-    </script>
 </body>
 
 </html>`
@@ -609,9 +546,11 @@ app.get('/questions/:questionid', (req, res) => {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IT LOVE</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
+<!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <!-- <link href="../css/style.css" rel="stylesheet"> -->
+    <link href="../css/newstyle.css" rel="stylesheet">
+    <link href="../css/single-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -826,120 +765,107 @@ app.get('/questions/:questionid', (req, res) => {
     // });
     // }
     </script>
+
+    <script>
+    /**
+     * init firestone
+     */
+    // Initialize Cloud Firestore through Firebase
+    function initApp() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                document.getElementById('signintop').textContent = '';
+                var tag = document.createElement("i");
+                tag.setAttribute('class', 'fa fa-key');
+                document.getElementById('signintop').appendChild(tag);
+                var text = document.createElement("div");
+                text.setAttribute('style', 'display: inline;');
+                text.textContent = '注销';
+                document.getElementById('signintop').appendChild(text);
+            } else {
+            }
+        });
+        document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+    }
+
+    function toggleSignIn() {
+        if (firebase.auth().currentUser) {
+            // [START signout]
+            firebase.auth().signOut();
+            window.open('../登录.html', "_self");
+            // [END signout]
+        } else {
+        }
+    }
+
+    window.onload = function() {
+        initApp();
+    };
+    </script>
 </head>
 
 <body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="login-box border-right-1">
-                        <a href="../个人信息.html">
-                            <i class="fa fa-key"></i> 登陆</a>
-                    </div>
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="../email-password.html">
-                                <i class="fa fa-pencil"></i> 注册</a>
-                    </div>
-                    <div class="login-box border-right-1">
-                        <a href="../系统消息.html">
-                                    <i class="fa fa-bell"></i> 系统消息</a>
-                    </div>
-                </div>
-            </div>
+    <div class="toppest">
+        <div class="login-box">
+            <div id="signintop">
+                            <i class="fa fa-key"></i> 登陆</div>
+        </div>
+        <div class="login-box">
+            <a href="../email-password.html">
+                            <i class="fa fa-pencil"></i> 注册</a>
+        </div>
+        <div class="login-box">
+            <a href="../系统消息.html">
+                            <i class="fa fa-bell"></i> 系统消息</a>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="../index.html">
-                                        <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="../提问.html">
-                                            <i class="fa fa-book"></i> 提问</a>
-                    </li>
-                    <li>
-                        <a href="../回答.html">
-                                                <i class="fa fa-file-text-o"></i> 回答</a>
-                    </li>
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="../index.html">
+                            <i class="fa fa-home"></i> 首页</a>
+            </li>
+            <li>
+                <a href="../提问.html">
+                            <i class="fa fa-book"></i> 提问</a>
+            </li>
+            <li>
+                <a href="../回答.html">
+                            <i class="fa fa-file-text-o"></i> 回答</a>
+            </li>
+            <li class="icon">
+                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
     </div>
     <!-- END TOP NAVIGATION -->
-    <!-- SEARCH FIELD AREA -->
-    <div class="searchfield bg-hed-six">
-        <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-            <div class="row text-center margin-bottom-20">
-                <h1 class="white"> IT LOVE</h1>
+    <!-- MAIN SECTION -->
+    <div class="question">
+        <!-- ARTICLE  -->
+        <div class="article">
+            <div class="article-content">
+                <p class="block-with-text" id="main-content">
+                </p>
             </div>
-            <br>
-            <div class="row search-row">
-                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
-                <button onclick="search()">搜索</button>
+            <!-- article-info bar -->
+            <div class="article-info">
+                <i class="fa fa-calendar-o"></i>
+                <div id="date" class="tag"> </div>
+                <i class="fa fa-comments-o"></i>
+                <div id="numberOfA" class="tag"></div>
             </div>
         </div>
-    </div>
-    <!-- END SEARCH FIELD AREA -->
-    <!-- MAIN SECTION -->
-    <div class="container featured-area-default padding-30">
-        <div class="row">
-            <div class="col-md-8 padding-20">
-                <div class="row">
-                    <!-- BREADCRUMBS -->
-                    <div class="breadcrumb-container">
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="../index.html">
-                                                            <i class="fa fa-home"></i>
-                                                        </a>
-                            </li>
-                            <li>
-                                <a href="../回答.html">回答</a>
-                            </li>
-                        </ol>
-                    </div>
-                    <!-- END BREADCRUMBS -->
-                    <!-- ARTICLE  -->
-                    <div class="panel panel-default">
-                        <!--                         <div class="article-heading margin-bottom-5">
-                                <a href="#">
-                                <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
-                            </div> -->
-                        <div class="article-info">
-                            <div class="art-date">
-                                <i class="fa fa-calendar-o"></i>
-                                <div id="date"> </div>
-                            </div>
-                            <div class="art-comments">
-                                <i class="fa fa-comments-o"></i>
-                                <div id="numberOfA"></div>
-                            </div>
-                        </div>
-                        <div class="article-content" id="main-content">
-                        </div>
-                        <div class="article-content">
-                        </div>
-                    </div>
-                    <!-- END ARTICLE -->
-                    <!-- COMMENTS  -->
-                    <div class="panel panel-default">
-                        <div class="article-heading">
-                            <i class="fa fa-comments-o"></i>
-                            <div id="numberOfA"></div>
-                        </div>
-                        <div id="solutions">
-                        </div>
-                        <!-- Previous Rate Part -->
-                        <!--                             <div class="panel-transparent">
+        <!-- END ARTICLE -->
+        <!-- COMMENTS  -->
+        <div class="heading">
+            <i class="fa fa-comments-o"></i>
+            <div id="numberOfA"></div>
+        </div>
+        <div id="solutions">
+        </div>
+        <!-- Previous Rate Part -->
+        <!--                             <div class="panel-transparent">
                                 <div class="article-heading">
                                     <i class="fa fa-comment-o"></i> 留下你的意见
                                 </div>
@@ -961,62 +887,47 @@ app.get('/questions/:questionid', (req, res) => {
                                     </div>
                                 </form>
                             </div> -->
-                        <!-- END LEAVE A REPLY SECTION -->
-                    </div>
-                    <!-- END COMMENTS -->
-                </div>
-            </div>
-            <!-- SIDEBAR STUFF -->
-            <div class="col-md-4 padding-20">
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            最火的问题
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
+        <!-- END LEAVE A REPLY SECTION -->
+        <!-- END COMMENTS -->
+    </div>
+    <!-- SIDEBAR STUFF -->
+    <div class="sidenav">
+        <div class="heading">
+            最火的问题
+        </div>
+        <hr class="style-three">
+        <div class="fat-content-small padding-left-10">
+            <ul>
+                <li>
+                    <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                </li>
+                <li>
+                    <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                </li>
+                <li>
+                    <a href="#">
                                         <i class="fa fa-file-text-o"></i> Add new user</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                </li>
+                <li>
+                    <a href="#">
                                         <i class="fa fa-file-text-o"></i> Change customer details</a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                </li>
+                <li>
+                    <a href="#">
                                         <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END SIDEBAR STUFF -->
+                </li>
+            </ul>
         </div>
     </div>
+    <!-- END SIDEBAR STUFF -->
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
     <script src="../js/jquery-2.2.4.min.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
-    <script>
-    function search() {
-        var content = "" + document.getElementById("searchcontent").value;
-        console.log(content);
-        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
-    }
-    </script>
 </body>
 
 </html>`);
@@ -1035,11 +946,11 @@ app2.get('/search/:searchcontent', (req, res) => {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT LOVE回答</title>
+    <title>IT LOVE 搜索结果</title>
     <!-- LOADING STYLESHEETS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/newstyle.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -1088,37 +999,88 @@ app2.get('/search/:searchcontent', (req, res) => {
         });
     });
 
-    var newRef = ref.where("index", ">", 0).orderBy("index");
+    var newRef = ref.where("index", ">", 0).where("Public", "==", true).orderBy("index");
     newRef.get().then(function(querySnapshot3) {
         querySnapshot3.forEach(function(doc) {
-            var dic = doc.data();
+            // var dic = doc.data();
+            // //console.log(author["Author"]);
+            // var author = dic["Author"];
+            // var desc = dic["Description"];
+            // var link = dic["LinkToImage"];
+            // var public = dic["Public"];
+            // var time = dic["Time"];
+
+
+            // var ahref = document.createElement("a");
+            // ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            // var father = document.createElement("div");
+            // father.setAttribute('class', 'panel panel-default');
+            // var authorChild = document.createElement("p");
+            // authorChild.innerHTML = author;
+            // var descChild = document.createElement("div");
+            // descChild.innerHTML = desc;
+            // descChild.setAttribute('class', 'article-content');
+            // var timeChild = document.createElement("div");
+            // timeChild.innerHTML = time;
+            // timeChild.setAttribute('class', 'art-date');
+            // father.appendChild(authorChild);
+            // father.appendChild(descChild);
+            // father.appendChild(timeChild);
+            // ahref.appendChild(father);
+
+            // var grandfather = document.getElementById("allQ");
+            // grandfather.appendChild(ahref);
+             var dic = doc.data();
             //console.log(author["Author"]);
             var author = dic["Author"];
             var desc = dic["Description"];
             var link = dic["LinkToImage"];
-            var public = dic["Public"];
             var time = dic["Time"];
+            var number = dic["NumberOfAnswers"];
 
-
+            //add html
             var ahref = document.createElement("a");
             ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            ahref.style.color = "black";
             var father = document.createElement("div");
-            father.setAttribute('class', 'panel panel-default');
-            var authorChild = document.createElement("p");
-            authorChild.innerHTML = author;
-            var descChild = document.createElement("div");
+            father.setAttribute('class', 'article');
+            // var authorChild = document.createElement("p");
+            // authorChild.innerHTML = author;
+            // authorChild.setAttribute('class', 'article');
+            var contentChild = document.createElement("div");
+            contentChild.setAttribute('class', 'article-content');
+            var descChild = document.createElement("p");
             descChild.innerHTML = desc;
-            descChild.setAttribute('class', 'article-content');
-            var timeChild = document.createElement("div");
-            timeChild.innerHTML = time;
-            timeChild.setAttribute('class', 'art-date');
-            father.appendChild(authorChild);
-            father.appendChild(descChild);
-            father.appendChild(timeChild);
+            descChild.setAttribute('class', 'block-with-text');
+            contentChild.appendChild(descChild);
+            var infoChild = document.createElement("div");
+            infoChild.setAttribute('class', 'article-info');
+            // time
+            var timeTag = document.createElement("i");
+            timeTag.setAttribute('class', 'fa fa-calendar-o');
+            var timeTime = document.createElement("div");
+            timeTime.setAttribute('class', 'tag');
+            timeTime.innerHTML = time;
+            // answers
+            var answersTag = document.createElement("i");
+            answersTag.setAttribute('class', 'fa fa-comments-o');
+            answersTag.style.margin = "0 0 0 10px";
+            var answersAns = document.createElement("div");
+            answersAns.setAttribute('class', 'tag');
+            answersAns.innerHTML = number + " Answers";
+            // add answers and time
+            infoChild.appendChild(timeTag);
+            infoChild.appendChild(timeTime);
+            infoChild.appendChild(answersTag);
+            infoChild.appendChild(answersAns);
+
+            father.appendChild(contentChild);
+            father.appendChild(infoChild);
             ahref.appendChild(father);
 
             var grandfather = document.getElementById("allQ");
             grandfather.appendChild(ahref);
+
         });
     });
 
@@ -1173,212 +1135,167 @@ app2.get('/search/:searchcontent', (req, res) => {
     //     });
     // });
     </script>
+    <script>
+    /**
+     * init firestone
+     */
+    // Initialize Cloud Firestore through Firebase
+    function initApp() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                document.getElementById('signintop').textContent = '';
+                var tag = document.createElement("i");
+                tag.setAttribute('class', 'fa fa-key');
+                document.getElementById('signintop').appendChild(tag);
+                var text = document.createElement("div");
+                text.setAttribute('style', 'display: inline;');
+                text.textContent = '注销';
+                document.getElementById('signintop').appendChild(text);
+            } else {
+            }
+        });
+        document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+    }
+
+    function toggleSignIn() {
+        if (firebase.auth().currentUser) {
+            // [START signout]
+            firebase.auth().signOut();
+            window.open('../登录.html', "_self");
+            // [END signout]
+        } else {
+        }
+    }
+
+    window.onload = function() {
+        initApp();
+    };
+    </script>
 </head>
 
 <body>
-    <div class="container-fluid featured-area-white-border">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="login-box border-right-1">
-                        <a href="个人信息.html">
-                            <i class="fa fa-key"></i> 登陆</a>
-                    </div>
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="email-password.html">
+    <div class="toppest">
+        <div class="login-box">
+            <div id="signintop">
+                            <i class="fa fa-key"></i> 登陆</div>
+        </div>
+        <div class="login-box">
+            <a href="../email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
-                    </div>
-                    <div class="login-box border-right-1">
-                        <a href="系统消息.html">
+        </div>
+        <div class="login-box">
+            <a href="../系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
-    <div class="container-fluid">
-        <div class="navigation">
-            <div class="row">
-                <ul class="topnav">
-                    <li></li>
-                    <li>
-                        <a href="index.html">
+    <div class="topnav-outline">
+        <ul class="topnav">
+            <li>
+                <a href="../index.html">
                             <i class="fa fa-home"></i> 首页</a>
-                    </li>
-                    <li>
-                        <a href="提问.html">
+            </li>
+            <li>
+                <a href="../提问.html">
                             <i class="fa fa-book"></i> 提问</a>
+            </li>
+            <li>
+                <a href="../回答.html">
+                            <i class="fa fa-file-text-o"></i> 回答</a>
+            </li>
+            <li class="icon">
+                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END TOP NAVIGATION -->
+    <!-- SEARCH FIELD AREA -->
+    <div class="searchfield">
+        <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
+        <button class="btn buttonsearch" onclick="search()">搜索</button>
+    </div>
+    <!-- END SEARCH FIELD AREA -->
+    <!-- MAIN SECTION -->
+    <!-- ARTICLE OVERVIEW SECTION -->
+    <h1 class=pageheader>搜索结果</h1>
+
+<!-- UNDECIDED    
+    <div class="sort">
+        <button id=# class="btn"> 升序</a>
+            <button id=# class="btn"> 降序</a>
+    </div> -->
+
+
+    <!-- ARTICLES -->
+    <div class="questions">
+        <div id="allQ">
+            <!-- Used to generate questions from database -->
+            <hr class="style-three">
+            <!-- <div class="article">
+                <div class="article-content">
+                    <p class="block-with-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
+                    </p>
+                </div>
+                <div class="article-info">
+                    <div class="tag">
+                        <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
+                    </div>
+                    <div class="tag">
+                        <i class="fa fa-comments-o"></i> 4 Comments </a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- END ARTICLES OVERVIEW SECTION-->
+        <!-- SIDEBAR STUFF -->
+        <div class="sidenav">
+            <div class="fb-heading-small">
+                最火的问题
+            </div>
+            <hr class="style-three">
+            <div class="fat-content-small padding-left-10">
+                <ul>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
                     </li>
                     <li>
-                        <a href="回答.html">
-                            <i class="fa fa-file-text-o"></i> 回答</a>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
                     </li>
-                    <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Add new user</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
-    <!-- END TOP NAVIGATION -->
-    <!-- SEARCH FIELD AREA -->
-    <div class="searchfield bg-hed-six">
-        <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-            <div class="row text-center margin-bottom-20">
-                <h1 class="white"> IT LOVE</h1>
-            </div>
-            <br>
-            <div class="row search-row">
-                <input type="text" class="search" placeholder="搜索你感兴趣的内容" id="searchcontent">
-                <button onclick="search()">搜索</button>
-            </div>
-        </div>
-    </div>
-    <!-- END SEARCH FIELD AREA -->
-    <!-- MAIN SECTION -->
-    <div class="container featured-area-default padding-30">
-        <div class="row">
-            <!-- ARTICLE OVERVIEW SECTION -->
-            <div class="col-md-8 padding-20">
-                <div class="row">
-                    <!-- BREADCRUMBS -->
-                    <div class="breadcrumb-container">
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="index.html">
-                                    <i class="fa fa-home"></i>
-                                </a>
-                            </li>
-                            <li class="active"> 所有问题</li>
-                        </ol>
-                        <div class="sort">
-                            <a href=# class="btn btn-default btn-wide"> 升序</a>
-                            <a href=# class="btn btn-default btn-wide"> 降序</a>
-                        </div>
-                    </div>
-                    <!-- END BREADCRUMBS -->
-                    <!-- ARTICLES -->
-                    <div id="allQ">
-                        <div class="fb-heading">
-                            所有问题
-                        </div>
-                        <hr class="style-three">
-                        <div class="panel panel-default">
-                            <div class="article-heading-abb">
-                                <a href="单个回答.html">
-                                <i class="fa fa-pencil-square-o"></i> How to change account password?</a>
-                            </div>
-                            <div class="article-info">
-                                <div class="art-date">
-                                    <a href="#">
-                                    <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                                </div>
-                                <div class="art-category">
-                                    <a href="#">
-                                    <i class="fa fa-folder"></i> Account Settings </a>
-                                </div>
-                                <div class="art-comments">
-                                    <a href="#">
-                                    <i class="fa fa-comments-o"></i> 4 Comments </a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <p class="block-with-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
-                                </p>
-                            </div>
-                            <div class="article-read-more">
-                                <a href="单个回答.html" class="btn btn-default btn-wide">Read more...</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- PAGINATION -->
-                    <nav class="text-center">
-                        <ul class="pagination">
-                            <li class="disabled">
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">
-                                        <i class="fa fa-arrow-circle-left"></i> 上一页</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="#">1
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="enabled">
-                                <a href="#">2
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="enabled">
-                                <a href="#">3
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="enabled">
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">下一页
-                                        <i class="fa fa-arrow-circle-right"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- END PAGINATION -->
-                </div>
-            </div>
-            <!-- END ARTICLES OVERVIEW SECTION-->
-            <!-- SIDEBAR STUFF -->
-            <div class="col-md-4 padding-20">
-                <div class="row margin-top-20">
-                    <div class="col-md-12">
-                        <div class="fb-heading-small">
-                            最火的问题
-                        </div>
-                        <hr class="style-three">
-                        <div class="fat-content-small padding-left-10">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Add new user</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Change customer details</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END SIDEBAR STUFF -->
-        </div>
+        <!-- END SIDEBAR STUFF -->
     </div>
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
-    <script src="../js/jquery-2.2.4.min.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
     <script>
     function search() {
         var content = "" + document.getElementById("searchcontent").value;
         console.log(content);
-        window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
+        if (content != "") {
+            window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
+        } else {
+            window.open('https://it-love1.firebaseapp.com/回答.html', "_self");
+        }
     }
     </script>
 </body>
