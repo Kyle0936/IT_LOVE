@@ -11,6 +11,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/newstyle.css" rel="stylesheet">
     <link href="css/all-questions.css" rel="stylesheet">
+
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -34,7 +35,7 @@
     var publicRef = ref.where("Public", "==", true);
     publicRef.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-            console.log("test" + doc.id);
+            //console.log("test" + doc.id);
             // doc.data() is never undefined for query doc snapshots
 
             //console.log(doc.id, " => ", doc.data());
@@ -171,6 +172,74 @@
         initApp();
     };
     </script>
+    <script type="text/javascript">
+    var db = firebase.firestore();
+    var ref = db.collection("Questions");
+    var newRef = ref.orderBy("NumberOfAnswers","desc").limit(5);
+    console.log(newRef);
+    newRef.get().then(function(querySnapshot4) {
+        querySnapshot4.forEach(function(doc) {
+
+            var dic = doc.data();
+
+            //console.log(author["Author"]);
+            var description = dic["Description"];
+            console.log(description);
+
+            //add html
+            var ahref = document.createElement("a");
+
+            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            ahref.style.color = "black";
+            var father = document.createElement("div");
+            father.setAttribute("class", "b");
+
+            //var descChild = document.createElement("div");
+            father.innerHTML = description;
+            //father.appendChild(descChild);
+            ahref.appendChild(father);
+            var li = document.createElement("li");
+            li.appendChild(ahref);
+            //var father = document.getElement("mostPopular");
+            //father.setAttribute('class', 'article');
+            
+            // var contentChild = document.createElement("div");
+            // contentChild.setAttribute('class', 'article-content');
+            // var descChild = document.createElement("p");
+            // descChild.innerHTML = desc;
+            // descChild.setAttribute('class', 'block-with-text');
+            // contentChild.appendChild(descChild);
+            // var infoChild = document.createElement("div");
+            // infoChild.setAttribute('class', 'article-info');
+            // // time
+            // var timeTag = document.createElement("i");
+            // timeTag.setAttribute('class', 'fa fa-calendar-o');
+            // var timeTime = document.createElement("div");
+            // timeTime.setAttribute('class', 'tag');
+            // timeTime.innerHTML = time;
+            // // answers
+            // var answersTag = document.createElement("i");
+            // answersTag.setAttribute('class', 'fa fa-comments-o');
+            // answersTag.style.margin = "0 0 0 10px";
+            // var answersAns = document.createElement("div");
+            // answersAns.setAttribute('class', 'tag');
+            // answersAns.innerHTML = number + " Answers";
+            // // add answers and time
+            // infoChild.appendChild(timeTag);
+            // infoChild.appendChild(timeTime);
+            // infoChild.appendChild(answersTag);
+            // infoChild.appendChild(answersAns);
+
+            // father.appendChild(contentChild);
+            // father.appendChild(infoChild);
+            // ahref.appendChild(father);
+
+            var grandfather = document.getElementById("mostPopular");
+            grandfather.appendChild(li);
+
+        });
+    });
+    </script>
 </head>
 
 <body>
@@ -221,7 +290,7 @@
     <!-- END SEARCH FIELD AREA -->
     <!-- MAIN SECTION -->
     <!-- ARTICLE OVERVIEW SECTION -->
-    <h1 class="pageheader">所有问题</h1>
+    <h1 class="questionspageheader">所有问题</h1>
     <!-- UNDECIDED    
     <div class="sort">
         <button id=# class="btn"> 升序</a>
@@ -256,8 +325,8 @@
             </div>
             <hr class="style-three">
             <div class="fat-content-small padding-left-10">
-                <ul>
-                    <li>
+                <ul id="mostPopular">
+                    <!-- <li>
                         <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to change account password?</a>
                     </li>
@@ -276,7 +345,7 @@
                     <li>
                         <a href="#">
                                         <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

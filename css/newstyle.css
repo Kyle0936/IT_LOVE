@@ -102,10 +102,13 @@ ul.topnav li.icon {display: none;}
 	margin-top: 20px;
 	margin-bottom: 15px;
 	margin-left: 25px;
+  padding-top: 10px;
 }
 
 /* ARTICLE-CONTENT: class="article-content" */
 .article-content {
+  min-height: 30px;
+  margin-top: 10px: 
 	padding: 15px 35px 10px 15px;
 }
 /* end of ARTICLE-CONTENT */
