@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
-
+<!-- NEED TO BE TEST ABOUT IMAGES + CHANGE #images{} -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IT LOVE 回答</title>
     <!-- LOADING STYLESHEETS -->
-<!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-<!--     <link href="../css/style.css" rel="stylesheet"> -->
-    <link href="../css/newstyle.css" rel="stylesheet">
-    <link href="../css/single-question.css" rel="stylesheet">
+    <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!--     <link href="../css/style.css" rel="stylesheet"> -->
+    <link href="css/newstyle.css" rel="stylesheet">
+    <link href="css/single-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -32,17 +32,34 @@
         if (doc.exists) {
             var author = dic["Author"];
             var desc = dic["Description"];
-            var link = dic["LinkToImage"];
             var public = dic["Public"];
             var time = dic["Time"];
             var number = dic["NumberOfAnswers"];
             //set HTML
+            //set heading
+            var numberDiv = document.getElementById("numberOfA2");
+            numberDiv.innerHTML = number + " 备选方案";
+            //set info
             var numberChild = document.getElementById("numberOfA");
             numberChild.innerHTML = number + " 备选方案";
             var descChild = document.getElementById("main-content");
             descChild.innerHTML = desc;
             var timeChild = document.getElementById("date");
             timeChild.innerHTML = time;
+
+            var imageFather = document.getElementById("images");
+            var subref = doc.collection("URLs");
+            subRef.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc2) {
+                    dic2 = doc2.data();
+                    var image = document.createElement("img");
+                    image.src = dic2["Image"];
+                    image.setAttribute('width', '100');
+                    image.setAttribute('height', '80');
+                    imageFather.appendChild(image);
+                });
+            });
+
         } else {
             console.log("No such document!");
         }
@@ -75,8 +92,8 @@
             contentChild.innerHTML = content;
             var likeChild = document.createElement("p");
             likeChild.innerHTML = "Number of people chose this: " + likes;
-            var lineChild = document.createElement("hr");
-            lineChild.setAttribute('class', 'style-three');
+            // var lineChild = document.createElement("hr");
+            // lineChild.setAttribute('class', 'style-three');
             var father = document.createElement("div");
             father.setAttribute('class', 'article-content');
             var son = document.createElement("div");
@@ -145,17 +162,19 @@
                             }
                         });
                         console.log("test3");
-                        likeChild.innerHTML = "Number of people chose this: " + detailedRef.data()["Likes"];
+                        detailedRef.get().then(function(doc4) {
+                            likeChild.innerHTML = "Number of people chose this: " + doc4.data()["Likes"];
+                        });
                         // User is signed in.
                     } else {
                         // No user is signed in.
-                        window.open('../email-password.html');
+                        window.open('../登录.html');
                     }
 
                 });
             }
             father.appendChild(son);
-            father.appendChild(lineChild);
+            // father.appendChild(lineChild);
             grandfather.appendChild(father);
 
         });
@@ -226,7 +245,6 @@
     // });
     // }
     </script>
-
     <script>
     /**
      * init firestone
@@ -255,10 +273,11 @@
                             var dic = doc.data();
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
                         }
-                    } else{
+                    } else {
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
-                    }});
+                    }
+                });
             } else {
                 document.getElementById('system').style.display = "none";
             }
@@ -272,8 +291,7 @@
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {
-        }
+        } else {}
     }
 
     window.onload = function() {
@@ -286,7 +304,7 @@
     <div class="toppest">
         <div class="login-box">
             <div id="signintop">
-                            <i class="fa fa-key"></i> 登陆</div>
+                <i class="fa fa-key"></i> 登陆</div>
         </div>
         <div class="login-box" id="signuptop">
             <a href="../email-password.html">
@@ -337,14 +355,16 @@
                 <i class="fa fa-comments-o"></i>
                 <div id="numberOfA" class="tag"></div>
             </div>
+            <div id="images">
+            </div>
         </div>
         <!-- END ARTICLE -->
         <!-- COMMENTS  -->
         <div class="heading">
-            <i class="fa fa-comments-o"></i>
-            <div id="numberOfA"></div>
+            <i class="fa fa-comments-o" style="padding-left: 20px;"></i>
+            <div id="numberOfA2"></div>
         </div>
-        <div id="solutions">
+        <div id="solutions" class="solution">
         </div>
         <!-- Previous Rate Part -->
         <!--                             <div class="panel-transparent">

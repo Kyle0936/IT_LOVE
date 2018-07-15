@@ -14,4 +14,6 @@
     position: relative;
     width: 66%;
     left: 1%;
+    border: 1px solid #CDCDCD;
+    border-radius: 10px;
 }

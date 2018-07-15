@@ -102,6 +102,7 @@ ul.topnav li.icon {display: none;}
 	margin-top: 20px;
 	margin-bottom: 15px;
 	margin-left: 25px;
+  margin-right: 15px;
   padding-top: 10px;
 }
 
@@ -277,6 +278,10 @@ h1 {
   text-overflow: ellipsis;
   color: #303030;
   font-weight: bold;
+  display: inline-block;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 /* end of HEADING */
 
@@ -343,3 +348,19 @@ hr.style-three {
   cursor: pointer;
 }
 /* end of SIGNINTOP */
+
+/* SOLUTIONS */
+.solution{
+  border:1px solid #CDCDCD;
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* IMAGES */
+#images{
+  display: inline-block;
+  
+}
