@@ -3,8 +3,8 @@ const express = require('express');
 const app1 = express();
 
 app1.get('/myQuestions/:questionid', (req, res) => {
-	console.log("TEST");
-	res.status(200).send(`<!DOCTYPE html>
+    console.log("TEST");
+    res.status(200).send(`<!DOCTYPE html>
 <html lang="zh">
 
 <head>
@@ -486,7 +486,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
 </html>`
 
-		);
+        );
 });
 exports.singleQues = functions.https.onRequest(app1);
 // exports.bigben = functions.https.onRequest((req, res) => {
@@ -524,14 +524,6 @@ exports.singleQues = functions.https.onRequest(app1);
 
 
 
-
-
-
-
-
-
-
-
 const app = express();
 
 
@@ -539,16 +531,17 @@ app.get('/questions/:questionid', (req, res) => {
   console.log("TEST2");
   res.status(200).send(`<!DOCTYPE html>
 <html lang="zh">
+<!-- NEED TO BE TEST ABOUT IMAGES + CHANGE #images{} -->
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT LOVE</title>
+    <title>IT LOVE 回答</title>
     <!-- LOADING STYLESHEETS -->
-<!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
+    <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <!-- <link href="../css/style.css" rel="stylesheet"> -->
+    <!--     <link href="../css/style.css" rel="stylesheet"> -->
     <link href="../css/newstyle.css" rel="stylesheet">
     <link href="../css/single-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
@@ -567,21 +560,38 @@ app.get('/questions/:questionid', (req, res) => {
     var db = firebase.firestore();
     var ref = db.collection("Questions").doc("${req.params.questionid}");
     ref.get().then(function(doc) {
-        var dic = doc.data()
+        var dic = doc.data();
         if (doc.exists) {
             var author = dic["Author"];
             var desc = dic["Description"];
-            var link = dic["LinkToImage"];
             var public = dic["Public"];
             var time = dic["Time"];
             var number = dic["NumberOfAnswers"];
             //set HTML
+            //set heading
+            var numberDiv = document.getElementById("numberOfA2");
+            numberDiv.innerHTML = number + " 备选方案";
+            //set info
             var numberChild = document.getElementById("numberOfA");
             numberChild.innerHTML = number + " 备选方案";
             var descChild = document.getElementById("main-content");
             descChild.innerHTML = desc;
             var timeChild = document.getElementById("date");
             timeChild.innerHTML = time;
+
+            var imageFather = document.getElementById("images");
+            var subRef = db.collection("Questions").doc("${req.params.questionid}").collection("URLs");
+            subRef.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc2) {
+                    dic2 = doc2.data();
+                    var image = document.createElement("img");
+                    image.src = dic2["Image"];
+                    image.setAttribute('width', '100');
+                    image.setAttribute('height', '80');
+                    imageFather.appendChild(image);
+                });
+            });
+
         } else {
             console.log("No such document!");
         }
@@ -614,8 +624,8 @@ app.get('/questions/:questionid', (req, res) => {
             contentChild.innerHTML = content;
             var likeChild = document.createElement("p");
             likeChild.innerHTML = "Number of people chose this: " + likes;
-            var lineChild = document.createElement("hr");
-            lineChild.setAttribute('class', 'style-three');
+            // var lineChild = document.createElement("hr");
+            // lineChild.setAttribute('class', 'style-three');
             var father = document.createElement("div");
             father.setAttribute('class', 'article-content');
             var son = document.createElement("div");
@@ -637,8 +647,11 @@ app.get('/questions/:questionid', (req, res) => {
                         var otherRef = db.collection("user").doc(email).collection("Answers").doc(doc1.id);
                         otherRef.get().then(function(doc3) {
                             if (!doc3.exists) {
+                                questionLink = "${req.params.questionid}";
                                 otherRef.set({
-                                        type: "choose"
+                                        Type: "choose",
+                                        QuestionID: questionLink,
+                                        Chosen: false
                                     }).then(function() {
                                         console.log("Document successfully written!");
                                     })
@@ -684,17 +697,19 @@ app.get('/questions/:questionid', (req, res) => {
                             }
                         });
                         console.log("test3");
-                        likeChild.innerHTML = "Number of people chose this: " + detailedRef.data()["Likes"];
+                        detailedRef.get().then(function(doc4) {
+                            likeChild.innerHTML = "Number of people chose this: " + doc4.data()["Likes"];
+                        });
                         // User is signed in.
                     } else {
                         // No user is signed in.
-                        window.open('https://it-love1.firebaseapp.com/email-password.html');
+                        window.open('../登录.html');
                     }
 
                 });
             }
             father.appendChild(son);
-            father.appendChild(lineChild);
+            // father.appendChild(lineChild);
             grandfather.appendChild(father);
 
         });
@@ -765,7 +780,6 @@ app.get('/questions/:questionid', (req, res) => {
     // });
     // }
     </script>
-
     <script>
     /**
      * init firestone
@@ -782,10 +796,30 @@ app.get('/questions/:questionid', (req, res) => {
                 text.setAttribute('style', 'display: inline;');
                 text.textContent = '注销';
                 document.getElementById('signintop').appendChild(text);
+
+
+                document.getElementById('signuptop').style.display = "none";
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email);
+                ref.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                        }
+                    } else {
+                        console.log("No such document!");
+                        document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                    }
+                });
             } else {
+                document.getElementById('system').style.display = "none";
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+        document.getElementById('addsolution').addEventListener('click', addsolution);
+        document.getElementById('submit').addEventListener('click', submit);
     }
 
     function toggleSignIn() {
@@ -794,13 +828,178 @@ app.get('/questions/:questionid', (req, res) => {
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {
-        }
+        } else {}
     }
 
-    window.onload = function() {
-        initApp();
-    };
+    var numberOfSolutions = 0;
+
+    function addsolution() {
+        console.log("testADD");
+        document.getElementById('submit').style.display = "block";
+        numberOfSolutions++;
+        var outerdiv = document.createElement("div");
+        outerdiv.innerHTML = "你推荐的备选方案#" + numberOfSolutions;
+        outerdiv.style.margin = "5px 25px 5px 25px";
+        var solution = document.createElement("input");
+        solution.type = "text";
+        solution.setAttribute('class', 'solution');
+        solution.style.margin = "5px 15px 5px 15px";
+        solution.style.fontSize = "14px";
+        outerdiv.appendChild(solution);
+        document.getElementById('yoursolutions').appendChild(outerdiv);
+    }
+
+    function submit() {
+        if (document.getElementByClassName("solution")[0].value) {
+            firebase.auth().onAuthStateChanged(function(user) {
+                    var email = "" + user.email;
+                    var db = firebase.firestore();
+                    var ref = db.collection("user").doc(email).collection("Answers");
+                    var ref2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
+                    // name
+                    var name = user.email;
+                    var ref3 = db.collection("user").doc(email);
+                    ref3.get().then(function(doc) {
+                        if (doc.exists) {
+                            if (typeof doc.data == 'function') {
+                                var dic = doc.data();
+                                if (dic["Name"] != undefined) {
+                                    name = dic["Name"];
+                                }
+                            }
+                        }
+                    });
+                    // end for name
+                    // time
+                    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                    var now = new Date();
+                    var thisMonth = months[now.getMonth()];
+                    var date = now.getDate();
+                    var year = now.getFullYear();
+                    if (date < 10) {
+                        date = '0' + date;
+                    }
+                    var time = "" + date + " " + thisMonth + ", " + year;
+                    // end for time
+                    var questionlink = "${req.params.questionid}";
+
+                    var solutions;
+                    var numberOfNewA = 0;
+                    if (document.getElementsByClassName("solution")) {
+                        solutions = document.getElementsByClassName("solution");
+                        numberOfNewA = solutions.length;
+                    }
+
+                    // add into ref-user-questions ref2-questions
+                    if (solutions != undefined) {
+                        var x;
+                        for (x = 0; x < numberOfNewA; x++) {
+                            var solutiontext = solutions[x];
+                            ref.add({
+                                Time: time,
+                                Content: solutiontext,
+                                QuestionID: questionlink,
+                                Status: "Has not decided"
+                            });
+                            ref2.add({
+                                Author: name,
+                                Time: time,
+                                Content: solutiontext,
+                                Approved: false,
+                                Likes: 0
+                            });
+                        }
+                    }
+                    // add numberOfAnswers
+                    var ref3 = db.collection("Questions").doc("${req.params.questionid}");
+                    ref3.get().then(function(doc2) {
+                        var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfNewA;
+                        return ref3.update({
+                                Likes: newAnswers
+                            })
+                            .then(function() {
+                                console.log("Document successfully updated!");
+                            })
+                            .catch(function(error) {
+                                // The document probably doesn't exist.
+                                console.error("Error updating document: ", error);
+                            });
+                    });
+                }
+            }
+
+            window.onload = function() {
+                initApp();
+            };
+    </script>
+    <script type="text/javascript">
+    // script for SIDEBAR
+    var db = firebase.firestore();
+    var ref = db.collection("Questions");
+    var newRef = ref.orderBy("NumberOfAnswers", "desc").limit(5);
+    console.log(newRef);
+    newRef.get().then(function(querySnapshot4) {
+        querySnapshot4.forEach(function(doc) {
+
+            var dic = doc.data();
+
+            //console.log(author["Author"]);
+            var description = dic["Description"];
+            console.log(description);
+
+            //add html
+            var ahref = document.createElement("a");
+
+            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            ahref.style.color = "black";
+            var father = document.createElement("div");
+            father.setAttribute("class", "b");
+
+            //var descChild = document.createElement("div");
+            father.innerHTML = description;
+            //father.appendChild(descChild);
+            ahref.appendChild(father);
+            var li = document.createElement("li");
+            li.appendChild(ahref);
+            //var father = document.getElement("mostPopular");
+            //father.setAttribute('class', 'article');
+
+            // var contentChild = document.createElement("div");
+            // contentChild.setAttribute('class', 'article-content');
+            // var descChild = document.createElement("p");
+            // descChild.innerHTML = desc;
+            // descChild.setAttribute('class', 'block-with-text');
+            // contentChild.appendChild(descChild);
+            // var infoChild = document.createElement("div");
+            // infoChild.setAttribute('class', 'article-info');
+            // // time
+            // var timeTag = document.createElement("i");
+            // timeTag.setAttribute('class', 'fa fa-calendar-o');
+            // var timeTime = document.createElement("div");
+            // timeTime.setAttribute('class', 'tag');
+            // timeTime.innerHTML = time;
+            // // answers
+            // var answersTag = document.createElement("i");
+            // answersTag.setAttribute('class', 'fa fa-comments-o');
+            // answersTag.style.margin = "0 0 0 10px";
+            // var answersAns = document.createElement("div");
+            // answersAns.setAttribute('class', 'tag');
+            // answersAns.innerHTML = number + " Answers";
+            // // add answers and time
+            // infoChild.appendChild(timeTag);
+            // infoChild.appendChild(timeTime);
+            // infoChild.appendChild(answersTag);
+            // infoChild.appendChild(answersAns);
+
+            // father.appendChild(contentChild);
+            // father.appendChild(infoChild);
+            // ahref.appendChild(father);
+
+            var grandfather = document.getElementById("mostPopular");
+            grandfather.appendChild(li);
+
+        });
+    });
     </script>
 </head>
 
@@ -808,15 +1007,19 @@ app.get('/questions/:questionid', (req, res) => {
     <div class="toppest">
         <div class="login-box">
             <div id="signintop">
-                            <i class="fa fa-key"></i> 登陆</div>
+                <i class="fa fa-key"></i> 登陆</div>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="signuptop">
             <a href="../email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="system">
             <a href="../系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
+        <div class="login-box">
+            <div id="welcome">
+            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
@@ -845,7 +1048,7 @@ app.get('/questions/:questionid', (req, res) => {
         <!-- ARTICLE  -->
         <div class="article">
             <div class="article-content">
-                <p class="block-with-text" id="main-content">
+                <p class="block-with-text" id="main-content" style="margin-left: 20px;">
                 </p>
             </div>
             <!-- article-info bar -->
@@ -855,15 +1058,22 @@ app.get('/questions/:questionid', (req, res) => {
                 <i class="fa fa-comments-o"></i>
                 <div id="numberOfA" class="tag"></div>
             </div>
+            <div id="images">
+            </div>
         </div>
         <!-- END ARTICLE -->
         <!-- COMMENTS  -->
-        <div class="heading">
-            <i class="fa fa-comments-o"></i>
-            <div id="numberOfA"></div>
+        <div class="heading" style="margin-left: 20px; font-size: 17px;">
+            <div class="tag">
+                <i class="fa fa-comments-o" style="padding-left: 20px;"></i>
+                <div id="numberOfA2"></div>
+            </div>
         </div>
-        <div id="solutions">
+        <div id="solutions" class="solution">
         </div>
+        <button class="btn" id="addsolution">添加你的推荐备选方案</button>
+        <div id="yoursolutions"></div>
+        <button class="btn" id="submit" style="display: none;">提交</button>
         <!-- Previous Rate Part -->
         <!--                             <div class="panel-transparent">
                                 <div class="article-heading">
@@ -896,28 +1106,28 @@ app.get('/questions/:questionid', (req, res) => {
             最火的问题
         </div>
         <hr class="style-three">
-        <div class="fat-content-small padding-left-10">
-            <ul>
-                <li>
-                    <a href="#">
+        <div>
+            <ul id="mostPopular">
+                <!-- <li>
+                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to change account password?</a>
-                </li>
-                <li>
-                    <a href="#">
+                    </li>
+                    <li>
+                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to edit order details?</a>
-                </li>
-                <li>
-                    <a href="#">
+                    </li>
+                    <li>
+                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> Add new user</a>
-                </li>
-                <li>
-                    <a href="#">
+                    </li>
+                    <li>
+                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> Change customer details</a>
-                </li>
-                <li>
-                    <a href="#">
+                    </li>
+                    <li>
+                        <a href="#">
                                         <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                </li>
+                    </li> -->
             </ul>
         </div>
     </div>
