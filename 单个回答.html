@@ -321,85 +321,86 @@
     function submit() {
         if (document.getElementByClassName("solution")[0].value) {
             firebase.auth().onAuthStateChanged(function(user) {
-                    var email = "" + user.email;
-                    var db = firebase.firestore();
-                    var ref = db.collection("user").doc(email).collection("Answers");
-                    var ref2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
-                    // name
-                    var name = user.email;
-                    var ref3 = db.collection("user").doc(email);
-                    ref3.get().then(function(doc) {
-                        if (doc.exists) {
-                            if (typeof doc.data == 'function') {
-                                var dic = doc.data();
-                                if (dic["Name"] != undefined) {
-                                    name = dic["Name"];
-                                }
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email).collection("Answers");
+                var ref2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
+                // name
+                var name = user.email;
+                var ref3 = db.collection("user").doc(email);
+                ref3.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            if (dic["Name"] != undefined) {
+                                name = dic["Name"];
                             }
                         }
-                    });
-                    // end for name
-                    // time
-                    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                    var now = new Date();
-                    var thisMonth = months[now.getMonth()];
-                    var date = now.getDate();
-                    var year = now.getFullYear();
-                    if (date < 10) {
-                        date = '0' + date;
                     }
-                    var time = "" + date + " " + thisMonth + ", " + year;
-                    // end for time
-                    var questionlink = "${req.params.questionid}";
-
-                    var solutions;
-                    var numberOfNewA = 0;
-                    if (document.getElementsByClassName("solution")) {
-                        solutions = document.getElementsByClassName("solution");
-                        numberOfNewA = solutions.length;
-                    }
-
-                    // add into ref-user-questions ref2-questions
-                    if (solutions != undefined) {
-                        var x;
-                        for (x = 0; x < numberOfNewA; x++) {
-                            var solutiontext = solutions[x];
-                            ref.add({
-                                Time: time,
-                                Content: solutiontext,
-                                QuestionID: questionlink,
-                                Status: "Has not decided"
-                            });
-                            ref2.add({
-                                Author: name,
-                                Time: time,
-                                Content: solutiontext,
-                                Approved: false,
-                                Likes: 0
-                            });
-                        }
-                    }
-                    // add numberOfAnswers
-                    var ref3 = db.collection("Questions").doc("${req.params.questionid}");
-                    ref3.get().then(function(doc2) {
-                        var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfNewA;
-                        return ref3.update({
-                                Likes: newAnswers
-                            })
-                            .then(function() {
-                                console.log("Document successfully updated!");
-                            })
-                            .catch(function(error) {
-                                // The document probably doesn't exist.
-                                console.error("Error updating document: ", error);
-                            });
-                    });
+                });
+                // end for name
+                // time
+                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                var now = new Date();
+                var thisMonth = months[now.getMonth()];
+                var date = now.getDate();
+                var year = now.getFullYear();
+                if (date < 10) {
+                    date = '0' + date;
                 }
-            }
+                var time = "" + date + " " + thisMonth + ", " + year;
+                // end for time
+                var questionlink = "${req.params.questionid}";
 
-            window.onload = function() {
-                initApp();
-            };
+                var solutions;
+                var numberOfNewA = 0;
+                if (document.getElementsByClassName("solution")) {
+                    solutions = document.getElementsByClassName("solution");
+                    numberOfNewA = solutions.length;
+                }
+
+                // add into ref-user-questions ref2-questions
+                if (solutions != undefined) {
+                    var x;
+                    for (x = 0; x < numberOfNewA; x++) {
+                        var solutiontext = solutions[x];
+                        ref.add({
+                            Time: time,
+                            Content: solutiontext,
+                            QuestionID: questionlink,
+                            Status: "Has not decided"
+                        });
+                        ref2.add({
+                            Author: name,
+                            Time: time,
+                            Content: solutiontext,
+                            Approved: false,
+                            Likes: 0
+                        });
+                    }
+                }
+                // add numberOfAnswers
+                var ref3 = db.collection("Questions").doc("${req.params.questionid}");
+                ref3.get().then(function(doc2) {
+                    var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfNewA;
+                    return ref3.update({
+                            Likes: newAnswers
+                        })
+                        .then(function() {
+                            console.log("Document successfully updated!");
+                        })
+                        .catch(function(error) {
+                            // The document probably doesn't exist.
+                            console.error("Error updating document: ", error);
+                        });
+                });
+            });
+        }
+    }
+
+    window.onload = function() {
+        initApp();
+    };
     </script>
     <script type="text/javascript">
     // script for SIDEBAR
@@ -540,9 +541,11 @@
         </div>
         <div id="solutions" class="solution">
         </div>
-        <button class="btn" id="addsolution">添加你的推荐备选方案</button>
-        <div id="yoursolutions"></div>
-        <button class="btn" id="submit" style="display: none;">提交</button>
+        <div id="ursolution">
+            <button class="btn" id="addsolution">添加你的推荐备选方案</button>
+            <div id="yoursolutions"></div>
+            <button class="btn" id="submit" style="display: none;">提交</button>
+        </div>
         <!-- Previous Rate Part -->
         <!--                             <div class="panel-transparent">
                                 <div class="article-heading">

@@ -10,6 +10,7 @@
    <!--  <link href="css/bootstrap.css" rel="stylesheet"> -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/newstyle.css" rel="stylesheet">
+    <link href="css/system.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -45,7 +46,7 @@
                     var ahref1 = document.createElement("a");
                     ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
                     var father1 = document.createElement("div");
-                    father1.setAttribute('class', 'panel panel-default');
+                    father1.setAttribute('class', 'article');
                     var infoChild1 = document.createElement("div");
                     infoChild1.setAttribute('class', 'article-info');
                     var descChild1 = document.createElement("div");
@@ -55,7 +56,7 @@
                     contentChild1.innerHTML = descrip;
                     var timeChild1 = document.createElement("div");
                     timeChild1.innerHTML = time1;
-                    timeChild1.setAttribute('class', 'art-date');
+                    timeChild1.setAttribute('class', 'tag');
                     infoChild1.appendChild(timeChild1);
                     descChild1.appendChild(contentChild1);
                     father1.appendChild(infoChild1);
@@ -81,10 +82,11 @@
                             var ahref = document.createElement("a");
                             ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
                             var father = document.createElement("div");
-                            father.setAttribute('class', 'panel panel-default');
+                            father.setAttribute('class', 'article');
                             var infoChild = document.createElement("div");
                             infoChild.setAttribute('class', 'article-info');
-                            var authorChild = document.createElement("p");
+                            var authorChild = document.createElement("div");
+                            authorChild.setAttribute('class', 'tag');
                             authorChild.innerHTML = author;
                             var descChild = document.createElement("div");
                             descChild.setAttribute('class', 'article-content');
@@ -93,7 +95,7 @@
                             contentChild.innerHTML = content;
                             var timeChild = document.createElement("div");
                             timeChild.innerHTML = time;
-                            timeChild.setAttribute('class', 'art-date');
+                            timeChild.setAttribute('class', 'tag');
                             var buttonsChild = document.createElement("div");
                             buttonsChild.setAttribute('class', 'article-read-more');
                             var buttonChild1 = document.createElement("button");
@@ -159,9 +161,9 @@
 
 
                 // show all answers
-                var authorChild2 = document.createElement("p");
+                var authorChild2 = document.createElement("div");
                 if (selfWritten == false) { authorChild2.innerHTML = author1; } else { authorChild2.innerHTML = "Clever Me"; }
-                authorChild2.setAttribute('class', 'art-date');
+                authorChild2.setAttribute('class', 'tag');
                 var statusChild = document.createElement("div");
                 statusChild.innerHTML = "Status: " + status;
 
@@ -170,7 +172,7 @@
                 var ahref2 = document.createElement("a");
                 ahref2.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + question);
                 var father2 = document.createElement("div");
-                father2.setAttribute('class', 'panel panel-default');
+                father2.setAttribute('class', 'article');
                 var infoChild2 = document.createElement("div");
                 infoChild2.setAttribute('class', 'article-info');
                 var descChild2 = document.createElement("div");
@@ -180,7 +182,7 @@
                 contentChild2.innerHTML = content1;
                 var timeChild2 = document.createElement("div");
                 timeChild2.innerHTML = time2;
-                timeChild2.setAttribute('class', 'art-date');
+                timeChild2.setAttribute('class', 'tag');
                 infoChild2.appendChild(timeChild2);
                 infoChild2.appendChild(authorChild2);
                 descChild2.appendChild(contentChild2);
@@ -290,7 +292,7 @@
             <div id="signintop">
                 <i class="fa fa-key"></i> 登陆</div>
         </div>
-        <div class="login-box" id="signintop">
+        <div class="login-box" id="signuptop">
             <a href="email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
         </div>
@@ -325,12 +327,12 @@
     </div>
     <!-- END TOP NAVIGATION -->
     <!-- MAIN SECTION -->
-    <div class="container featured-area-default padding-30">
+    <div class="main-content">
         <div class="row">
             <!-- ARTICLE OVERVIEW SECTION -->
             <div class="col-md-8 padding-20">
                 <div class="row">
-                    <div class="fb-heading">
+                    <div class="heading">
                         <i class="fa fa-folder"></i> 审核方案
                         <span class="cat-count">(10)</span>
                     </div>
@@ -339,7 +341,7 @@
                     </div>
                     <!-- END BREADCRUMBS -->
                     <!-- ARTICLES -->
-                    <div class="fb-heading">
+                    <div class="heading">
                         <i class="fa fa-folder"></i> 历史问题
                         <span class="cat-count">(10)</span>
                     </div>
@@ -347,7 +349,7 @@
                     <div id="history"></div>
                     <!-- END ARTICLES -->
                     <!-- ANSWERS -->
-                    <div class="fb-heading">
+                    <div class="heading">
                         <i class="fa fa-folder"></i> 历史答案
                         <span class="cat-count">(10)</span>
                     </div>
