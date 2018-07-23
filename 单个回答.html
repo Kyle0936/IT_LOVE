@@ -28,6 +28,7 @@
     <script>
     var db = firebase.firestore();
     var ref = db.collection("Questions").doc("${req.params.questionid}");
+    // var ref = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo");
     ref.get().then(function(doc) {
         var dic = doc.data();
         if (doc.exists) {
@@ -50,6 +51,7 @@
 
             var imageFather = document.getElementById("images");
             var subRef = db.collection("Questions").doc("${req.params.questionid}").collection("URLs");
+            // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
             subRef.get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc2) {
                     dic2 = doc2.data();
@@ -68,7 +70,7 @@
         console.log("Error getting document:", error);
     });
     // add answers
-    ref.collection("Answers").get().then(function(querySnapshot) {
+    ref.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc1) {
             var dic1 = doc1.data();
             var author1 = dic1["Author"];
@@ -92,6 +94,7 @@
             contentChild.setAttribute('class', 'comments-content');
             contentChild.innerHTML = content;
             var likeChild = document.createElement("p");
+            likeChild.setAttribute('class', 'likes');
             likeChild.innerHTML = "Number of people chose this: " + likes;
             // var lineChild = document.createElement("hr");
             // lineChild.setAttribute('class', 'style-three');
@@ -111,12 +114,14 @@
                     if (user) {
                         var email = "" + user.email;
                         //current answer in question
-                        var detailedRef = db.collection("Questions").doc("${req.params.questionid}").collection("Answers").doc(doc1.id);
+                        var detailedRef = db.collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true).doc(doc1.id);
+                        // var detailedRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers").doc(doc1.id);
                         //current answer in user
-                        var otherRef = db.collection("user").doc(email).collection("Answers").doc(doc1.id);
+                        var otherRef = db.collection("user").doc(email).collection("Answers").where("Approved", "==", true).doc(doc1.id);
                         otherRef.get().then(function(doc3) {
                             if (!doc3.exists) {
-                                questionLink = "${req.params.questionid}";
+                                var questionLink = "${req.params.questionid}";
+                                // var questionLink = "K0orA8toMuCwKRTihTGo";
                                 otherRef.set({
                                         Type: "choose",
                                         QuestionID: questionLink,
@@ -301,6 +306,7 @@
     }
 
     var numberOfSolutions = 0;
+    var solutions = [];
 
     function addsolution() {
         console.log("testADD");
@@ -316,15 +322,22 @@
         solution.style.fontSize = "14px";
         outerdiv.appendChild(solution);
         document.getElementById('yoursolutions').appendChild(outerdiv);
+        solutions.push(solution);
     }
 
     function submit() {
-        if (document.getElementByClassName("solution")[0].value) {
+        console.log("TEST: " + document.getElementsByClassName("solution")[0]);
+        if (document.getElementsByClassName("solution")[0].textContent) {
+            console.log(document.getElementsByClassName("solution")[0].textContent);
             firebase.auth().onAuthStateChanged(function(user) {
                 var email = "" + user.email;
                 var db = firebase.firestore();
-                var ref = db.collection("user").doc(email).collection("Answers");
-                var ref2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
+
+                var query = db.collection("user").doc(email).collection("Answers");
+                var ref = query.where("Approved", "==", true);
+                var query2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
+                var ref2 = query2.where("Approved", "==", true);
+                // var ref2 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers");
                 // name
                 var name = user.email;
                 var ref3 = db.collection("user").doc(email);
@@ -351,19 +364,20 @@
                 var time = "" + date + " " + thisMonth + ", " + year;
                 // end for time
                 var questionlink = "${req.params.questionid}";
+                // var questionlink = "K0orA8toMuCwKRTihTGo";
 
-                var solutions;
-                var numberOfNewA = 0;
-                if (document.getElementsByClassName("solution")) {
-                    solutions = document.getElementsByClassName("solution");
-                    numberOfNewA = solutions.length;
-                }
+                // var numberOfNewA = 0;
+                // if (document.getElementsByClassName("solution")) {
+                //     solutions = document.getElementsByClassName("solution");
+                //     numberOfNewA = solutions.length;
+                // }
 
                 // add into ref-user-questions ref2-questions
                 if (solutions != undefined) {
+                    console.log("Test2");
                     var x;
-                    for (x = 0; x < numberOfNewA; x++) {
-                        var solutiontext = solutions[x];
+                    for (x = 0; x < numberOfSolutions; x++) {
+                        var solutiontext = solutions[x].value;
                         ref.add({
                             Time: time,
                             Content: solutiontext,
@@ -380,9 +394,10 @@
                     }
                 }
                 // add numberOfAnswers
+                // var ref3 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo");
                 var ref3 = db.collection("Questions").doc("${req.params.questionid}");
                 ref3.get().then(function(doc2) {
-                    var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfNewA;
+                    var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfSolutions;
                     return ref3.update({
                             Likes: newAnswers
                         })
@@ -396,6 +411,7 @@
                 });
             });
         }
+        location.reload();
     }
 
     window.onload = function() {

@@ -3,8 +3,8 @@ const express = require('express');
 const app1 = express();
 
 app1.get('/myQuestions/:questionid', (req, res) => {
-    console.log("TEST");
-    res.status(200).send(`<!DOCTYPE html>
+	console.log("TEST");
+	res.status(200).send(`<!DOCTYPE html>
 <html lang="zh">
 
 <head>
@@ -47,7 +47,23 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                 text.setAttribute('style', 'display: inline;');
                 text.textContent = '注销';
                 document.getElementById('signintop').appendChild(text);
+
+                document.getElementById('signuptop').style.display = "none";
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email);
+                ref.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                        }
+                    } else{
+                        console.log("No such document!");
+                        document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                    }});
             } else {
+                document.getElementById('system').style.display = "none";
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
@@ -75,13 +91,17 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             <div id="signintop">
                             <i class="fa fa-key"></i> 登陆</div>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="signuptop">
             <a href="../email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="system">
             <a href="../系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
+        <div class="login-box">
+            <div id="welcome">
+            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
@@ -256,7 +276,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             var db = firebase.firestore();
             var email = "" + user.email;
             //WHY THERE ARE TWO COMMENTS QUES????
-            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
+            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true).;
             var ref1 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
 
             ref1.get().then(function(doc) {
@@ -441,7 +461,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                 //var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
                 var ref2 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
                 ref2.get().then(function(doc) {
-                    ref2.collection("Answers").get().then(function(querySnapshot) {
+                    ref2.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
                             console.log(typeof(doc.data()["Name"]));
                             console.log(typeof(doc.data()["Likes"]));
@@ -486,7 +506,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
 </html>`
 
-        );
+		);
 });
 exports.singleQues = functions.https.onRequest(app1);
 // exports.bigben = functions.https.onRequest((req, res) => {
@@ -559,6 +579,7 @@ app.get('/questions/:questionid', (req, res) => {
     <script>
     var db = firebase.firestore();
     var ref = db.collection("Questions").doc("${req.params.questionid}");
+    // var ref = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo");
     ref.get().then(function(doc) {
         var dic = doc.data();
         if (doc.exists) {
@@ -581,6 +602,7 @@ app.get('/questions/:questionid', (req, res) => {
 
             var imageFather = document.getElementById("images");
             var subRef = db.collection("Questions").doc("${req.params.questionid}").collection("URLs");
+            // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
             subRef.get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc2) {
                     dic2 = doc2.data();
@@ -599,7 +621,7 @@ app.get('/questions/:questionid', (req, res) => {
         console.log("Error getting document:", error);
     });
     // add answers
-    ref.collection("Answers").get().then(function(querySnapshot) {
+    ref.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc1) {
             var dic1 = doc1.data();
             var author1 = dic1["Author"];
@@ -623,6 +645,7 @@ app.get('/questions/:questionid', (req, res) => {
             contentChild.setAttribute('class', 'comments-content');
             contentChild.innerHTML = content;
             var likeChild = document.createElement("p");
+            likeChild.setAttribute('class', 'likes');
             likeChild.innerHTML = "Number of people chose this: " + likes;
             // var lineChild = document.createElement("hr");
             // lineChild.setAttribute('class', 'style-three');
@@ -642,12 +665,14 @@ app.get('/questions/:questionid', (req, res) => {
                     if (user) {
                         var email = "" + user.email;
                         //current answer in question
-                        var detailedRef = db.collection("Questions").doc("${req.params.questionid}").collection("Answers").doc(doc1.id);
+                        var detailedRef = db.collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true).doc(doc1.id);
+                        // var detailedRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers").doc(doc1.id);
                         //current answer in user
-                        var otherRef = db.collection("user").doc(email).collection("Answers").doc(doc1.id);
+                        var otherRef = db.collection("user").doc(email).collection("Answers").where("Approved", "==", true).doc(doc1.id);
                         otherRef.get().then(function(doc3) {
                             if (!doc3.exists) {
-                                questionLink = "${req.params.questionid}";
+                                var questionLink = "${req.params.questionid}";
+                                // var questionLink = "K0orA8toMuCwKRTihTGo";
                                 otherRef.set({
                                         Type: "choose",
                                         QuestionID: questionLink,
@@ -832,6 +857,7 @@ app.get('/questions/:questionid', (req, res) => {
     }
 
     var numberOfSolutions = 0;
+    var solutions = [];
 
     function addsolution() {
         console.log("testADD");
@@ -847,15 +873,22 @@ app.get('/questions/:questionid', (req, res) => {
         solution.style.fontSize = "14px";
         outerdiv.appendChild(solution);
         document.getElementById('yoursolutions').appendChild(outerdiv);
+        solutions.push(solution);
     }
 
     function submit() {
-        if (document.getElementByClassName("solution")[0].value) {
+        console.log("TEST: " + document.getElementsByClassName("solution")[0]);
+        if (document.getElementsByClassName("solution")[0].textContent) {
+            console.log(document.getElementsByClassName("solution")[0].textContent);
             firebase.auth().onAuthStateChanged(function(user) {
                 var email = "" + user.email;
                 var db = firebase.firestore();
-                var ref = db.collection("user").doc(email).collection("Answers");
-                var ref2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
+
+                var query = db.collection("user").doc(email).collection("Answers");
+                var ref = query.where("Approved", "==", true);
+                var query2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
+                var ref2 = query2.where("Approved", "==", true);
+                // var ref2 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers");
                 // name
                 var name = user.email;
                 var ref3 = db.collection("user").doc(email);
@@ -882,19 +915,20 @@ app.get('/questions/:questionid', (req, res) => {
                 var time = "" + date + " " + thisMonth + ", " + year;
                 // end for time
                 var questionlink = "${req.params.questionid}";
+                // var questionlink = "K0orA8toMuCwKRTihTGo";
 
-                var solutions;
-                var numberOfNewA = 0;
-                if (document.getElementsByClassName("solution")) {
-                    solutions = document.getElementsByClassName("solution");
-                    numberOfNewA = solutions.length;
-                }
+                // var numberOfNewA = 0;
+                // if (document.getElementsByClassName("solution")) {
+                //     solutions = document.getElementsByClassName("solution");
+                //     numberOfNewA = solutions.length;
+                // }
 
                 // add into ref-user-questions ref2-questions
                 if (solutions != undefined) {
+                    console.log("Test2");
                     var x;
-                    for (x = 0; x < numberOfNewA; x++) {
-                        var solutiontext = solutions[x];
+                    for (x = 0; x < numberOfSolutions; x++) {
+                        var solutiontext = solutions[x].value;
                         ref.add({
                             Time: time,
                             Content: solutiontext,
@@ -911,9 +945,10 @@ app.get('/questions/:questionid', (req, res) => {
                     }
                 }
                 // add numberOfAnswers
+                // var ref3 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo");
                 var ref3 = db.collection("Questions").doc("${req.params.questionid}");
                 ref3.get().then(function(doc2) {
-                    var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfNewA;
+                    var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfSolutions;
                     return ref3.update({
                             Likes: newAnswers
                         })
@@ -927,6 +962,7 @@ app.get('/questions/:questionid', (req, res) => {
                 });
             });
         }
+        location.reload();
     }
 
     window.onload = function() {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
-
+<!-- need to replace example and add ui -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,10 +8,10 @@
     <title>IT LOVE 历史问题</title>
     <!-- LOADING STYLESHEETS -->
     <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
     <!--     <link href="../css/style.css" rel="stylesheet"> -->
-    <link href="css/newstyle.css" rel="stylesheet">
-    <link href="css/history-question.css" rel="stylesheet">
+    <link href="../css/newstyle.css" rel="stylesheet">
+    <link href="../css/history-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script>
     var config = {
@@ -270,7 +270,7 @@
             var db = firebase.firestore();
             var email = "" + user.email;
             //WHY THERE ARE TWO COMMENTS QUES????
-            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
+            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true).;
             var ref1 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
 
             ref1.get().then(function(doc) {
@@ -455,11 +455,11 @@
                 //var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
                 var ref2 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
                 ref2.get().then(function(doc) {
-                    ref2.collection("Answers").get().then(function(querySnapshot) {
+                    ref2.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
-                            console.log(typeof(doc.data()["Name"]));
+                            console.log(typeof(doc.data()["Author"]));
                             console.log(typeof(doc.data()["Likes"]));
-                            data.addRow([doc.data()["Name"], doc.data()["Likes"]]);
+                            data.addRow([doc.data()["Author"], doc.data()["Likes"]]);
                         });
                         var options = {
                             'title': 'How many likes each solution has?',

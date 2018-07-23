@@ -210,7 +210,7 @@
                 if (questionRef1 == undefined) {
                     var newerRef1 = ref.doc();
                     newerRef1.set({
-                            Name: name,
+                            Author: name,
                             Description: descr,
                             Public: check,
                             Time: time,
@@ -237,7 +237,7 @@
 
                 } else {
                     ref.doc(questionRef1).set({
-                            Name: name,
+                            Author: name,
                             Description: descr,
                             Public: check,
                             Time: time,
@@ -322,6 +322,7 @@
             });
             alert("提交成功!");
         } else { alert("请先输入您的问题啦"); }
+        window.open('https://it-love1.firebaseapp.com/questions/' + questionRef2, "_self");
     }
 
     var numberOfSolutions = 0;

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>系统消息</title>
     <!-- LOADING STYLESHEETS -->
-   <!--  <link href="css/bootstrap.css" rel="stylesheet"> -->
+    <!--  <link href="css/bootstrap.css" rel="stylesheet"> -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/newstyle.css" rel="stylesheet">
     <link href="css/system.css" rel="stylesheet">
@@ -26,6 +26,8 @@
     <!--         <script src="js/msg.js"></script> -->
     <script>
     var db = firebase.firestore();
+    var count1 = 0;
+    var count2 = 0;
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             var email = "" + user.email;
@@ -34,6 +36,7 @@
             ref.get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
                     // add all asked questions
+                    count2++;
                     var bigdic = doc.data();
                     var descrip = bigdic["Description"];
                     var number = bigdic["NumberOfAnswers"];
@@ -57,23 +60,26 @@
                     var timeChild1 = document.createElement("div");
                     timeChild1.innerHTML = time1;
                     timeChild1.setAttribute('class', 'tag');
+                    publicChild.setAttribute('class', 'tag');
+                    numberChild.setAttribute('class', 'tag');
                     infoChild1.appendChild(timeChild1);
+                    infoChild1.appendChild(publicChild);
+                    infoChild1.appendChild(numberChild);
                     descChild1.appendChild(contentChild1);
-                    father1.appendChild(infoChild1);
                     father1.appendChild(descChild1);
-                    father1.appendChild(publicChild);
-                    father1.appendChild(numberChild);
+                    father1.appendChild(infoChild1);
                     ahref1.appendChild(father1);
                     var fafather1 = document.createElement("div");
                     fafather1.appendChild(ahref1);
                     var grandfather1 = document.getElementById("history");
                     grandfather1.appendChild(fafather1);
-
                     // add all unapproved proposals
                     var secondRef = ref.doc(doc.id).collection("Answers");
                     var query = secondRef.where("Approved", "==", false);
                     query.get().then(function(querySnapshot1) {
                         querySnapshot1.forEach(function(doc1) {
+                            count1++;
+                            console.log(count1);
                             var dic = doc1.data();
                             var thirdRef = secondRef.doc(doc1.id);
                             var author = dic["Author"];
@@ -128,8 +134,8 @@
                             infoChild.appendChild(timeChild);
                             infoChild.appendChild(authorChild);
                             descChild.appendChild(contentChild);
-                            father.appendChild(infoChild);
                             father.appendChild(descChild);
+                            father.appendChild(infoChild);
                             ahref.appendChild(father);
                             var fafather = document.createElement("div");
                             fafather.appendChild(ahref);
@@ -139,17 +145,22 @@
                             grandfather.appendChild(fafather);
 
                         });
+                        document.getElementById("approvenumber").innerHTML = count1;
                     });
+
                 });
+                document.getElementById("questionnumber").innerHTML = count2;
             });
 
         } else {
             window.open('登录.html', "_self");
         }
         // add all answered
+        var count3 = 0;
         var ref1 = db.collection("user").doc(email).collection("Answers");
         ref1.get().then(function(querySnapshot2) {
             querySnapshot2.forEach(function(doc2) {
+                count3++;
                 var dic1 = doc2.data();
                 var author1 = dic1["Author"]; // an email address
                 var likes1 = dic1["Likes"];
@@ -158,7 +169,6 @@
                 var selfWritten = dic1["Self"]; // use this to judege and generate two diff types
                 var question = dic1["QuestionID"]; //id from root colletion(questions)
                 var content1 = dic1["Content"];
-
 
                 // show all answers
                 var authorChild2 = document.createElement("div");
@@ -183,13 +193,16 @@
                 var timeChild2 = document.createElement("div");
                 timeChild2.innerHTML = time2;
                 timeChild2.setAttribute('class', 'tag');
+                authorChild2.setAttribute('class', 'tag');
+                statusChild.setAttribute('class', 'tag');
+                likeChild2.setAttribute('class', 'tag');
                 infoChild2.appendChild(timeChild2);
                 infoChild2.appendChild(authorChild2);
+                infoChild2.appendChild(statusChild);
+                infoChild2.appendChild(likeChild2);
                 descChild2.appendChild(contentChild2);
-                father2.appendChild(infoChild2);
                 father2.appendChild(descChild2);
-                father2.appendChild(statusChild);
-                father2.appendChild(likeChild2);
+                father2.appendChild(infoChild2);
                 ahref2.appendChild(father2);
                 var fafather2 = document.createElement("div");
                 fafather2.appendChild(ahref2);
@@ -197,7 +210,9 @@
                 grandfather2.appendChild(fafather2);
 
             });
+            document.getElementById("answernumber").innerHTML = count3;
         });
+
 
 
     });
@@ -229,10 +244,11 @@
                             var dic = doc.data();
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
                         }
-                    } else{
+                    } else {
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
-                    }});
+                    }
+                });
             } else {
                 window.open('登录.html', "_self");
                 document.getElementById('system').style.display = "none";
@@ -334,7 +350,7 @@
                 <div class="row">
                     <div class="heading">
                         <i class="fa fa-folder"></i> 审核方案
-                        <span class="cat-count">(10)</span>
+                        <span class="cat-count" id="approvenumber"></span>
                     </div>
                     <hr class="style-three">
                     <div id="solutions">
@@ -343,7 +359,7 @@
                     <!-- ARTICLES -->
                     <div class="heading">
                         <i class="fa fa-folder"></i> 历史问题
-                        <span class="cat-count">(10)</span>
+                        <span class="cat-count" id="questionnumber"></span>
                     </div>
                     <hr class="style-three">
                     <div id="history"></div>
@@ -351,7 +367,7 @@
                     <!-- ANSWERS -->
                     <div class="heading">
                         <i class="fa fa-folder"></i> 历史答案
-                        <span class="cat-count">(10)</span>
+                        <span class="cat-count" id="answernumber"></span>
                     </div>
                     <hr class="style-three">
                     <div id="answers"></div>

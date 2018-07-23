@@ -171,14 +171,15 @@ ul.topnav li.icon {display: none;}
 .block-with-text {
   overflow: hidden;
   position: relative;
-  text-indent: 40px;
+  text-indent: 30px;
   line-height: 1.2em;
   max-height: 3.6em;
   text-align: justify;
-  margin-right: -1em;
+  margin-right: 1em;
   padding-right: 1em;
   margin-top: -7px;
   margin-bottom: -7px;
+  font-size: 18px;
 }
 .block-with-text:before {
   content: '...';
@@ -359,12 +360,18 @@ hr.style-three {
   border-radius:10px;
   margin-top: 20px;
   margin-bottom: 15px;
-  margin-left: 15px;
+  margin-left: 40px;
   margin-right: 15px;
 }
 
 /* IMAGES */
 .images{
   display: inline-block;
-  
+}
+
+span.cat-count {
+  font-size: 12px;
+  font-weight: lighter;
+  font-family: sans-serif;
+  color: #626262;
 }
