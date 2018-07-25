@@ -102,10 +102,10 @@
     function uploadImageAsPromise(imageFile) {
         return new Promise(function(resolve, reject) {
             console.log("TESTNEW");
-            var storageRef = firebase.storage().ref(imageFile.name);
+            var storageRef = firebase.storage().ref();
 
             //Upload file
-            var task = storageRef.put(imageFile).then(function(snapshot) {
+            var task = storageRef.child('images/' + new Date() + imageFile.name).put(imageFile).then(function(snapshot) {
                 snapshot.ref.getDownloadURL().then(function(url) {
                     firebase.auth().onAuthStateChanged(function(user) {
                         var email = "" + user.email;
@@ -126,10 +126,10 @@
                                         console.error("Error removing document: ", error);
                                     });
                                 });
-                                 // add new ones
+                                // add new ones
                                 ref.doc(email).collection("Questions").doc(questionRef1).collection("URLs").add({ Image: "" + url });
                             });
-                            
+
                         }
                         var ref2 = db.collection("Questions");
                         if (questionRef2 == undefined) {
@@ -149,7 +149,7 @@
                                 // add new ones
                                 ref2.doc(questionRef2).collection("URLs").add({ Image: "" + url });
                             });
-                            
+
                         }
                     });
                 });
@@ -504,16 +504,14 @@
         <form>
             <textarea rows="5" name="text" placeholder="问题描述" class="desc" id="description"></textarea>
             <!-- Container for the demo -->
-            <div class="drop">
-                <!--       <input type='file' onchange="readURL(this);" />
+            <!--       <input type='file' onchange="readURL(this);" />
                            <img id="blah" src=# alt="your image" /> -->
-                <h4 style="margin-top: 0px;">上传聊天截图</h4>
-                <!-- <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button> -->
-                <!--  <div id="messagesDiv"> -->
-                <input type="file" id="files" name="files[]" multiple />
-                <!-- </div> -->
-                <!--   <input type="file" id="file" name="file"/> -->
-            </div>
+            <h4 style="margin-top: 0px;">上传聊天截图</h4>
+            <!-- <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button> -->
+            <!--  <div id="messagesDiv"> -->
+            <input type="file" id="files" name="files[]" multiple />
+            <!-- </div> -->
+            <!--   <input type="file" id="file" name="file"/> -->
             <input type="checkbox" value="" id="defaultCheck1">
             <label for="defaultCheck1">
                 发布到公共社区

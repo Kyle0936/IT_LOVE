@@ -559,9 +559,7 @@ app.get('/questions/:questionid', (req, res) => {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IT LOVE 回答</title>
     <!-- LOADING STYLESHEETS -->
-    <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <!--     <link href="../css/style.css" rel="stylesheet"> -->
     <link href="../css/newstyle.css" rel="stylesheet">
     <link href="../css/single-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
@@ -603,14 +601,17 @@ app.get('/questions/:questionid', (req, res) => {
             var imageFather = document.getElementById("images");
             var subRef = db.collection("Questions").doc("${req.params.questionid}").collection("URLs");
             // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
+            var countImage;
             subRef.get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc2) {
                     dic2 = doc2.data();
                     var image = document.createElement("img");
                     image.src = dic2["Image"];
+                    image.id = 'show' + countImage;
                     image.setAttribute('width', '100');
                     image.setAttribute('height', '80');
                     imageFather.appendChild(image);
+                    document.getElementById(image.id).addEventListener("click", function(){showFullScreen(image.src)});
                 });
             });
 
@@ -804,6 +805,12 @@ app.get('/questions/:questionid', (req, res) => {
     //     console.log("Transaction failed: ", error);
     // });
     // }
+
+    // Show image in full screen when clicked, worked for Cordova
+    function showFullScreen(url){
+        FullScreenImage.showImageURL(url);
+    }
+
     </script>
     <script>
     /**

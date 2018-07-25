@@ -22,14 +22,34 @@
         messagingSenderId: "782043275132"
     };
     firebase.initializeApp(config);
+
+    function uploadImageAsPromise(imageFile) {
+        return new Promise(function(resolve, reject) {
+            console.log("TESTNEW");
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                var storageRef = firebase.storage().ref();
+                var email = "" + user.email;
+                //Upload file
+                var task = storageRef.child('user/' + email).child(new Date() + imageFile.name).put(imageFile).then(function(snapshot) {
+                    snapshot.ref.getDownloadURL().then(function(url) {
+                        var db = firebase.firestore();
+                        var ref = db.collection("user");
+                        ref.doc(email).set({ Picture: "" + url }, { merge: true });
+                        console.log("success");
+                    });
+                });
+            });
+        });
+    }
     </script>
 </head>
 
 <body>
     <div class="toppest">
         <div class="login-box">
-        <div id="signintop">
-                            <i class="fa fa-key"></i> 登陆</div>
+            <div id="signintop">
+                <i class="fa fa-key"></i> 登陆</div>
         </div>
         <div class="login-box" id="signuptop">
             <a href="email-password.html">
@@ -84,11 +104,22 @@
     </div>
     <div class="article">
         <div class="gray">
-            简介
+            <strong>头像</strong>
+        </div>
+        <div id="profileImage">
+            <form id="imageform">
+                <h4 style="margin-top: 0px;">上传头像</h4>
+                <input type="file" id="file" name="file" />
+            </form>
+        </div>
+    </div>
+    <div class="article">
+        <div class="gray">
+            <strong>简介</strong>
             <!-- Store as Type -->
         </div>
         <div class="article-content">
-            你的属性：
+            <strong>你的属性：</strong>
             <div id="typeDiv" style="display: inline-block;">
                 <input id="inputType" />
             </div>
@@ -97,7 +128,7 @@
     </div>
     <div class="article">
         <div class="gray">
-            虚拟货币
+            <strong>虚拟货币</strong>
         </div>
         <div class="article-content">
             15 = 3 个提案被采纳 * 2 + 9 个提案被选择 * 1
@@ -106,16 +137,15 @@
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
     <script>
-
     function toggleSignIn() {
-      if (firebase.auth().currentUser) {
-        // [START signout]
-        firebase.auth().signOut();
-        window.open('登录.html', "_self");
-        // [END signout]
-      } else {
-        window.open('登录.html', "_self");
-      }
+        if (firebase.auth().currentUser) {
+            // [START signout]
+            firebase.auth().signOut();
+            window.open('登录.html', "_self");
+            // [END signout]
+        } else {
+            window.open('登录.html', "_self");
+        }
     }
 
 
@@ -144,6 +174,15 @@
                             if (dic["Type"] != null) {
                                 document.getElementById('typeDiv').innerHTML = dic["Type"];
                                 document.getElementById('type-submit').textContent = '编辑';
+                            }
+                            if (dic["Picture"] != null) {
+                                document.getElementById('imageform').style.display = 'none';
+                                var profileImg = document.createElement('img');
+                                profileImg.src = dic["Picture"];
+                                profileImg.setAttribute('width', '80');
+                                profileImg.setAttribute('height', '80');
+                                document.getElementById('profileImage').style.alignContent = "center";
+                                document.getElementById('profileImage').appendChild(profileImg);
                             }
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
                         }
@@ -177,10 +216,11 @@
                             var dic = doc.data();
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
                         }
-                    } else{
+                    } else {
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
-                    }});
+                    }
+                });
             } else {
                 document.getElementById('system').style.display = "none";
                 document.getElementById('name-submit').disabled = true;
@@ -189,9 +229,13 @@
             }
             document.getElementById('name-submit').addEventListener('click', storeName, false);
             document.getElementById('type-submit').addEventListener('click', storeType, false);
-            
+
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+        document.getElementById('file').addEventListener('change', function(e) {
+            var imageFile = e.target.files[0];
+            uploadImageAsPromise(imageFile);
+        });
     }
 
     // storename function
@@ -225,8 +269,8 @@
                                 });
                         } else { console.log("Error: other text on the button."); }
                     } else {
-                        ref.doc(email).set({ Name: "" + document.getElementById("inputName").value }, { merge: true }).then(function(){location.reload();});
-                        
+                        ref.doc(email).set({ Name: "" + document.getElementById("inputName").value }, { merge: true }).then(function() { location.reload(); });
+
                     }
                 });
             } else {}
