@@ -8,10 +8,25 @@
     right: 5%;
     overflow-x: hidden;
     padding: 8px 0;
+    text-align: center;
 }
 
 .question{
     position: relative;
     width: 66%;
     left: 1%;
+    border: 1px solid #CDCDCD;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#ursolution{
+    margin-left: 25px;
+}
+
+.likes{
+    font-size: 14px;
+    margin-bottom: -10px;
+    text-align: right;
+
 }

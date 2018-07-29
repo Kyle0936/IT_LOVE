@@ -6,6 +6,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 	console.log("TEST");
 	res.status(200).send(`<!DOCTYPE html>
 <html lang="zh">
+<!-- need to replace example and add ui -->
 
 <head>
     <meta charset="utf-8">
@@ -16,8 +17,8 @@ app1.get('/myQuestions/:questionid', (req, res) => {
     <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <!--     <link href="../css/style.css" rel="stylesheet"> -->
-    <link href="../css/newstyle.css" rel="stylesheet">
-    <link href="../css/history-question.css" rel="stylesheet">
+    <link href="css/newstyle.css" rel="stylesheet">
+    <link href="css/history-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script>
     var config = {
@@ -30,7 +31,6 @@ app1.get('/myQuestions/:questionid', (req, res) => {
     };
     firebase.initializeApp(config);
     </script>
-
     <script>
     /**
      * init firestone
@@ -57,16 +57,24 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                         if (typeof doc.data == 'function') {
                             var dic = doc.data();
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                            document.getElementById('welcome').addEventListener('click', openProfile);
                         }
-                    } else{
+                    } else {
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
-                    }});
+                        document.getElementById('welcome').addEventListener('click', openProfile);
+                    }
+                });
             } else {
                 document.getElementById('system').style.display = "none";
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+        document.getElementById('submit').addEventListener('click', submit);
+    }
+
+    function openProfile(){
+        window.open("个人信息.html", "_self");
     }
 
     function toggleSignIn() {
@@ -75,8 +83,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {
-        }
+        } else {}
     }
 
     window.onload = function() {
@@ -89,7 +96,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
     <div class="toppest">
         <div class="login-box">
             <div id="signintop">
-                            <i class="fa fa-key"></i> 登陆</div>
+                <i class="fa fa-key"></i> 登陆</div>
         </div>
         <div class="login-box" id="signuptop">
             <a href="../email-password.html">
@@ -127,108 +134,58 @@ app1.get('/myQuestions/:questionid', (req, res) => {
     <!-- END TOP NAVIGATION -->
     <!-- MAIN SECTION -->
     <div class="question">
-        <div class="row">
-            <!-- ARTICLE  -->
-            <div id="displayQues"></div>
-            <div id="solutions"></div>
-            <div class="panel panel-default">
-                <div class="article-info">
-                    <div class="art-date">
-                        <a href="#">
-                                                                <i class="fa fa-calendar-o"></i> 20 May, 2016 </a>
-                    </div>
-                    <div class="art-category">
-                        <a href="#">
-                                                                    <i class="fa fa-folder"></i> Account Settings </a>
-                    </div>
-                    <div class="art-comments">
-                        <a href="#">
-                                                                        <i class="fa fa-comments-o"></i> 4 解决方案 </a>
-                    </div>
-                </div>
-                <div class="article-content">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
-                    </p>
-                </div>
-                <div class="article-content">
-                </div>
+        <!-- ARTICLE  -->
+        <div class="article">
+            <div class="article-content">
+                <p class="block-with-text" id="main-content" style="margin-left: 20px;">
+                </p>
             </div>
-            <!-- END ARTICLE -->
-            <!-- COMMENTS  -->
-            <div class="panel panel-default">
-                <div class="article-heading">
-                    <i class="fa fa-comments-o"></i> 解决方案 (4)
-                </div>
-                <!-- FIRST LEVEL COMMENT 1 -->
-                <div class="article-content">
-                    <div class="article-comment-top">
-                        <div class="comments-user">
-                            <h4> 回答1 </h4>
-                            <div class="user-name">John Doe</div>
-                            <div class="comment-post-date">Posted On
-                                <span class="italics">20 May, 2016</span>
-                            </div>
-                        </div>
-                        <div class="comments-content">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
-                            </p>
-                            <div class="article-read-more">
-                                <button class="btn btn-default btn-sm">
-                                    <i class="fa fa-reply"></i> Reply</button>
-                            </div>
-                        </div>
-                        <!-- SECOND LEVEL COMMENT -->
-                        <div class="article-comment-second">
-                            <div class="comments-user">
-                                <div class="user-name">Quinn Demma</div>
-                                <div class="comment-post-date">Posted On
-                                    <span class="italics">20 May, 2016</span>
-                                </div>
-                            </div>
-                            <div class="comments-content">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in orci velit. Sed sodales diam in massa auctor iaculis. Nunc lacinia vitae nunc vel condimentum. Etiam dignissim pulvinar vulputate. Mauris vitae ex felis. Duis ante mi, faucibus nec sem at, venenatis pretium nibh. Nulla condimentum a risus eu fermentum. Proin dapibus odio ex, vel tempor diam volutpat a. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus fermentum facilisis pellentesque.
-                                </p>
-                            </div>
-                        </div>
-                        <!-- END SECOND LEVEL COMMENT -->
-                    </div>
-                </div>
-                <!-- END FIRST LEVEL COMMENT 1 -->
+            <!-- article-info bar -->
+            <div class="article-info">
+                <i class="fa fa-calendar-o"></i>
+                <div id="date" class="tag"> </div>
+                <i class="fa fa-comments-o"></i>
+                <div id="numberOfA" class="tag"></div>
             </div>
-            <!-- END COMMENTS -->
-        </div>
-        <div class="sidenav">
-            <div id="myChart"></div>
-            <div class="heading">
-                <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
-            </div>
-            <form method="post" class="comment-form">
-                <div class="form-row align-items-center">
-                    <div class="col-auto my-1" id="add-solutions">
-                        <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
-                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" onchange="scheduleA.call(this,event,this.value)">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col-auto my-1">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-            </form>
-            <div class="form-check col-md-8 padding-20 add-button">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                    从公共社区隐藏
-                </label>
+            <div id="images">
             </div>
         </div>
-        <!--                 <script type="text/javascript">
+        <!-- END ARTICLE -->
+        <!-- COMMENTS  -->
+        <div class="heading" style="margin-left: 20px; font-size: 17px;">
+            <div class="tag">
+                <i class="fa fa-comments-o" style="padding-left: 20px;"></i>
+                <div id="numberOfA2"></div>
+            </div>
+        </div>
+        <div id="solutions" class="solution">
+        </div>
+    </div>
+    <!-- sidebar -->
+    <div class="sidenav">
+        <div id="myChart"></div>
+        <div class="heading">
+            <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
+        </div>
+        <form>
+                <div id="add-solutions" style="margin-bottom:10px;">
+                    <select id="inlineFormCustomSelect" onchange="scheduleA.call(this,event,this.value)">
+                        <option selected>Choose...</option>
+<!--                         <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option> -->
+                    </select>
+                </div>
+                <button class="btn" id="submit">提交</button>
+        </form>
+        <div>
+            <input type="checkbox" value="" id="defaultCheck1">
+            <label for="defaultCheck1">
+                从公共社区隐藏
+            </label>
+        </div>
+    </div>
+    <!--                 <script type="text/javascript">
                 google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(drawChart);
 
@@ -250,7 +207,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                     chart.draw(data, options);
                 }
                 </script> -->
-        <!-- <script type="text/javascript">
+    <!-- <script type="text/javascript">
                 var auth1 = firebase.auth();
                 firebase.auth().onAuthStateChanged(function(user){
                     var email1 = ""+user.email;
@@ -261,7 +218,6 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
                 });
             </script> -->
-    </div>
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
     <script src="../js/jquery-2.2.4.min.js"></script>
@@ -276,62 +232,50 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             var db = firebase.firestore();
             var email = "" + user.email;
             //WHY THERE ARE TWO COMMENTS QUES????
-            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true).;
+            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true);
             var ref1 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
 
             ref1.get().then(function(doc) {
-                // var description1 = doc.data().Description;
-                // var link1 = doc.data().LinkToImage;
-                // console.log(link1);
-                // var public1 = doc.data().Public;
-                // console.log(public1);
-                // console.log(description1);
-                // var time1 = doc.data().Time;
                 var dic = doc.data();
-                var description1 = dic["Description"];
-                var link1 = dic["LinkToImage"];
-                var time1 = dic["Time"];
-                var number = dic["NumberOfAnswers"];
+                if (doc.exists) {
+                    var author = dic["Author"];
+                    var desc = dic["Description"];
+                    var public = dic["Public"];
+                    var time = dic["Time"];
+                    var number = dic["NumberOfAnswers"];
+                    //set HTML
+                    //set heading
+                    var numberDiv = document.getElementById("numberOfA2");
+                    numberDiv.innerHTML = number + " 备选方案";
+                    //set info
+                    var numberChild = document.getElementById("numberOfA");
+                    numberChild.innerHTML = number + " 备选方案";
+                    var descChild = document.getElementById("main-content");
+                    descChild.innerHTML = desc;
+                    var timeChild = document.getElementById("date");
+                    timeChild.innerHTML = time;
 
-                var child1 = document.createElement("div");
-                child1.setAttribute('class', 'comments-user');
-                var publicChild = document.createElement("div");
-                publicChild.setAttribute('class', 'comment-post-date');
-                var desChild1 = document.createElement("div");
-                desChild1.setAttribute('class', 'comment-post-date');
-                desChild1.innerHTML = "Description: " + description1;
-                var dateChild1 = document.createElement("div");
-                dateChild1.setAttribute('class', 'comment-post-date');
-                dateChild1.innerHTML = "Posted on " + time1;
-
-                var lineChild1 = document.createElement("hr");
-                lineChild1.setAttribute('class', 'style-three');
-                var father1 = document.createElement("div");
-                father1.setAttribute('class', 'article-content');
-                var son1 = document.createElement("div");
-                son1.setAttribute('class', 'article-comment-top');
-                var grandfather1 = document.getElementById("displayQues");
-                child1.appendChild(publicChild);
-                child1.appendChild(desChild1);
-                child1.appendChild(dateChild1);
-
-
-                ref1.collection("Images").get().then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
-                        var link2 = doc.data().URL;
-                        console.log(link2);
-                        var imageChild = document.createElement("img");
-                        imageChild.setAttribute('src', link2);
-                        child1.appendChild(imageChild);
+                    var imageFather = document.getElementById("images");
+                    var subRef = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("URLs");
+                    // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
+                    var countImage;
+                    subRef.get().then(function(querySnapshot) {
+                        querySnapshot.forEach(function(doc2) {
+                            dic2 = doc2.data();
+                            var image = document.createElement("img");
+                            image.src = dic2["Image"];
+                            image.id = 'show' + countImage;
+                            image.setAttribute('width', '100');
+                            image.setAttribute('height', '80');
+                            image.setAttribute('margin', '5px');
+                            imageFather.appendChild(image);
+                            document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
+                        });
                     });
-                });
 
-                //imageChild.setAttribute('src','link1');
-                son1.appendChild(child1);
-                father1.appendChild(son1);
-                father1.appendChild(lineChild1);
-                grandfather1.appendChild(father1);
-
+                } else {
+                    console.log("No such document!");
+                }
 
 
             });
@@ -382,47 +326,68 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             //     });
 
             // });
-            ref.get().then(function(querySnapshot) {
+            // add solutions
+            var count = 0;
+            ref.orderBy("Likes").get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
+                    count ++;
+                    console.log("success");
+                    var dic1 = doc.data();
+                    var author1 = dic1["Author"];
+                    var content = dic1["Content"];
+                    var likes = dic1["Likes"];
+                    var approve = dic1["Approved"];
+                    var date = dic1["Time"];
+                    var link;
+                    var name;
+                    db.collection("user").doc(author1).get().then(function(doc00) {
+                        var dic00 = doc00.data();
+                        if (dic00["Name"] != undefined) { name = dic00["Name"]; } else { name = author1;}
+                        if (dic00["Picture"] != undefined) { link = dic00["Picture"]; } else { link = "../images/user.png"; }
+                        console.log(link);
+                        // write html
+                        var userChild = document.createElement("div");
+                        userChild.setAttribute('class', 'comments-user');
+                        var imageChild = document.createElement("img");
+                        imageChild.src = link;
+                        console.log("test" + imageChild.src);
+                        imageChild.setAttribute('alt', 'anonymous');
+                        var nameChild = document.createElement("div");
+                        nameChild.setAttribute('class', 'user-name');
+                        nameChild.innerHTML = name;
+                        var dateChild = document.createElement("div");
+                        dateChild.setAttribute('class', 'comment-post-date');
+                        dateChild.innerHTML = "Posted on " + date;
+                        var contentChild = document.createElement("div");
+                        contentChild.setAttribute('class', 'comments-content');
+                        contentChild.innerHTML = content;
+                        var likeChild = document.createElement("p");
+                        likeChild.setAttribute('class', 'likes');
+                        likeChild.innerHTML = "Number of people chose this: " + likes;
+                        // var lineChild = document.createElement("hr");
+                        // lineChild.setAttribute('class', 'style-three');
+                        var father = document.createElement("div");
+                        father.setAttribute('class', 'article-content');
+                        var son = document.createElement("div");
+                        son.setAttribute('class', 'article-comment-top');
+                        var grandfather = document.getElementById("solutions");
+                        userChild.appendChild(imageChild);
+                        userChild.appendChild(nameChild);
+                        userChild.appendChild(dateChild);
+                        son.appendChild(userChild);
+                        son.appendChild(contentChild);
+                        son.appendChild(likeChild);
 
-                    console.log("test111");
-                    console.log(" ==> ", doc.data().Approved);
-                    var approved = doc.data().Approved;
-                    var author = doc.data().Author;
-                    var content = doc.data().Content;
-                    var likes = doc.data().Likes;
-                    var time = doc.data().Time;
+                        father.appendChild(son);
+                        // father.appendChild(lineChild);
+                        grandfather.appendChild(father);
 
-                    var child = document.createElement("div");
-                    child.setAttribute('class', 'comments-user');
+                        var grand2 = document.getElementById("inlineFormCustomSelect");
+                        var grandson = document.createElement("option");
+                        grandson.setAttribute('value', count);
+                        grandson.innerHTML = 'Solution #' + count;
 
-
-                    var nameChild = document.createElement("div");
-                    nameChild.setAttribute('class', 'user-name');
-                    nameChild.innerHTML = author;
-                    var dateChild = document.createElement("div");
-                    dateChild.setAttribute('class', 'comment-post-date');
-                    dateChild.innerHTML = "Posted on " + time;
-                    var contentChild = document.createElement("div");
-                    contentChild.setAttribute('class', 'comments-content');
-                    contentChild.innerHTML = content;
-                    var likeChild = document.createElement("p");
-                    likeChild.innerHTML = "Number of people chose this: " + likes;
-                    var lineChild = document.createElement("hr");
-                    lineChild.setAttribute('class', 'style-three');
-                    var father = document.createElement("div");
-                    father.setAttribute('class', 'article-content');
-                    var son = document.createElement("div");
-                    son.setAttribute('class', 'article-comment-top');
-                    var grandfather = document.getElementById("solutions");
-                    child.appendChild(nameChild);
-                    child.appendChild(dateChild);
-                    son.appendChild(child);
-                    son.appendChild(contentChild);
-                    son.appendChild(likeChild);
-                    father.appendChild(son);
-                    father.appendChild(lineChild);
-                    grandfather.appendChild(father);
+                    });
 
 
                 });
@@ -432,6 +397,11 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
         } else {}
     });
+    
+    // work on cordova
+    function showFullScreen(url) {
+        FullScreenImage.showImageURL(url);
+    }
     </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -463,9 +433,9 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                 ref2.get().then(function(doc) {
                     ref2.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
-                            console.log(typeof(doc.data()["Name"]));
+                            console.log(typeof(doc.data()["Author"]));
                             console.log(typeof(doc.data()["Likes"]));
-                            data.addRow([doc.data()["Name"], doc.data()["Likes"]]);
+                            data.addRow([doc.data()["Author"], doc.data()["Likes"]]);
                         });
                         var options = {
                             'title': 'How many likes each solution has?',
@@ -500,6 +470,161 @@ app1.get('/myQuestions/:questionid', (req, res) => {
         var selectedItem = chart.getSelection()[0];
         var value = data.getValue(selectedItem.row, 0);
         alert('The user selected ' + value);
+    }
+
+    function submit() {
+        if (document.getElementById('description').value) {
+            firebase.auth().onAuthStateChanged(function(user) {
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email).collection("Questions");
+                var ref2 = db.collection("Questions");
+                var check = false;
+                // time
+                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                var now = new Date();
+                var thisMonth = months[now.getMonth()];
+                var date = now.getDate();
+                var year = now.getFullYear();
+                // author
+                var author = user.email;
+                var descr = document.getElementById("description").value;
+                var solutions;
+                var numberOfA = 0;
+                if (document.getElementsByClassName("solution")) {
+                    solutions = document.getElementsByClassName("solution");
+                    numberOfA = solutions.length;
+                }
+
+                // still time
+                if (date < 10) {
+                    date = '0' + date;
+                }
+                var time = "" + date + " " + thisMonth + ", " + year;
+
+                if (document.getElementById("defaultCheck1").checked) {
+                    check = true;
+                }
+
+                // add to collection "user/questions"
+                if (questionRef1 == undefined) {
+                    var newerRef1 = ref.doc();
+                    questionRef1 = newRef1.id;
+                    newerRef1.set({
+                            Author: author,
+                            Description: descr,
+                            Public: check,
+                            Time: time,
+                            NumberOfAnswers: numberOfA
+                        })
+                        .then(function() {
+                            console.log("Document successfully written!");
+                        })
+                        .catch(function(error) {
+                            console.error("Error writing document: ", error);
+                        });
+                    if (solutions != undefined) {
+                        var x = 0;
+                        for (x = 0; x < solutions.length; x++) {
+                            var solution = solutions[x].value;
+                            newerRef1.collection("Answers").add({
+                                Approved: true,
+                                Author: author,
+                                Content: solution,
+                                Likes: 0
+                            });
+                        }
+                    }
+
+                } else {
+                    ref.doc(questionRef1).set({
+                            Author: author,
+                            Description: descr,
+                            Public: check,
+                            Time: time,
+                            NumberOfAnswers: numberOfA
+                        })
+                        .then(function() {
+                            console.log("Document successfully written!");
+                        })
+                        .catch(function(error) {
+                            console.error("Error writing document: ", error);
+                        });
+                    if (solutions != undefined) {
+                        var x = 0;
+                        for (x = 0; x < solutions.length; x++) {
+                            var solution = solutions[x].value;
+                            ref.doc(questionRef1).collection("Answers").add({
+                                Approved: true,
+                                Author: author,
+                                Content: solution,
+                                Likes: 0
+                            });
+                        }
+                    }
+                }
+
+                // add to collection "questions"
+                if (questionRef2 == undefined) {
+                    var newerRef2 = ref2.doc();
+                    questionRef2 = newRef2.id;
+                    newerRef2.set({
+                            Description: descr,
+                            Public: check,
+                            Time: time,
+                            NumberOfAnswers: numberOfA
+                        })
+                        .then(function() {
+                            console.log("Document successfully written!");
+                        })
+                        .catch(function(error) {
+                            console.error("Error writing document: ", error);
+                        });
+                    if (solutions != undefined) {
+                        var x = 0;
+                        for (x = 0; x < solutions.length; x++) {
+                            var solution = solutions[x].value;
+                            console.log("test " + solution);
+                            newerRef2.collection("Answers").add({
+                                Approved: true,
+                                Author: author,
+                                Content: solution,
+                                Likes: 0
+                            });
+                        }
+                    }
+                } else {
+                    ref2.doc(questionRef2).set({
+                            Description: descr,
+                            Public: check,
+                            Time: time,
+                            NumberOfAnswers: numberOfA
+                        })
+                        .then(function() {
+                            console.log("Document successfully written!");
+                        })
+                        .catch(function(error) {
+                            console.error("Error writing document: ", error);
+                        });
+
+                    if (solutions != undefined) {
+                        var x = 0;
+                        for (x = 0; x < solutions.length; x++) {
+                            var solution = solutions[x].value;
+                            ref2.doc(questionRef2).collection("Answers").add({
+                                Approved: true,
+                                Author: author,
+                                Content: solution,
+                                Likes: 0
+                            });
+                        }
+                    }
+                }
+
+            });
+            alert("提交成功!");
+        } else { alert("请先输入您的问题啦"); }
+        window.open('https://it-love1.firebaseapp.com/questions/' + questionRef2, "_self");
     }
     </script>
 </body>
@@ -581,7 +706,7 @@ app.get('/questions/:questionid', (req, res) => {
     ref.get().then(function(doc) {
         var dic = doc.data();
         if (doc.exists) {
-            var author = dic["Author"];
+            // var author = dic["Author"];
             var desc = dic["Description"];
             var public = dic["Public"];
             var time = dic["Time"];
@@ -610,8 +735,9 @@ app.get('/questions/:questionid', (req, res) => {
                     image.id = 'show' + countImage;
                     image.setAttribute('width', '100');
                     image.setAttribute('height', '80');
+                    image.setAttribute('margin', '5px');
                     imageFather.appendChild(image);
-                    document.getElementById(image.id).addEventListener("click", function(){showFullScreen(image.src)});
+                    document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
                 });
             });
 
@@ -630,113 +756,128 @@ app.get('/questions/:questionid', (req, res) => {
             var likes = dic1["Likes"];
             var approve = dic1["Approved"];
             var date = dic1["Time"];
-            // write html
-            var userChild = document.createElement("div");
-            userChild.setAttribute('class', 'comments-user');
-            var imageChild = document.createElement("img");
-            imageChild.setAttribute('src', '../images/user.png');
-            imageChild.setAttribute('alt', 'anonymous');
-            var nameChild = document.createElement("div");
-            nameChild.setAttribute('class', 'user-name');
-            nameChild.innerHTML = author1;
-            var dateChild = document.createElement("div");
-            dateChild.setAttribute('class', 'comment-post-date');
-            dateChild.innerHTML = "Posted on " + date;
-            var contentChild = document.createElement("div");
-            contentChild.setAttribute('class', 'comments-content');
-            contentChild.innerHTML = content;
-            var likeChild = document.createElement("p");
-            likeChild.setAttribute('class', 'likes');
-            likeChild.innerHTML = "Number of people chose this: " + likes;
-            // var lineChild = document.createElement("hr");
-            // lineChild.setAttribute('class', 'style-three');
-            var father = document.createElement("div");
-            father.setAttribute('class', 'article-content');
-            var son = document.createElement("div");
-            son.setAttribute('class', 'article-comment-top');
-            var grandfather = document.getElementById("solutions");
-            userChild.appendChild(imageChild);
-            userChild.appendChild(nameChild);
-            userChild.appendChild(dateChild);
-            son.appendChild(userChild);
-            son.appendChild(contentChild);
-            son.appendChild(likeChild);
-            son.onclick = function() {
-                firebase.auth().onAuthStateChanged(function(user) {
-                    if (user) {
-                        var email = "" + user.email;
-                        //current answer in question
-                        var detailedRef = db.collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true).doc(doc1.id);
-                        // var detailedRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers").doc(doc1.id);
-                        //current answer in user
-                        var otherRef = db.collection("user").doc(email).collection("Answers").where("Approved", "==", true).doc(doc1.id);
-                        otherRef.get().then(function(doc3) {
-                            if (!doc3.exists) {
-                                var questionLink = "${req.params.questionid}";
-                                // var questionLink = "K0orA8toMuCwKRTihTGo";
-                                otherRef.set({
-                                        Type: "choose",
-                                        QuestionID: questionLink,
-                                        Chosen: false
-                                    }).then(function() {
-                                        console.log("Document successfully written!");
-                                    })
-                                    .catch(function(error) {
-                                        console.error("Error writing document: ", error);
+            var link;
+            var name;
+            db.collection("user").doc(author1).get().then(function(doc00) {
+                var dic00 = doc00.data();
+                if (dic00["Name"] != undefined) { name = dic00["Name"]; } else { name = author1; }
+                if (dic00["Picture"] != undefined) { link = dic00["Picture"]; } else { link = "../images/user.png"; }
+                console.log(link);
+                // write html
+                var userChild = document.createElement("div");
+                userChild.setAttribute('class', 'comments-user');
+                var imageChild = document.createElement("img");
+                imageChild.src = link;
+                console.log("test" + imageChild.src);
+                imageChild.setAttribute('alt', 'anonymous');
+                var nameChild = document.createElement("div");
+                nameChild.setAttribute('class', 'user-name');
+                nameChild.innerHTML = name;
+                var dateChild = document.createElement("div");
+                dateChild.setAttribute('class', 'comment-post-date');
+                dateChild.innerHTML = "Posted on " + date;
+                var contentChild = document.createElement("div");
+                contentChild.setAttribute('class', 'comments-content');
+                contentChild.innerHTML = content;
+                var likeChild = document.createElement("p");
+                likeChild.setAttribute('class', 'likes');
+                likeChild.innerHTML = "Number of people chose this: " + likes;
+                // var lineChild = document.createElement("hr");
+                // lineChild.setAttribute('class', 'style-three');
+                var father = document.createElement("div");
+                father.setAttribute('class', 'article-content');
+                var son = document.createElement("div");
+                son.setAttribute('class', 'article-comment-top');
+                var grandfather = document.getElementById("solutions");
+                userChild.appendChild(imageChild);
+                userChild.appendChild(nameChild);
+                userChild.appendChild(dateChild);
+                son.appendChild(userChild);
+                son.appendChild(contentChild);
+                son.appendChild(likeChild);
+                son.onclick = function() {
+                    firebase.auth().onAuthStateChanged(function(user) {
+                        if (user) {
+                            var email = "" + user.email;
+                            //current answer in question
+                            var detailedRef = db.collection("Questions").doc("${req.params.questionid}").collection("Answers").doc(doc1.id);
+                            // var detailedRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers").doc(doc1.id);
+                            //current answer in user
+                            var otherRef = db.collection("user").doc(email).collection("Answers").doc(doc1.id);
+                            // add into current user's answers list to show what he chooses
+                            otherRef.get().then(function(doc3) {
+                                if (!doc3.exists) { // if it has not been chosen
+                                    var questionLink = "${req.params.questionid}";
+                                    // var questionLink = "K0orA8toMuCwKRTihTGo";
+                                    otherRef.set({
+                                            Type: "choose",
+                                            QuestionID: questionLink,
+                                            Chosen: false
+                                        }).then(function() {
+                                            console.log("Document successfully written!");
+                                        })
+                                        .catch(function(error) {
+                                            console.error("Error writing document: ", error);
+                                        });
+                                    // add a like iff the current usr != author
+                                    detailedRef.get().then(function(doc2) {
+                                        if(doc2.data()["Author"] == email){
+                                            alert("不可以给自己点赞哦 不要那么自恋嘛～");
+                                        }
+                                        var newLike = doc2.data()["Likes"] + 1;
+                                        return detailedRef.update({
+                                                Likes: newLike
+                                            })
+                                            .then(function() {
+                                                console.log("Document successfully updated!");
+                                            })
+                                            .catch(function(error) {
+                                                // The document probably doesn't exist.
+                                                console.error("Error updating document: ", error);
+                                            });
+                                        likeChild.innerHTML = "Number of people chose this: " + newLike;
                                     });
-                                detailedRef.get().then(function(doc2) {
-                                    var newLike = doc2.data()["Likes"] + 1;
-                                    return detailedRef.update({
-                                            Likes: newLike
-                                        })
-                                        .then(function() {
-                                            console.log("Document successfully updated!");
-                                        })
-                                        .catch(function(error) {
-                                            // The document probably doesn't exist.
-                                            console.error("Error updating document: ", error);
-                                        });
-                                    likeChild.innerHTML = "Number of people chose this: " + newLike;
-                                });
-                            } else {
-                                otherRef.delete().then(function() {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function(error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                                detailedRef.get().then(function(doc2) {
-                                    var newLike = doc2.data()["Likes"] - 1;
-                                    console.log("test" + newLike);
-                                    return detailedRef.update({
-                                            Likes: newLike
-                                        })
-                                        .then(function() {
-                                            console.log("Document successfully updated!");
-                                        })
-                                        .catch(function(error) {
-                                            // The document probably doesn't exist.
-                                            console.error("Error updating document: ", error);
-                                        });
-                                    console.log("test2" + newLike);
-                                    likeChild.innerHTML = "Number of people chose this: " + doc2.data()["Likes"];
-                                });
-                            }
-                        });
-                        console.log("test3");
-                        detailedRef.get().then(function(doc4) {
-                            likeChild.innerHTML = "Number of people chose this: " + doc4.data()["Likes"];
-                        });
-                        // User is signed in.
-                    } else {
-                        // No user is signed in.
-                        window.open('../登录.html');
-                    }
+                                } else {
+                                    otherRef.delete().then(function() {
+                                        console.log("Document successfully deleted!");
+                                    }).catch(function(error) {
+                                        console.error("Error removing document: ", error);
+                                    });
+                                    detailedRef.get().then(function(doc2) {
+                                        var newLike = doc2.data()["Likes"] - 1;
+                                        console.log("test" + newLike);
+                                        return detailedRef.update({
+                                                Likes: newLike
+                                            })
+                                            .then(function() {
+                                                console.log("Document successfully updated!");
+                                            })
+                                            .catch(function(error) {
+                                                // The document probably doesn't exist.
+                                                console.error("Error updating document: ", error);
+                                            });
+                                        console.log("test2" + newLike);
+                                        likeChild.innerHTML = "Number of people chose this: " + doc2.data()["Likes"];
+                                    });
+                                }
+                            });
+                            console.log("test3");
+                            detailedRef.get().then(function(doc4) {
+                                likeChild.innerHTML = "Number of people chose this: " + doc4.data()["Likes"];
+                            });
+                            // User is signed in.
+                        } else {
+                            // No user is signed in.
+                            window.open('../登录.html');
+                        }
 
-                });
-            }
-            father.appendChild(son);
-            // father.appendChild(lineChild);
-            grandfather.appendChild(father);
+                    });
+                };
+                father.appendChild(son);
+                // father.appendChild(lineChild);
+                grandfather.appendChild(father);
+            });
+
 
         });
     });
@@ -807,10 +948,9 @@ app.get('/questions/:questionid', (req, res) => {
     // }
 
     // Show image in full screen when clicked, worked for Cordova
-    function showFullScreen(url){
+    function showFullScreen(url) {
         FullScreenImage.showImageURL(url);
     }
-
     </script>
     <script>
     /**
@@ -839,10 +979,13 @@ app.get('/questions/:questionid', (req, res) => {
                         if (typeof doc.data == 'function') {
                             var dic = doc.data();
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                            document.getElementById('welcome').addEventListener('click', openProfile);
+
                         }
                     } else {
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                        document.getElementById('welcome').addEventListener('click', openProfile);
                     }
                 });
             } else {
@@ -852,6 +995,10 @@ app.get('/questions/:questionid', (req, res) => {
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
         document.getElementById('addsolution').addEventListener('click', addsolution);
         document.getElementById('submit').addEventListener('click', submit);
+    }
+
+    function openProfile(){
+        window.open("个人信息.html", "_self");
     }
 
     function toggleSignIn() {
@@ -896,19 +1043,19 @@ app.get('/questions/:questionid', (req, res) => {
                 var query2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
                 var ref2 = query2.where("Approved", "==", true);
                 // var ref2 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers");
-                // name
-                var name = user.email;
-                var ref3 = db.collection("user").doc(email);
-                ref3.get().then(function(doc) {
-                    if (doc.exists) {
-                        if (typeof doc.data == 'function') {
-                            var dic = doc.data();
-                            if (dic["Name"] != undefined) {
-                                name = dic["Name"];
-                            }
-                        }
-                    }
-                });
+                // author
+                var author = user.email;
+                // var ref3 = db.collection("user").doc(email);
+                // ref3.get().then(function(doc) {
+                //     if (doc.exists) {
+                //         if (typeof doc.data == 'function') {
+                //             var dic = doc.data();
+                //             if (dic["Name"] != undefined) {
+                //                 name = dic["Name"];
+                //             }
+                //         }
+                //     }
+                // });
                 // end for name
                 // time
                 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -943,7 +1090,7 @@ app.get('/questions/:questionid', (req, res) => {
                             Status: "Has not decided"
                         });
                         ref2.add({
-                            Author: name,
+                            Author: author,
                             Time: time,
                             Content: solutiontext,
                             Approved: false,
@@ -1202,7 +1349,7 @@ app2.get('/search/:searchcontent', (req, res) => {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT LOVE 搜索结果</title>
+    <title>IT LOVE回答</title>
     <!-- LOADING STYLESHEETS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
@@ -1286,7 +1433,7 @@ app2.get('/search/:searchcontent', (req, res) => {
 
             // var grandfather = document.getElementById("allQ");
             // grandfather.appendChild(ahref);
-             var dic = doc.data();
+            var dic = doc.data();
             //console.log(author["Author"]);
             var author = dic["Author"];
             var desc = dic["Description"];
@@ -1407,10 +1554,33 @@ app2.get('/search/:searchcontent', (req, res) => {
                 text.setAttribute('style', 'display: inline;');
                 text.textContent = '注销';
                 document.getElementById('signintop').appendChild(text);
+
+                document.getElementById('signuptop').style.display = "none";
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                var ref = db.collection("user").doc(email);
+                ref.get().then(function(doc) {
+                    if (doc.exists) {
+                        if (typeof doc.data == 'function') {
+                            var dic = doc.data();
+                            document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                            document.getElementById('welcome').addEventListener('click', openProfile);
+                        }
+                    } else {
+                        console.log("No such document!");
+                        document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                        document.getElementById('welcome').addEventListener('click', openProfile);
+                    }
+                });
             } else {
+                document.getElementById('system').style.display = "none";
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+    }
+
+    function openProfile(){
+        window.open("个人信息.html", "_self");
     }
 
     function toggleSignIn() {
@@ -1419,8 +1589,7 @@ app2.get('/search/:searchcontent', (req, res) => {
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {
-        }
+        } else {}
     }
 
     window.onload = function() {
@@ -1433,34 +1602,38 @@ app2.get('/search/:searchcontent', (req, res) => {
     <div class="toppest">
         <div class="login-box">
             <div id="signintop">
-                            <i class="fa fa-key"></i> 登陆</div>
+                <i class="fa fa-key"></i> 登陆</div>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="signuptop">
             <a href="../email-password.html">
                             <i class="fa fa-pencil"></i> 注册</a>
         </div>
-        <div class="login-box">
+        <div class="login-box" id="system">
             <a href="../系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
+        </div>
+        <div class="login-box">
+            <div id="welcome">
+            </div>
         </div>
     </div>
     <!-- TOP NAVIGATION -->
     <div class="topnav-outline">
         <ul class="topnav">
             <li>
-                <a href="../index.html">
+                <a href="index.html">
                             <i class="fa fa-home"></i> 首页</a>
             </li>
             <li>
-                <a href="../提问.html">
+                <a href="提问.html">
                             <i class="fa fa-book"></i> 提问</a>
             </li>
             <li>
-                <a href="../回答.html">
+                <a href="回答.html">
                             <i class="fa fa-file-text-o"></i> 回答</a>
             </li>
             <li class="icon">
-                        <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
             </li>
         </ul>
     </div>
@@ -1474,14 +1647,11 @@ app2.get('/search/:searchcontent', (req, res) => {
     <!-- MAIN SECTION -->
     <!-- ARTICLE OVERVIEW SECTION -->
     <h1 class=pageheader>搜索结果</h1>
-
-<!-- UNDECIDED    
+    <!-- UNDECIDED    
     <div class="sort">
         <button id=# class="btn"> 升序</a>
             <button id=# class="btn"> 降序</a>
     </div> -->
-
-
     <!-- ARTICLES -->
     <div class="questions">
         <div id="allQ">

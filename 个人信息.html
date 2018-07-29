@@ -185,11 +185,13 @@
                                 document.getElementById('profileImage').appendChild(profileImg);
                             }
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                            document.getElementById('welcome').addEventListener('click', openProfile);
                         }
                     } else {
                         // doc.data() will be undefined in this case
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                        document.getElementById('welcome').addEventListener('click', openProfile);
                     }
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
@@ -236,6 +238,10 @@
             var imageFile = e.target.files[0];
             uploadImageAsPromise(imageFile);
         });
+    }
+
+    function openProfile(){
+        window.open("个人信息.html", "_self");
     }
 
     // storename function

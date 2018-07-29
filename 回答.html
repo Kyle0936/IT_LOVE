@@ -146,10 +146,12 @@
                         if (typeof doc.data == 'function') {
                             var dic = doc.data();
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                            document.getElementById('welcome').addEventListener('click', openProfile);
                         }
                     } else {
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                        document.getElementById('welcome').addEventListener('click', openProfile);
                     }
                 });
             } else {
@@ -157,6 +159,10 @@
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+    }
+
+    function openProfile(){
+        window.open("个人信息.html", "_self");
     }
 
     function toggleSignIn() {
@@ -256,7 +262,7 @@
             <a href="系统消息.html">
                             <i class="fa fa-bell"></i> 系统消息</a>
         </div>
-        <div class="login-box nohover">
+        <div class="login-box">
             <div id="welcome">
             </div>
         </div>

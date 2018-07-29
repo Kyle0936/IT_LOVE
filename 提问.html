@@ -54,10 +54,12 @@
                         if (typeof doc.data == 'function') {
                             var dic = doc.data();
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
+                            document.getElementById('welcome').addEventListener('click', openProfile);
                         }
                     } else {
                         console.log("No such document!");
                         document.getElementById('welcome').textContent = '欢迎 xxx （您还未命名）';
+                        document.getElementById('welcome').addEventListener('click', openProfile);
                     }
                 });
             } else {
@@ -77,6 +79,10 @@
                 uploadImageAsPromise(imageFile);
             }
         });
+    }
+
+    function openProfile(){
+        window.open("个人信息.html", "_self");
     }
 
     function toggleSignIn() {
@@ -171,8 +177,8 @@
                 var thisMonth = months[now.getMonth()];
                 var date = now.getDate();
                 var year = now.getFullYear();
-                // name
-                var name = user.email;
+                // author
+                var author = user.email;
                 var descr = document.getElementById("description").value;
                 var solutions;
                 var numberOfA = 0;
@@ -182,19 +188,19 @@
                 }
 
 
-                // still name
-                var ref3 = db.collection("user").doc(email);
-                ref3.get().then(function(doc) {
-                    if (doc.exists) {
-                        if (typeof doc.data == 'function') {
-                            var dic = doc.data();
-                            if (dic["Name"] != undefined) {
-                                name = dic["Name"];
-                            }
-                        }
-                    }
-                });
-                var author = name + "（提问者本人）";
+                // // still name
+                // var ref3 = db.collection("user").doc(email);
+                // ref3.get().then(function(doc) {
+                //     if (doc.exists) {
+                //         if (typeof doc.data == 'function') {
+                //             var dic = doc.data();
+                //             if (dic["Name"] != undefined) {
+                //                 name = dic["Name"];
+                //             }
+                //         }
+                //     }
+                // });
+                // var author = name;
 
                 // still time
                 if (date < 10) {
@@ -209,8 +215,9 @@
                 // add to collection "user/questions"
                 if (questionRef1 == undefined) {
                     var newerRef1 = ref.doc();
+                    questionRef1 = newRef1.id;
                     newerRef1.set({
-                            Author: name,
+                            Author: author,
                             Description: descr,
                             Public: check,
                             Time: time,
@@ -237,7 +244,7 @@
 
                 } else {
                     ref.doc(questionRef1).set({
-                            Author: name,
+                            Author: author,
                             Description: descr,
                             Public: check,
                             Time: time,
@@ -265,7 +272,8 @@
 
                 // add to collection "questions"
                 if (questionRef2 == undefined) {
-                    var newerRef2 = ref2.doc()
+                    var newerRef2 = ref2.doc();
+                    questionRef2 = newRef2.id;
                     newerRef2.set({
                             Description: descr,
                             Public: check,
@@ -471,7 +479,7 @@
             <a href="系统消息.html">
                 <i class="fa fa-bell"></i> 系统消息</a>
         </div>
-        <div class="login-box nohover">
+        <div class="login-box">
             <div id="welcome">
             </div>
         </div>
@@ -506,10 +514,12 @@
             <!-- Container for the demo -->
             <!--       <input type='file' onchange="readURL(this);" />
                            <img id="blah" src=# alt="your image" /> -->
-            <h4 style="margin-top: 0px;">上传聊天截图</h4>
-            <!-- <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button> -->
-            <!--  <div id="messagesDiv"> -->
-            <input type="file" id="files" name="files[]" multiple />
+            <div class="drop">
+                <h4 style="margin-top: 0px;">上传聊天截图</h4>
+                <!-- <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button> -->
+                <!--  <div id="messagesDiv"> -->
+                <input type="file" id="files" name="files[]" multiple />
+            </div>
             <!-- </div> -->
             <!--   <input type="file" id="file" name="file"/> -->
             <input type="checkbox" value="" id="defaultCheck1">
