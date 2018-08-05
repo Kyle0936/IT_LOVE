@@ -518,6 +518,9 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                 ref1.set({
                     Selected: true
                 }, { merge: true });
+                ref.update({
+                    Status: "已完结"
+                });
             }
 
         });
