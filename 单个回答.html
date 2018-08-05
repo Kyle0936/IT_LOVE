@@ -110,6 +110,9 @@
                 // lineChild.setAttribute('class', 'style-three');
                 var father = document.createElement("div");
                 father.setAttribute('class', 'article-content');
+                if (dic1["Selected"] != undefined && dic1["Selected"] == true) {
+                    father.id = "selected";
+                }
                 var son = document.createElement("div");
                 son.setAttribute('class', 'article-comment-top');
                 var grandfather = document.getElementById("solutions");
@@ -128,67 +131,72 @@
                             // var detailedRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers").doc(doc1.id);
                             //current answer in user
                             var otherRef = db.collection("user").doc(email).collection("Answers").doc(doc1.id);
-                            // add into current user's answers list to show what he chooses
-                            otherRef.get().then(function(doc3) {
-                                if (!doc3.exists) { // if it has not been chosen
-                                    var questionLink = "${req.params.questionid}";
-                                    // var questionLink = "K0orA8toMuCwKRTihTGo";
-                                    otherRef.set({
-                                            Type: "choose",
-                                            QuestionID: questionLink,
-                                            Chosen: false
-                                        }).then(function() {
-                                            console.log("Document successfully written!");
-                                        })
-                                        .catch(function(error) {
-                                            console.error("Error writing document: ", error);
+                            var answerLink = doc1.id;
+
+                            if (author1 == email) {
+                                alert("不可以给自己点赞哦 不要那么自恋嘛～");
+                            } else {
+                                // add into current user's answers list to show what he chooses
+                                otherRef.get().then(function(doc3) {
+                                    if (!doc3.exists) { // if it has not been chosen
+                                        var questionLink = "${req.params.questionid}";
+                                        // var questionLink = "K0orA8toMuCwKRTihTGo";
+                                        otherRef.set({
+                                                Type: "choose",
+                                                QuestionID: questionLink,
+                                                AnswersID: answerLink
+                                            }).then(function() {
+                                                console.log("Document successfully written!");
+                                            })
+                                            .catch(function(error) {
+                                                console.error("Error writing document: ", error);
+                                            });
+                                        // add a like iff the current usr != author
+                                        detailedRef.get().then(function(doc2) {
+
+                                            var newLike = doc2.data()["Likes"] + 1;
+                                            return detailedRef.update({
+                                                    Likes: newLike
+                                                })
+                                                .then(function() {
+                                                    console.log("Document successfully updated!");
+                                                })
+                                                .catch(function(error) {
+                                                    // The document probably doesn't exist.
+                                                    console.error("Error updating document: ", error);
+                                                });
+                                            likeChild.innerHTML = "Number of people chose this: " + newLike;
+
                                         });
-                                    // add a like iff the current usr != author
-                                    detailedRef.get().then(function(doc2) {
-                                        if(doc2.data()["Author"] == email){
-                                            alert("不可以给自己点赞哦 不要那么自恋嘛～");
-                                        }
-                                        var newLike = doc2.data()["Likes"] + 1;
-                                        return detailedRef.update({
-                                                Likes: newLike
-                                            })
-                                            .then(function() {
-                                                console.log("Document successfully updated!");
-                                            })
-                                            .catch(function(error) {
-                                                // The document probably doesn't exist.
-                                                console.error("Error updating document: ", error);
-                                            });
-                                        likeChild.innerHTML = "Number of people chose this: " + newLike;
-                                    });
-                                } else {
-                                    otherRef.delete().then(function() {
-                                        console.log("Document successfully deleted!");
-                                    }).catch(function(error) {
-                                        console.error("Error removing document: ", error);
-                                    });
-                                    detailedRef.get().then(function(doc2) {
-                                        var newLike = doc2.data()["Likes"] - 1;
-                                        console.log("test" + newLike);
-                                        return detailedRef.update({
-                                                Likes: newLike
-                                            })
-                                            .then(function() {
-                                                console.log("Document successfully updated!");
-                                            })
-                                            .catch(function(error) {
-                                                // The document probably doesn't exist.
-                                                console.error("Error updating document: ", error);
-                                            });
-                                        console.log("test2" + newLike);
-                                        likeChild.innerHTML = "Number of people chose this: " + doc2.data()["Likes"];
-                                    });
-                                }
-                            });
-                            console.log("test3");
-                            detailedRef.get().then(function(doc4) {
-                                likeChild.innerHTML = "Number of people chose this: " + doc4.data()["Likes"];
-                            });
+                                    } else {
+                                        otherRef.delete().then(function() {
+                                            console.log("Document successfully deleted!");
+                                        }).catch(function(error) {
+                                            console.error("Error removing document: ", error);
+                                        });
+                                        detailedRef.get().then(function(doc2) {
+                                            var newLike = doc2.data()["Likes"] - 1;
+                                            console.log("test" + newLike);
+                                            return detailedRef.update({
+                                                    Likes: newLike
+                                                })
+                                                .then(function() {
+                                                    console.log("Document successfully updated!");
+                                                })
+                                                .catch(function(error) {
+                                                    // The document probably doesn't exist.
+                                                    console.error("Error updating document: ", error);
+                                                });
+                                            console.log("test2" + newLike);
+                                            likeChild.innerHTML = "Number of people chose this: " + doc2.data()["Likes"];
+                                        });
+                                    }
+                                });
+                                console.log("test3");
+                                detailedRef.get().then(function(doc4) {
+                                    likeChild.innerHTML = "Number of people chose this: " + doc4.data()["Likes"];
+                                });
+                            }
                             // User is signed in.
                         } else {
                             // No user is signed in.
@@ -321,7 +329,7 @@
         document.getElementById('submit').addEventListener('click', submit);
     }
 
-    function openProfile(){
+    function openProfile() {
         window.open("个人信息.html", "_self");
     }
 
@@ -334,15 +342,20 @@
         } else {}
     }
 
-    var numberOfSolutions = 0;
+    var numberOfSolutions = 1;
     var solutions = [];
 
     function addsolution() {
         console.log("testADD");
         document.getElementById('submit').style.display = "block";
-        numberOfSolutions++;
+
         var outerdiv = document.createElement("div");
-        outerdiv.innerHTML = "你推荐的备选方案#" + numberOfSolutions;
+
+        // only allow one proposal a time!!!
+        // numberOfSolutions++;
+        // outerdiv.innerHTML = "你推荐的备选方案" + numberOfSolutions;
+        outerdiv.innerHTML = "你推荐的备选方案";
+
         outerdiv.style.margin = "5px 25px 5px 25px";
         var solution = document.createElement("input");
         solution.type = "text";
@@ -352,9 +365,12 @@
         outerdiv.appendChild(solution);
         document.getElementById('yoursolutions').appendChild(outerdiv);
         solutions.push(solution);
+
+        // only allow one proposal a time!!!
+        document.getElementById("addsolution").style.display = 'none';
     }
 
-    function submit() {
+    function submit() { // only submit the first one.
         console.log("TEST: " + document.getElementsByClassName("solution")[0]);
         if (document.getElementsByClassName("solution")[0].textContent) {
             console.log(document.getElementsByClassName("solution")[0].textContent);
@@ -362,10 +378,10 @@
                 var email = "" + user.email;
                 var db = firebase.firestore();
 
-                var query = db.collection("user").doc(email).collection("Answers");
-                var ref = query.where("Approved", "==", true);
-                var query2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
-                var ref2 = query2.where("Approved", "==", true);
+                var ref = db.collection("user").doc(email).collection("Answers");
+                // var ref = query.where("Approved", "==", true);
+                var ref2 = db.collection("Questions").doc("${req.params.questionid}").collection("Answers");
+                // var ref2 = query2.where("Approved", "==", true);
                 // var ref2 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("Answers");
                 // author
                 var author = user.email;
@@ -405,39 +421,60 @@
                 if (solutions != undefined) {
                     console.log("Test2");
                     var x;
-                    for (x = 0; x < numberOfSolutions; x++) {
-                        var solutiontext = solutions[x].value;
-                        ref.add({
-                            Time: time,
-                            Content: solutiontext,
-                            QuestionID: questionlink,
-                            Status: "Has not decided"
-                        });
-                        ref2.add({
-                            Author: author,
-                            Time: time,
-                            Content: solutiontext,
-                            Approved: false,
-                            Likes: 0
-                        });
-                    }
+                    db.collection("Questions").doc("${req.params.questionid}").get().then(function(doc5) {
+                        var dic5 = doc5.data();
+                        console.log(dic5["Author"]);
+                        if (dic5["Author"] == author) {
+                            var solutiontext = solutions[x].value;
+                            ref2.add({
+                                Author: author,
+                                Time: time,
+                                Content: solutiontext,
+                                Approved: true,
+                                Likes: 0
+                            });
+                        } else {
+                            for (x = 0; x < numberOfSolutions; x++) {
+                                var solutiontext = solutions[x].value;
+                                ref.add({
+                                    Time: time,
+                                    Content: solutiontext,
+                                    QuestionID: questionlink,
+                                    Type: "propose",
+                                    Approved: false
+                                });
+                                ref2.add({
+                                    Author: author,
+                                    Time: time,
+                                    Content: solutiontext,
+                                    Approved: false,
+                                    Likes: 0
+                                });
+                            }
+                        }
+                    });
+
+                } else {
+                    alert("请先填写建议");
                 }
                 // add numberOfAnswers
                 // var ref3 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo");
-                var ref3 = db.collection("Questions").doc("${req.params.questionid}");
-                ref3.get().then(function(doc2) {
-                    var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfSolutions;
-                    return ref3.update({
-                            Likes: newAnswers
-                        })
-                        .then(function() {
-                            console.log("Document successfully updated!");
-                        })
-                        .catch(function(error) {
-                            // The document probably doesn't exist.
-                            console.error("Error updating document: ", error);
-                        });
-                });
+
+                
+                // var ref3 = db.collection("Questions").doc("${req.params.questionid}");
+                // ref3.get().then(function(doc2) {
+                //     var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfSolutions;
+                //     return ref3.update({
+                //             NumberOfAnswers: newAnswers
+                //         })
+                //         .then(function() {
+                //             console.log("Document successfully updated!");
+                //         })
+                //         .catch(function(error) {
+                //             // The document probably doesn't exist.
+                //             console.error("Error updating document: ", error);
+                //         });
+                // });
             });
         }
         location.reload();

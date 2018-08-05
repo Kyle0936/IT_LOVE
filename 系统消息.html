@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+<!-- 暂定历史回答中显示approved，可以改为这个问题是否完结-->
 
 <head>
     <meta charset="utf-8">
@@ -32,122 +33,139 @@
         if (user) {
             var email = "" + user.email;
             console.log(email);
-            var ref = db.collection("user").doc(email).collection("Questions");
-            ref.get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    // add all asked questions
-                    count2++;
-                    var bigdic = doc.data();
-                    var descrip = bigdic["Description"];
-                    var number = bigdic["NumberOfAnswers"];
-                    var public = bigdic["Public"];
-                    var time1 = bigdic["Time"];
-                    var publicChild = document.createElement("div");
-                    publicChild.innerHTML = "Public? : " + public;
-                    var numberChild = document.createElement("div");
-                    numberChild.innerHTML = "Number of Answers: " + number;
-                    var ahref1 = document.createElement("a");
-                    ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
-                    var father1 = document.createElement("div");
-                    father1.setAttribute('class', 'article');
-                    var infoChild1 = document.createElement("div");
-                    infoChild1.setAttribute('class', 'article-info');
-                    var descChild1 = document.createElement("div");
-                    descChild1.setAttribute('class', 'article-content');
-                    var contentChild1 = document.createElement("p");
-                    contentChild1.setAttribute('class', 'block-with-text');
-                    contentChild1.innerHTML = descrip;
-                    var timeChild1 = document.createElement("div");
-                    timeChild1.innerHTML = time1;
-                    timeChild1.setAttribute('class', 'tag');
-                    publicChild.setAttribute('class', 'tag');
-                    numberChild.setAttribute('class', 'tag');
-                    infoChild1.appendChild(timeChild1);
-                    infoChild1.appendChild(publicChild);
-                    infoChild1.appendChild(numberChild);
-                    descChild1.appendChild(contentChild1);
-                    father1.appendChild(descChild1);
-                    father1.appendChild(infoChild1);
-                    ahref1.appendChild(father1);
-                    var fafather1 = document.createElement("div");
-                    fafather1.appendChild(ahref1);
-                    var grandfather1 = document.getElementById("history");
-                    grandfather1.appendChild(fafather1);
-                    // add all unapproved proposals
-                    var secondRef = ref.doc(doc.id).collection("Answers");
-                    var query = secondRef.where("Approved", "==", false);
-                    query.get().then(function(querySnapshot1) {
-                        querySnapshot1.forEach(function(doc1) {
-                            count1++;
-                            console.log(count1);
-                            var dic = doc1.data();
-                            var thirdRef = secondRef.doc(doc1.id);
-                            var author = dic["Author"];
-                            var content = dic["Content"];
-                            var time = dic["Time"];
-                            var ahref = document.createElement("a");
-                            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
-                            var father = document.createElement("div");
-                            father.setAttribute('class', 'article');
-                            var infoChild = document.createElement("div");
-                            infoChild.setAttribute('class', 'article-info');
-                            var authorChild = document.createElement("div");
-                            authorChild.setAttribute('class', 'tag');
-                            authorChild.innerHTML = author;
-                            var descChild = document.createElement("div");
-                            descChild.setAttribute('class', 'article-content');
-                            var contentChild = document.createElement("p");
-                            contentChild.setAttribute('class', 'block-with-text');
-                            contentChild.innerHTML = content;
-                            var timeChild = document.createElement("div");
-                            timeChild.innerHTML = time;
-                            timeChild.setAttribute('class', 'tag');
-                            var buttonsChild = document.createElement("div");
-                            buttonsChild.setAttribute('class', 'article-read-more');
-                            var buttonChild1 = document.createElement("button");
-                            buttonChild1.setAttribute('class', 'btn btn-default btn-sm');
-                            buttonChild1.innerHTML = "通过";
-                            buttonChild1.onclick = function() {
+            var ref0 = db.collection("user").doc(email).collection("Questions");
+            ref0.get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc00) {
+                    var dic0 = doc00.data();
+                    var link = dic0["Ref"];
+                    var ref = db.collection("Questions").doc(link);
+                    ref.get().then(function(doc) {
+                        // add all asked questions
+                        count2++;
+                        var bigdic = doc.data();
+                        var descrip = bigdic["Description"];
+                        var number = bigdic["NumberOfAnswers"];
+                        var public = bigdic["Public"];
+                        var time1 = bigdic["Time"];
+                        var publicChild = document.createElement("div");
+                        publicChild.innerHTML = "Public? : " + public;
+                        var numberChild = document.createElement("div");
+                        numberChild.innerHTML = "Number of Answers: " + number;
+                        var ahref1 = document.createElement("a");
+                        ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
+                        var father1 = document.createElement("div");
+                        father1.setAttribute('class', 'article');
+                        var infoChild1 = document.createElement("div");
+                        infoChild1.setAttribute('class', 'article-info');
+                        var descChild1 = document.createElement("div");
+                        descChild1.setAttribute('class', 'article-content');
+                        var contentChild1 = document.createElement("p");
+                        contentChild1.setAttribute('class', 'block-with-text');
+                        contentChild1.innerHTML = descrip;
+                        var timeChild1 = document.createElement("div");
+                        timeChild1.innerHTML = time1;
+                        timeChild1.setAttribute('class', 'tag');
+                        publicChild.setAttribute('class', 'tag');
+                        numberChild.setAttribute('class', 'tag');
+                        infoChild1.appendChild(timeChild1);
+                        infoChild1.appendChild(publicChild);
+                        infoChild1.appendChild(numberChild);
+                        descChild1.appendChild(contentChild1);
+                        father1.appendChild(descChild1);
+                        father1.appendChild(infoChild1);
+                        ahref1.appendChild(father1);
+                        var fafather1 = document.createElement("div");
+                        fafather1.appendChild(ahref1);
+                        var grandfather1 = document.getElementById("history");
+                        grandfather1.appendChild(fafather1);
+                        // add all unapproved proposals
+                        var secondRef = ref.collection("Answers");
+                        var query = secondRef.where("Approved", "==", false);
+                        query.get().then(function(querySnapshot1) {
+                            querySnapshot1.forEach(function(doc1) {
+                                count1++;
+                                console.log(count1);
+                                var dic = doc1.data();
+                                var thirdRef = secondRef.doc(doc1.id);
+                                var author = dic["Author"];
+                                var content = dic["Content"];
+                                var time = dic["Time"];
+                                var ahref = document.createElement("a");
+                                ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
+                                var father = document.createElement("div");
+                                father.setAttribute('class', 'article');
+                                var infoChild = document.createElement("div");
+                                infoChild.setAttribute('class', 'article-info');
+                                var authorChild = document.createElement("div");
+                                authorChild.setAttribute('class', 'tag');
+                                authorChild.innerHTML = author;
+                                var descChild = document.createElement("div");
+                                descChild.setAttribute('class', 'article-content');
+                                var contentChild = document.createElement("p");
+                                contentChild.setAttribute('class', 'block-with-text');
+                                contentChild.innerHTML = content;
+                                var timeChild = document.createElement("div");
+                                timeChild.innerHTML = time;
+                                timeChild.setAttribute('class', 'tag');
+                                var buttonsChild = document.createElement("div");
+                                buttonsChild.setAttribute('class', 'article-read-more');
+                                var buttonChild1 = document.createElement("button");
+                                buttonChild1.setAttribute('class', 'btn btn-default btn-sm');
+                                buttonChild1.innerHTML = "通过";
+                                buttonChild1.onclick = function() {
 
-                                return thirdRef.update({ Approved: true })
-                                    .then(function() {
-                                        console.log("Document successfully approved!");
+                                    return thirdRef.update({ Approved: true })
+                                        .then(function() {
+                                            console.log("Document successfully approved!");
+                                            window.location.reload();
+                                        }).catch(function(error) {
+                                            console.error("Error removing document: ", error);
+                                        });
+
+                                    // add one to number of answers
+                                    var newAnswers = number + 1;
+                                    return ref.update({
+                                            NumberOfAnswers: newAnswers
+                                        })
+                                        .then(function() {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function(error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                }
+                                var buttonChild2 = document.createElement("button");
+                                buttonChild2.setAttribute('class', 'btn btn-default btn-sm');
+                                buttonChild2.innerHTML = "不通过";
+                                buttonChild2.onclick = function() {
+                                    thirdRef.delete().then(function() {
+                                        console.log("Document successfully deleted!");
                                         window.location.reload();
                                     }).catch(function(error) {
                                         console.error("Error removing document: ", error);
                                     });
-                            }
-                            var buttonChild2 = document.createElement("button");
-                            buttonChild2.setAttribute('class', 'btn btn-default btn-sm');
-                            buttonChild2.innerHTML = "不通过";
-                            buttonChild2.onclick = function() {
-                                thirdRef.delete().then(function() {
-                                    console.log("Document successfully deleted!");
-                                    window.location.reload();
-                                }).catch(function(error) {
-                                    console.error("Error removing document: ", error);
-                                });
 
-                            }
-                            buttonsChild.appendChild(buttonChild1);
-                            buttonsChild.appendChild(buttonChild2);
-                            infoChild.appendChild(timeChild);
-                            infoChild.appendChild(authorChild);
-                            descChild.appendChild(contentChild);
-                            father.appendChild(descChild);
-                            father.appendChild(infoChild);
-                            ahref.appendChild(father);
-                            var fafather = document.createElement("div");
-                            fafather.appendChild(ahref);
-                            fafather.appendChild(buttonsChild);
+                                }
+                                buttonsChild.appendChild(buttonChild1);
+                                buttonsChild.appendChild(buttonChild2);
+                                infoChild.appendChild(timeChild);
+                                infoChild.appendChild(authorChild);
+                                descChild.appendChild(contentChild);
+                                father.appendChild(descChild);
+                                father.appendChild(infoChild);
+                                ahref.appendChild(father);
+                                var fafather = document.createElement("div");
+                                fafather.appendChild(ahref);
+                                fafather.appendChild(buttonsChild);
 
-                            var grandfather = document.getElementById("solutions");
-                            grandfather.appendChild(fafather);
+                                var grandfather = document.getElementById("solutions");
+                                grandfather.appendChild(fafather);
 
+                            });
+                            document.getElementById("approvenumber").innerHTML = count1;
                         });
-                        document.getElementById("approvenumber").innerHTML = count1;
                     });
-
                 });
                 document.getElementById("questionnumber").innerHTML = count2;
             });
@@ -164,7 +182,7 @@
                 var dic1 = doc2.data();
                 var author1 = dic1["Author"]; // an email address
                 var likes1 = dic1["Likes"];
-                var status = dic1["Status"];
+                var status = dic1["Approved"];
                 var time2 = dic1["Time"];
                 var selfWritten = dic1["Self"]; // use this to judege and generate two diff types
                 var question = dic1["QuestionID"]; //id from root colletion(questions)
@@ -175,7 +193,7 @@
                 if (selfWritten == false) { authorChild2.innerHTML = author1; } else { authorChild2.innerHTML = "Clever Me"; }
                 authorChild2.setAttribute('class', 'tag');
                 var statusChild = document.createElement("div");
-                statusChild.innerHTML = "Status: " + status;
+                statusChild.innerHTML = "Approved: " + status;
 
                 var likeChild2 = document.createElement("div");
                 likeChild2.innerHTML = "Number of Likes: " + likes1;
@@ -260,7 +278,7 @@
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
     }
 
-    function openProfile(){
+    function openProfile() {
         window.open("个人信息.html", "_self");
     }
 

@@ -9,27 +9,6 @@ $(function() {
   last.css({ borderBottom : 'none' });
 });
 
-function scheduleA(value, event){
-	if(event=="1") return;
-	if(event=="2") return;
-	if(event=="3") return;
-	if(event=="4") 
-	  {
-	  	var div = document.createElement('div');
-	  	var btn = document.createElement("form");
-	  	var i = document.createElement("input");
-	  	i.setAttribute('type',"text");
-        i.setAttribute('name',"username"); 
-        i.setAttribute("placeholder","输入新的解决方案"); 
-
-        btn.appendChild(i);
-        div.appendChild(btn);
-
-        document.getElementById("add-solutions").appendChild(div);
-		console.log("Test");
-	  }
-}
-
 
 function myButtonFunction() {
     console.log("Test");

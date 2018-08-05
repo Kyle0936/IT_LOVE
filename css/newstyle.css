@@ -375,3 +375,7 @@ span.cat-count {
   font-family: sans-serif;
   color: #626262;
 }
+
+#selected{
+    background-color: #D2ECF3;
+}

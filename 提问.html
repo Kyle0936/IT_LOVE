@@ -81,7 +81,7 @@
         });
     }
 
-    function openProfile(){
+    function openProfile() {
         window.open("个人信息.html", "_self");
     }
 
@@ -116,27 +116,27 @@
                     firebase.auth().onAuthStateChanged(function(user) {
                         var email = "" + user.email;
                         var db = firebase.firestore();
-                        var ref = db.collection("user");
-                        if (questionRef1 == undefined) {
-                            var newRef1 = ref.doc(email).collection("Questions").doc();
-                            questionRef1 = newRef1.id;
-                            newRef1.collection("URLs").add({ Image: "" + url });
-                        } else {
-                            // delete older links
-                            // Get a new write batch
-                            ref.doc(email).collection("Questions").doc(questionRef1).collection("URLs").get().then(function(querySnapshot) {
-                                querySnapshot.forEach(function(doc) {
-                                    doc.ref.delete().then(function() {
-                                        console.log("Document successfully deleted!");
-                                    }).catch(function(error) {
-                                        console.error("Error removing document: ", error);
-                                    });
-                                });
-                                // add new ones
-                                ref.doc(email).collection("Questions").doc(questionRef1).collection("URLs").add({ Image: "" + url });
-                            });
+                        // var ref = db.collection("user");
+                        // if (questionRef1 == undefined) {
+                        //     var newRef1 = ref.doc(email).collection("Questions").doc();
+                        //     questionRef1 = newRef1.id;
+                        //     newRef1.collection("URLs").add({ Image: "" + url });
+                        // } else {
+                        //     // delete older links
+                        //     // Get a new write batch
+                        //     ref.doc(email).collection("Questions").doc(questionRef1).collection("URLs").get().then(function(querySnapshot) {
+                        //         querySnapshot.forEach(function(doc) {
+                        //             doc.ref.delete().then(function() {
+                        //                 console.log("Document successfully deleted!");
+                        //             }).catch(function(error) {
+                        //                 console.error("Error removing document: ", error);
+                        //             });
+                        //         });
+                        //         // add new ones
+                        //         ref.doc(email).collection("Questions").doc(questionRef1).collection("URLs").add({ Image: "" + url });
+                        //     });
 
-                        }
+                        // }
                         var ref2 = db.collection("Questions");
                         if (questionRef2 == undefined) {
                             var newRef2 = ref2.doc();
@@ -212,76 +212,90 @@
                     check = true;
                 }
 
-                // add to collection "user/questions"
-                if (questionRef1 == undefined) {
-                    var newerRef1 = ref.doc();
-                    questionRef1 = newRef1.id;
-                    newerRef1.set({
-                            Author: author,
-                            Description: descr,
-                            Public: check,
-                            Time: time,
-                            NumberOfAnswers: numberOfA
-                        })
-                        .then(function() {
-                            console.log("Document successfully written!");
-                        })
-                        .catch(function(error) {
-                            console.error("Error writing document: ", error);
-                        });
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            newerRef1.collection("Answers").add({
-                                Approved: true,
-                                Author: author,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
+                // // add to collection "user/questions"
+                // if (questionRef1 == undefined) {
+                //     var newerRef1 = ref.doc();
+                //     questionRef1 = newRef1.id;
+                //     newerRef1.set({
+                //             Author: author,
+                //             Description: descr,
+                //             Public: check,
+                //             Time: time,
+                //             NumberOfAnswers: numberOfA
+                //         })
+                //         .then(function() {
+                //             console.log("Document successfully written!");
+                //         })
+                //         .catch(function(error) {
+                //             console.error("Error writing document: ", error);
+                //         });
+                //     if (solutions != undefined) {
+                //         var x = 0;
+                //         for (x = 0; x < solutions.length; x++) {
+                //             var solution = solutions[x].value;
+                //             newerRef1.collection("Answers").add({
+                //                 Approved: true,
+                //                 Author: author,
+                //                 Content: solution,
+                //                 Likes: 0
+                //             });
+                //         }
+                //     }
 
-                } else {
-                    ref.doc(questionRef1).set({
-                            Author: author,
-                            Description: descr,
-                            Public: check,
-                            Time: time,
-                            NumberOfAnswers: numberOfA
-                        })
-                        .then(function() {
-                            console.log("Document successfully written!");
-                        })
-                        .catch(function(error) {
-                            console.error("Error writing document: ", error);
-                        });
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            ref.doc(questionRef1).collection("Answers").add({
-                                Approved: true,
-                                Author: author,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
-                }
+                // } else {
+                //     ref.doc(questionRef1).set({
+                //             Author: author,
+                //             Description: descr,
+                //             Public: check,
+                //             Time: time,
+                //             NumberOfAnswers: numberOfA
+                //         })
+                //         .then(function() {
+                //             console.log("Document successfully written!");
+                //         })
+                //         .catch(function(error) {
+                //             console.error("Error writing document: ", error);
+                //         });
+                //     if (solutions != undefined) {
+                //         var x = 0;
+                //         for (x = 0; x < solutions.length; x++) {
+                //             var solution = solutions[x].value;
+                //             ref.doc(questionRef1).collection("Answers").add({
+                //                 Approved: true,
+                //                 Author: author,
+                //                 Content: solution,
+                //                 Likes: 0
+                //             });
+                //         }
+                //     }
+                // }
 
                 // add to collection "questions"
                 if (questionRef2 == undefined) {
                     var newerRef2 = ref2.doc();
-                    questionRef2 = newRef2.id;
+                    questionRef2 = newerRef2.id;
                     newerRef2.set({
+                            Author: author,
                             Description: descr,
                             Public: check,
                             Time: time,
+                            Status: "尚未决定",
                             NumberOfAnswers: numberOfA
                         })
                         .then(function() {
                             console.log("Document successfully written!");
+                            // add link to the question
+                            if (questionRef1 == undefined) {
+                                var newerRef1 = ref.doc();
+                                questionRef1 = newerRef1.id;
+                                newerRef1.set({
+                                    Ref: questionRef2
+                                });
+                            } else {
+                                ref.doc(questionRef1).set({
+                                    Ref: questionRef2
+                                });
+                            }
                         })
                         .catch(function(error) {
                             console.error("Error writing document: ", error);
@@ -294,6 +308,7 @@
                             newerRef2.collection("Answers").add({
                                 Approved: true,
                                 Author: author,
+                                Time: time,
                                 Content: solution,
                                 Likes: 0
                             });
@@ -301,13 +316,27 @@
                     }
                 } else {
                     ref2.doc(questionRef2).set({
+                            Author: author,
                             Description: descr,
                             Public: check,
                             Time: time,
+                            Status: "尚未决定",
                             NumberOfAnswers: numberOfA
                         })
                         .then(function() {
                             console.log("Document successfully written!");
+                            // add the link to the question
+                            if (questionRef1 == undefined) {
+                                var newerRef1 = ref.doc();
+                                questionRef1 = newerRef1.id;
+                                newerRef1.set({
+                                    Ref: questionRef2
+                                });
+                            } else {
+                                ref.doc(questionRef1).set({
+                                    Ref: questionRef2
+                                });
+                            }
                         })
                         .catch(function(error) {
                             console.error("Error writing document: ", error);
@@ -319,6 +348,7 @@
                             var solution = solutions[x].value;
                             ref2.doc(questionRef2).collection("Answers").add({
                                 Approved: true,
+                                Time: time,
                                 Author: author,
                                 Content: solution,
                                 Likes: 0
@@ -327,10 +357,14 @@
                     }
                 }
 
+
+
             });
             alert("提交成功!");
+            window.open('回答.html', "_self");
+
         } else { alert("请先输入您的问题啦"); }
-        window.open('https://it-love1.firebaseapp.com/questions/' + questionRef2, "_self");
+
     }
 
     var numberOfSolutions = 0;

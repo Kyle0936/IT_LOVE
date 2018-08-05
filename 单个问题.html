@@ -11,8 +11,8 @@
     <!--     <link href="../css/bootstrap.css" rel="stylesheet"> -->
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <!--     <link href="../css/style.css" rel="stylesheet"> -->
-    <link href="css/newstyle.css" rel="stylesheet">
-    <link href="css/history-question.css" rel="stylesheet">
+    <link href="../css/newstyle.css" rel="stylesheet">
+    <link href="../css/history-question.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script>
     var config = {
@@ -67,7 +67,7 @@
         document.getElementById('submit').addEventListener('click', submit);
     }
 
-    function openProfile(){
+    function openProfile() {
         window.open("个人信息.html", "_self");
     }
 
@@ -162,15 +162,15 @@
             <i class="fa fa-comment-o"></i> 选择你觉得合适的解决方案
         </div>
         <form>
-                <div id="add-solutions" style="margin-bottom:10px;">
-                    <select id="inlineFormCustomSelect" onchange="scheduleA.call(this,event,this.value)">
-                        <option selected>Choose...</option>
-<!--                         <option value="1">One</option>
+            <div id="add-solutions" style="margin-bottom:10px;">
+                <select id="inlineFormCustomSelect" onchange="scheduleA.call(this.event,this.value)">
+                    <option selected>Choose...</option>
+                    <!--                         <option value="1">One</option>
                         <option value="2">Two</option>
                         <option value="3">Three</option> -->
-                    </select>
-                </div>
-                <button class="btn" id="submit">提交</button>
+                </select>
+            </div>
+            <button class="btn" id="submit">提交</button>
         </form>
         <div>
             <input type="checkbox" value="" id="defaultCheck1">
@@ -225,173 +225,177 @@
             //ref = db.collection("user").doc(email).collection("Questions").doc().collection("Images");
             var db = firebase.firestore();
             var email = "" + user.email;
-            //WHY THERE ARE TWO COMMENTS QUES????
-            var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers").where("Approved", "==", true);
-            var ref1 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
+            db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").get().then(function(doc0) {
+                var dic0 = doc0.data();
+                var link = dic0["Ref"];
+                var ref1 = db.collection("Questions").doc(link);
+                var ref = db.collection("Questions").doc(link).collection("Answers").where("Approved", "==", true);
 
-            ref1.get().then(function(doc) {
-                var dic = doc.data();
-                if (doc.exists) {
-                    var author = dic["Author"];
-                    var desc = dic["Description"];
-                    var public = dic["Public"];
-                    var time = dic["Time"];
-                    var number = dic["NumberOfAnswers"];
-                    //set HTML
-                    //set heading
-                    var numberDiv = document.getElementById("numberOfA2");
-                    numberDiv.innerHTML = number + " 备选方案";
-                    //set info
-                    var numberChild = document.getElementById("numberOfA");
-                    numberChild.innerHTML = number + " 备选方案";
-                    var descChild = document.getElementById("main-content");
-                    descChild.innerHTML = desc;
-                    var timeChild = document.getElementById("date");
-                    timeChild.innerHTML = time;
+                ref1.get().then(function(doc) {
+                    var dic = doc.data();
+                    if (doc.exists) {
+                        var author = dic["Author"];
+                        var desc = dic["Description"];
+                        var public = dic["Public"];
+                        var time = dic["Time"];
+                        var number = dic["NumberOfAnswers"];
+                        //set HTML
+                        //set heading
+                        var numberDiv = document.getElementById("numberOfA2");
+                        numberDiv.innerHTML = number + " 备选方案";
+                        //set info
+                        var numberChild = document.getElementById("numberOfA");
+                        numberChild.innerHTML = number + " 备选方案";
+                        var descChild = document.getElementById("main-content");
+                        descChild.innerHTML = desc;
+                        var timeChild = document.getElementById("date");
+                        timeChild.innerHTML = time;
 
-                    var imageFather = document.getElementById("images");
-                    var subRef = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("URLs");
-                    // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
-                    var countImage;
-                    subRef.get().then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc2) {
-                            dic2 = doc2.data();
-                            var image = document.createElement("img");
-                            image.src = dic2["Image"];
-                            image.id = 'show' + countImage;
-                            image.setAttribute('width', '100');
-                            image.setAttribute('height', '80');
-                            image.setAttribute('margin', '5px');
-                            imageFather.appendChild(image);
-                            document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
+                        var imageFather = document.getElementById("images");
+                        var subRef = db.collection("Questions").doc(link).collection("URLs");
+                        // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
+                        var countImage;
+                        subRef.get().then(function(querySnapshot) {
+                            querySnapshot.forEach(function(doc2) {
+                                dic2 = doc2.data();
+                                var image = document.createElement("img");
+                                image.src = dic2["Image"];
+                                image.id = 'show' + countImage;
+                                image.setAttribute('width', '100');
+                                image.setAttribute('height', '80');
+                                image.setAttribute('margin', '5px');
+                                imageFather.appendChild(image);
+                                document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
+                            });
                         });
-                    });
 
-                } else {
-                    console.log("No such document!");
-                }
-
-
-            });
-
-
-
-
-            //         ref1.get().then(function(querySnapshot) {
-            //         querySnapshot.forEach(function(doc) {
-
-            //         console.log("test111");
-            //         console.log( " ==> ", doc.data().Description);
-            //         console.log( " link ==> ", doc.data().LinkToImage);
-            //         var description = doc.data().Description;
-            //         var public = doc.data().Public;
-            //         var time = doc.data().Time;
-
-            // var child = document.createElement("div");
-            // child.setAttribute('class', 'comments-user');
-
-
-            // var desChild = document.createElement("div");
-            // dateChild.setAttribute('class', 'comment-post-date');
-            // dateChild.innerHTML = "Description " + description;
-            // var dateChild = document.createElement("div");
-            // dateChild.setAttribute('class', 'comment-post-date');
-            // dateChild.innerHTML = "Posted on " + time;
-            // var contentChild = document.createElement("div");
-            // contentChild.setAttribute('class', 'comments-content');
-            // contentChild.innerHTML = content;
-            // var lineChild = document.createElement("hr");
-            // lineChild.setAttribute('class', 'style-three');
-            // var father = document.createElement("div");
-            // father.setAttribute('class', 'article-content');
-            // var son = document.createElement("div");
-            // son.setAttribute('class', 'article-comment-top');
-            // var grandfather = document.getElementById("displayQues");
-            // child.appendChild(nameChild);
-            // child.appendChild(dateChild);
-            // son.appendChild(child);
-            // son.appendChild(contentChild);
-            // son.appendChild(likeChild); 
-            // father.appendChild(son);
-            // father.appendChild(lineChild);
-            // grandfather.appendChild(father);
-
-
-            //     });
-
-            // });
-            // add solutions
-            var count = 0;
-            ref.orderBy("Likes").get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    count ++;
-                    console.log("success");
-                    var dic1 = doc.data();
-                    var author1 = dic1["Author"];
-                    var content = dic1["Content"];
-                    var likes = dic1["Likes"];
-                    var approve = dic1["Approved"];
-                    var date = dic1["Time"];
-                    var link;
-                    var name;
-                    db.collection("user").doc(author1).get().then(function(doc00) {
-                        var dic00 = doc00.data();
-                        if (dic00["Name"] != undefined) { name = dic00["Name"]; } else { name = author1;}
-                        if (dic00["Picture"] != undefined) { link = dic00["Picture"]; } else { link = "../images/user.png"; }
-                        console.log(link);
-                        // write html
-                        var userChild = document.createElement("div");
-                        userChild.setAttribute('class', 'comments-user');
-                        var imageChild = document.createElement("img");
-                        imageChild.src = link;
-                        console.log("test" + imageChild.src);
-                        imageChild.setAttribute('alt', 'anonymous');
-                        var nameChild = document.createElement("div");
-                        nameChild.setAttribute('class', 'user-name');
-                        nameChild.innerHTML = name;
-                        var dateChild = document.createElement("div");
-                        dateChild.setAttribute('class', 'comment-post-date');
-                        dateChild.innerHTML = "Posted on " + date;
-                        var contentChild = document.createElement("div");
-                        contentChild.setAttribute('class', 'comments-content');
-                        contentChild.innerHTML = content;
-                        var likeChild = document.createElement("p");
-                        likeChild.setAttribute('class', 'likes');
-                        likeChild.innerHTML = "Number of people chose this: " + likes;
-                        // var lineChild = document.createElement("hr");
-                        // lineChild.setAttribute('class', 'style-three');
-                        var father = document.createElement("div");
-                        father.setAttribute('class', 'article-content');
-                        var son = document.createElement("div");
-                        son.setAttribute('class', 'article-comment-top');
-                        var grandfather = document.getElementById("solutions");
-                        userChild.appendChild(imageChild);
-                        userChild.appendChild(nameChild);
-                        userChild.appendChild(dateChild);
-                        son.appendChild(userChild);
-                        son.appendChild(contentChild);
-                        son.appendChild(likeChild);
-
-                        father.appendChild(son);
-                        // father.appendChild(lineChild);
-                        grandfather.appendChild(father);
-
-                        var grand2 = document.getElementById("inlineFormCustomSelect");
-                        var grandson = document.createElement("option");
-                        grandson.setAttribute('value', count);
-                        grandson.innerHTML = 'Solution #' + count;
-
-                    });
+                    } else {
+                        console.log("No such document!");
+                    }
 
 
                 });
 
+
+
+
+                //         ref1.get().then(function(querySnapshot) {
+                //         querySnapshot.forEach(function(doc) {
+
+                //         console.log("test111");
+                //         console.log( " ==> ", doc.data().Description);
+                //         console.log( " link ==> ", doc.data().LinkToImage);
+                //         var description = doc.data().Description;
+                //         var public = doc.data().Public;
+                //         var time = doc.data().Time;
+
+                // var child = document.createElement("div");
+                // child.setAttribute('class', 'comments-user');
+
+
+                // var desChild = document.createElement("div");
+                // dateChild.setAttribute('class', 'comment-post-date');
+                // dateChild.innerHTML = "Description " + description;
+                // var dateChild = document.createElement("div");
+                // dateChild.setAttribute('class', 'comment-post-date');
+                // dateChild.innerHTML = "Posted on " + time;
+                // var contentChild = document.createElement("div");
+                // contentChild.setAttribute('class', 'comments-content');
+                // contentChild.innerHTML = content;
+                // var lineChild = document.createElement("hr");
+                // lineChild.setAttribute('class', 'style-three');
+                // var father = document.createElement("div");
+                // father.setAttribute('class', 'article-content');
+                // var son = document.createElement("div");
+                // son.setAttribute('class', 'article-comment-top');
+                // var grandfather = document.getElementById("displayQues");
+                // child.appendChild(nameChild);
+                // child.appendChild(dateChild);
+                // son.appendChild(child);
+                // son.appendChild(contentChild);
+                // son.appendChild(likeChild); 
+                // father.appendChild(son);
+                // father.appendChild(lineChild);
+                // grandfather.appendChild(father);
+
+
+                //     });
+
+                // });
+                // add solutions
+                var count = 0;
+                ref.orderBy("Likes").get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        count++;
+                        console.log("success");
+                        var dic1 = doc.data();
+                        var author1 = dic1["Author"];
+                        var content = dic1["Content"];
+                        var likes = dic1["Likes"];
+                        var approve = dic1["Approved"];
+                        var date = dic1["Time"];
+                        var link;
+                        var name;
+                        db.collection("user").doc(author1).get().then(function(doc00) {
+                            var dic00 = doc00.data();
+                            if (dic00["Name"] != undefined) { name = dic00["Name"]; } else { name = author1; }
+                            if (dic00["Picture"] != undefined) { link = dic00["Picture"]; } else { link = "../images/user.png"; }
+                            console.log(link);
+                            // write html
+                            var userChild = document.createElement("div");
+                            userChild.setAttribute('class', 'comments-user');
+                            var imageChild = document.createElement("img");
+                            imageChild.src = link;
+                            console.log("test" + imageChild.src);
+                            imageChild.setAttribute('alt', 'anonymous');
+                            var nameChild = document.createElement("div");
+                            nameChild.setAttribute('class', 'user-name');
+                            nameChild.innerHTML = name;
+                            var dateChild = document.createElement("div");
+                            dateChild.setAttribute('class', 'comment-post-date');
+                            dateChild.innerHTML = "Posted on " + date;
+                            var contentChild = document.createElement("div");
+                            contentChild.setAttribute('class', 'comments-content');
+                            contentChild.innerHTML = content;
+                            var likeChild = document.createElement("p");
+                            likeChild.setAttribute('class', 'likes');
+                            likeChild.innerHTML = "Number of people chose this: " + likes;
+                            // var lineChild = document.createElement("hr");
+                            // lineChild.setAttribute('class', 'style-three');
+                            var father = document.createElement("div");
+                            father.setAttribute('class', 'article-content');
+                            if (dic1["Selected"] != undefined) {
+                                father.id = "selected";
+                            }
+                            var son = document.createElement("div");
+                            son.setAttribute('class', 'article-comment-top');
+                            var grandfather = document.getElementById("solutions");
+                            userChild.appendChild(imageChild);
+                            userChild.appendChild(nameChild);
+                            userChild.appendChild(dateChild);
+                            son.appendChild(userChild);
+                            son.appendChild(contentChild);
+                            son.appendChild(likeChild);
+
+                            father.appendChild(son);
+                            // father.appendChild(lineChild);
+                            grandfather.appendChild(father);
+
+                            var grand2 = document.getElementById("inlineFormCustomSelect");
+                            var grandson = document.createElement("option");
+                            grandson.setAttribute('value', doc.id);
+                            grandson.innerHTML = 'Solution #' + count;
+
+                        });
+
+
+                    });
+
+                });
             });
-
-
         } else {}
     });
-    
+
     // work on cordova
     function showFullScreen(url) {
         FullScreenImage.showImageURL(url);
@@ -425,7 +429,10 @@
                 //var ref = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").collection("Answers");
                 var ref2 = db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}");
                 ref2.get().then(function(doc) {
-                    ref2.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
+                    var dic = doc.data();
+                    var link = dic["Ref"];
+                    var ref3 = db.collection("Questions").doc(link);
+                    ref3.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
                             console.log(typeof(doc.data()["Author"]));
                             console.log(typeof(doc.data()["Likes"]));
@@ -466,159 +473,51 @@
         alert('The user selected ' + value);
     }
 
+    var selectedOption;
+
+    function scheduleA(event, value) {
+        // if (event == "1") return;
+        // if (event == "2") return;
+        // if (event == "3") return;
+        // if (event == "4") {
+        //     var div = document.createElement('div');
+        //     var btn = document.createElement("form");
+        //     var i = document.createElement("input");
+        //     i.setAttribute('type', "text");
+        //     i.setAttribute('name', "username");
+        //     i.setAttribute("placeholder", "输入新的解决方案");
+
+        //     btn.appendChild(i);
+        //     div.appendChild(btn);
+
+        //     document.getElementById("add-solutions").appendChild(div);
+        //     console.log("Test");
+        // }
+        selectedOption = value;
+        console.log("select " + value);
+    }
+
     function submit() {
-        if (document.getElementById('description').value) {
-            firebase.auth().onAuthStateChanged(function(user) {
-                var email = "" + user.email;
-                var db = firebase.firestore();
-                var ref = db.collection("user").doc(email).collection("Questions");
-                var ref2 = db.collection("Questions");
-                var check = false;
-                // time
-                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                var now = new Date();
-                var thisMonth = months[now.getMonth()];
-                var date = now.getDate();
-                var year = now.getFullYear();
-                // author
-                var author = user.email;
-                var descr = document.getElementById("description").value;
-                var solutions;
-                var numberOfA = 0;
-                if (document.getElementsByClassName("solution")) {
-                    solutions = document.getElementsByClassName("solution");
-                    numberOfA = solutions.length;
-                }
+        // 给提供建议的人加钱
+        var db = firebase.firestore();
+        db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").get().then(function(doc0) {
+            var dic0 = doc0.data();
+            var link = dic0["Ref"];
+            console.log("success" + link);
+            var ref = db.collection("Questions").doc(link);
+            if (selectedOption == undefined) {
+                alert("请先选择一个方案再提交");
+            } else {
+                var ref1 = ref.collection("Answers").doc(selectedOption);
+                ref1.set({
+                    Selected: true
+                }, { merge: true });
+            }
 
-                // still time
-                if (date < 10) {
-                    date = '0' + date;
-                }
-                var time = "" + date + " " + thisMonth + ", " + year;
+        });
 
-                if (document.getElementById("defaultCheck1").checked) {
-                    check = true;
-                }
 
-                // add to collection "user/questions"
-                if (questionRef1 == undefined) {
-                    var newerRef1 = ref.doc();
-                    questionRef1 = newRef1.id;
-                    newerRef1.set({
-                            Author: author,
-                            Description: descr,
-                            Public: check,
-                            Time: time,
-                            NumberOfAnswers: numberOfA
-                        })
-                        .then(function() {
-                            console.log("Document successfully written!");
-                        })
-                        .catch(function(error) {
-                            console.error("Error writing document: ", error);
-                        });
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            newerRef1.collection("Answers").add({
-                                Approved: true,
-                                Author: author,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
-
-                } else {
-                    ref.doc(questionRef1).set({
-                            Author: author,
-                            Description: descr,
-                            Public: check,
-                            Time: time,
-                            NumberOfAnswers: numberOfA
-                        })
-                        .then(function() {
-                            console.log("Document successfully written!");
-                        })
-                        .catch(function(error) {
-                            console.error("Error writing document: ", error);
-                        });
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            ref.doc(questionRef1).collection("Answers").add({
-                                Approved: true,
-                                Author: author,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
-                }
-
-                // add to collection "questions"
-                if (questionRef2 == undefined) {
-                    var newerRef2 = ref2.doc();
-                    questionRef2 = newRef2.id;
-                    newerRef2.set({
-                            Description: descr,
-                            Public: check,
-                            Time: time,
-                            NumberOfAnswers: numberOfA
-                        })
-                        .then(function() {
-                            console.log("Document successfully written!");
-                        })
-                        .catch(function(error) {
-                            console.error("Error writing document: ", error);
-                        });
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            console.log("test " + solution);
-                            newerRef2.collection("Answers").add({
-                                Approved: true,
-                                Author: author,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
-                } else {
-                    ref2.doc(questionRef2).set({
-                            Description: descr,
-                            Public: check,
-                            Time: time,
-                            NumberOfAnswers: numberOfA
-                        })
-                        .then(function() {
-                            console.log("Document successfully written!");
-                        })
-                        .catch(function(error) {
-                            console.error("Error writing document: ", error);
-                        });
-
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            ref2.doc(questionRef2).collection("Answers").add({
-                                Approved: true,
-                                Author: author,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
-                }
-
-            });
-            alert("提交成功!");
-        } else { alert("请先输入您的问题啦"); }
-        window.open('https://it-love1.firebaseapp.com/questions/' + questionRef2, "_self");
+        alert("提交成功!");
     }
     </script>
 </body>
