@@ -314,8 +314,8 @@
                                 });
                         } else { console.log("Error: other text on the button."); }
                     } else {
-                        ref.doc(email).set({ Type: "" + document.getElementById("inputType").value }, { merge: true });
-                        location.reload();
+                        ref.doc(email).set({ Type: "" + document.getElementById("inputType").value }, { merge: true }).then(function(){location.reload();});
+                        
                     }
                 });
             } else {}
