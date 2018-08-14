@@ -110,8 +110,10 @@
                 // lineChild.setAttribute('class', 'style-three');
                 var father = document.createElement("div");
                 father.setAttribute('class', 'article-content');
+                // a answer is chosen and the question is considered as closed
                 if (dic1["Selected"] != undefined && dic1["Selected"] == true) {
                     father.id = "selected";
+                    document.getElementById("ursolution").style.display = "none";
                 }
                 var son = document.createElement("div");
                 son.setAttribute('class', 'article-comment-top');
