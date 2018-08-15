@@ -50,7 +50,7 @@
             var imageFather = document.getElementById("images");
             var subRef = db.collection("Questions").doc("${req.params.questionid}").collection("URLs");
             // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
-            var countImage;
+            var countImage = 0;
             subRef.get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc2) {
                     dic2 = doc2.data();
@@ -62,6 +62,7 @@
                     image.setAttribute('margin', '5px');
                     imageFather.appendChild(image);
                     document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
+                    countImage = countImage + 1;
                 });
             });
 
