@@ -766,7 +766,7 @@ app.get('/questions/:questionid', (req, res) => {
                                                     console.error("Error updating document: ", error);
                                                 });
                                             console.log("test2" + newLike);
-                                            likeChild.innerHTML = "Number of people chose this: " + doc2.data()["Likes"];
+                                            likeChild.innerHTML = "Number of people chose this: " + newLike;
                                         });
                                     }
                                 });
@@ -1030,6 +1030,7 @@ app.get('/questions/:questionid', (req, res) => {
                                 });
                             }
                         }
+                        location.reload();
                     });
 
                 } else {
@@ -1055,7 +1056,6 @@ app.get('/questions/:questionid', (req, res) => {
                 // });
             });
         }
-        location.reload();
     }
 
     window.onload = function() {
@@ -1290,9 +1290,10 @@ app2.get('/search/:searchcontent', (req, res) => {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IT LOVE回答</title>
     <!-- LOADING STYLESHEETS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
+<!--     <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet"> -->
     <link href="../css/newstyle.css" rel="stylesheet">
+    <link href="../css/all-questions.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -1519,7 +1520,7 @@ app2.get('/search/:searchcontent', (req, res) => {
     }
 
     function openProfile(){
-        window.open("个人信息.html", "_self");
+        window.open("../个人信息.html", "_self");
     }
 
     function toggleSignIn() {
@@ -1534,6 +1535,74 @@ app2.get('/search/:searchcontent', (req, res) => {
     window.onload = function() {
         initApp();
     };
+    </script>
+    <script type="text/javascript">
+    var db = firebase.firestore();
+    var ref = db.collection("Questions");
+    var newRef = ref.orderBy("NumberOfAnswers","desc").limit(5);
+    console.log(newRef);
+    newRef.get().then(function(querySnapshot4) {
+        querySnapshot4.forEach(function(doc) {
+
+            var dic = doc.data();
+
+            //console.log(author["Author"]);
+            var description = dic["Description"];
+            console.log(description);
+
+            //add html
+            var ahref = document.createElement("a");
+
+            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            ahref.style.color = "black";
+            var father = document.createElement("div");
+            father.setAttribute("class", "b");
+
+            //var descChild = document.createElement("div");
+            father.innerHTML = description;
+            //father.appendChild(descChild);
+            ahref.appendChild(father);
+            var li = document.createElement("li");
+            li.appendChild(ahref);
+            //var father = document.getElement("mostPopular");
+            //father.setAttribute('class', 'article');
+            
+            // var contentChild = document.createElement("div");
+            // contentChild.setAttribute('class', 'article-content');
+            // var descChild = document.createElement("p");
+            // descChild.innerHTML = desc;
+            // descChild.setAttribute('class', 'block-with-text');
+            // contentChild.appendChild(descChild);
+            // var infoChild = document.createElement("div");
+            // infoChild.setAttribute('class', 'article-info');
+            // // time
+            // var timeTag = document.createElement("i");
+            // timeTag.setAttribute('class', 'fa fa-calendar-o');
+            // var timeTime = document.createElement("div");
+            // timeTime.setAttribute('class', 'tag');
+            // timeTime.innerHTML = time;
+            // // answers
+            // var answersTag = document.createElement("i");
+            // answersTag.setAttribute('class', 'fa fa-comments-o');
+            // answersTag.style.margin = "0 0 0 10px";
+            // var answersAns = document.createElement("div");
+            // answersAns.setAttribute('class', 'tag');
+            // answersAns.innerHTML = number + " Answers";
+            // // add answers and time
+            // infoChild.appendChild(timeTag);
+            // infoChild.appendChild(timeTime);
+            // infoChild.appendChild(answersTag);
+            // infoChild.appendChild(answersAns);
+
+            // father.appendChild(contentChild);
+            // father.appendChild(infoChild);
+            // ahref.appendChild(father);
+
+            var grandfather = document.getElementById("mostPopular");
+            grandfather.appendChild(li);
+
+        });
+    });
     </script>
 </head>
 
@@ -1560,15 +1629,15 @@ app2.get('/search/:searchcontent', (req, res) => {
     <div class="topnav-outline">
         <ul class="topnav">
             <li>
-                <a href="index.html">
+                <a href="../index.html">
                             <i class="fa fa-home"></i> 首页</a>
             </li>
             <li>
-                <a href="提问.html">
+                <a href="../提问.html">
                             <i class="fa fa-book"></i> 提问</a>
             </li>
             <li>
-                <a href="回答.html">
+                <a href="../回答.html">
                             <i class="fa fa-file-text-o"></i> 回答</a>
             </li>
             <li class="icon">
@@ -1615,13 +1684,13 @@ app2.get('/search/:searchcontent', (req, res) => {
         <!-- END ARTICLES OVERVIEW SECTION-->
         <!-- SIDEBAR STUFF -->
         <div class="sidenav">
-            <div class="fb-heading-small">
+            <div class="heading">
                 最火的问题
             </div>
             <hr class="style-three">
-            <div class="fat-content-small padding-left-10">
-                <ul>
-                    <li>
+            <div>
+                <ul id="mostPopular">
+                    <!-- <li>
                         <a href="#">
                                         <i class="fa fa-file-text-o"></i> How to change account password?</a>
                     </li>
@@ -1640,7 +1709,7 @@ app2.get('/search/:searchcontent', (req, res) => {
                     <li>
                         <a href="#">
                                         <i class="fa fa-file-text-o"></i> Lookup existing customer in order form</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -1659,7 +1728,7 @@ app2.get('/search/:searchcontent', (req, res) => {
         if (content != "") {
             window.open('https://it-love1.firebaseapp.com/search/' + content, "_self");
         } else {
-            window.open('https://it-love1.firebaseapp.com/回答.html', "_self");
+            window.open('../回答.html', "_self");
         }
     }
     </script>

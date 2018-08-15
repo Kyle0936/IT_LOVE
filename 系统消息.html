@@ -52,7 +52,7 @@
                         var numberChild = document.createElement("div");
                         numberChild.innerHTML = "Number of Answers: " + number;
                         var ahref1 = document.createElement("a");
-                        ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
+                        ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
                         var father1 = document.createElement("div");
                         father1.setAttribute('class', 'article');
                         var infoChild1 = document.createElement("div");
@@ -91,7 +91,7 @@
                                 var content = dic["Content"];
                                 var time = dic["Time"];
                                 var ahref = document.createElement("a");
-                                ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc.id);
+                                ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
                                 var father = document.createElement("div");
                                 father.setAttribute('class', 'article');
                                 var infoChild = document.createElement("div");
@@ -114,9 +114,9 @@
                                 buttonChild1.innerHTML = "通过";
                                 buttonChild1.onclick = function() {
 
-                                    return thirdRef.update({ Approved: true })
+                                    thirdRef.update({ Approved: true })
                                         .then(function() {
-                                            console.log("Document successfully approved!");
+                                            console.log("2Document successfully approved!");
                                             window.location.reload();
                                         }).catch(function(error) {
                                             console.error("Error removing document: ", error);
@@ -124,11 +124,11 @@
 
                                     // add one to number of answers
                                     var newAnswers = number + 1;
-                                    return ref.update({
+                                    ref.update({
                                             NumberOfAnswers: newAnswers
                                         })
                                         .then(function() {
-                                            console.log("Document successfully updated!");
+                                            console.log("1Document successfully updated!");
                                         })
                                         .catch(function(error) {
                                             // The document probably doesn't exist.
@@ -166,8 +166,8 @@
                             document.getElementById("approvenumber").innerHTML = count1;
                         });
                     });
-                });
-                document.getElementById("questionnumber").innerHTML = count2;
+                }).then(function() { document.getElementById("questionnumber").innerHTML = count2; });
+
             });
 
         } else {
@@ -190,7 +190,7 @@
 
                 // show all answers
                 var authorChild2 = document.createElement("div");
-                if (selfWritten == false) { authorChild2.innerHTML = author1; } else { authorChild2.innerHTML = "Clever Me"; }
+                if (selfWritten == false) { authorChild2.innerHTML = author1; } else { authorChild2.innerHTML = "是我本人哒"; }
                 authorChild2.setAttribute('class', 'tag');
                 var statusChild = document.createElement("div");
                 statusChild.innerHTML = "Approved: " + status;
@@ -276,6 +276,8 @@
             }
         });
         document.getElementById('signintop').addEventListener('click', toggleSignIn, false);
+        document.getElementById("approvenumber").innerHTML = 0;
+        document.getElementById("questionnumber").innerHTML = 0;
     }
 
     function openProfile() {

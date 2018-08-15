@@ -296,24 +296,27 @@
                                     Ref: questionRef2
                                 });
                             }
+                            if (solutions != undefined) {
+                                var x = 0;
+                                for (x = 0; x < solutions.length; x++) {
+                                    var solution = solutions[x].value;
+                                    console.log("test " + solution);
+                                    newerRef2.collection("Answers").add({
+                                        Approved: true,
+                                        Author: author,
+                                        Time: time,
+                                        Content: solution,
+                                        Likes: 0
+                                    });
+                                }
+                            }
+                            alert("提交成功!");
+                            window.open('回答.html', "_self");
                         })
                         .catch(function(error) {
                             console.error("Error writing document: ", error);
                         });
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            console.log("test " + solution);
-                            newerRef2.collection("Answers").add({
-                                Approved: true,
-                                Author: author,
-                                Time: time,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
+
                 } else {
                     ref2.doc(questionRef2).set({
                             Author: author,
@@ -337,34 +340,34 @@
                                     Ref: questionRef2
                                 });
                             }
+
+                            if (solutions != undefined) {
+                                var x = 0;
+                                for (x = 0; x < solutions.length; x++) {
+                                    var solution = solutions[x].value;
+                                    ref2.doc(questionRef2).collection("Answers").add({
+                                        Approved: true,
+                                        Time: time,
+                                        Author: author,
+                                        Content: solution,
+                                        Likes: 0
+                                    });
+                                }
+                            }
+                            alert("提交成功!");
+                            window.open('回答.html', "_self");
                         })
                         .catch(function(error) {
                             console.error("Error writing document: ", error);
                         });
 
-                    if (solutions != undefined) {
-                        var x = 0;
-                        for (x = 0; x < solutions.length; x++) {
-                            var solution = solutions[x].value;
-                            ref2.doc(questionRef2).collection("Answers").add({
-                                Approved: true,
-                                Time: time,
-                                Author: author,
-                                Content: solution,
-                                Likes: 0
-                            });
-                        }
-                    }
                 }
 
 
 
             });
-            alert("提交成功!");
-            window.open('回答.html', "_self");
 
         } else { alert("请先输入您的问题啦"); }
-
     }
 
     var numberOfSolutions = 0;
