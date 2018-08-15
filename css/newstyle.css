@@ -178,7 +178,7 @@ ul.topnav li.icon {display: none;}
   margin-right: 1em;
   padding-right: 1em;
   margin-top: -7px;
-  margin-bottom: -7px;
+  margin-bottom: 3px;
   font-size: 18px;
 }
 .block-with-text:before {
