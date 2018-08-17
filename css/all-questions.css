@@ -28,6 +28,8 @@
 .sidenav a:hover {
     color: #064579;
 }
+
+/* hide extra */
 div.b {
     white-space: nowrap; 
     width: 80%; 
@@ -38,6 +40,8 @@ div.b {
     
     border-radius: 6px;
 }
+/* end of hiding extra */
+
 .questions{
 	position: relative;
 	width: 60%;

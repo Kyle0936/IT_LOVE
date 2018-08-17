@@ -29,6 +29,8 @@
     const settings = { /* your settings... */ timestampsInSnapshots: true };
     firestore.settings(settings);
 
+
+    var changed = false;
     /**
      * init firestone
      */
@@ -72,12 +74,27 @@
         document.getElementById('addsolution').addEventListener('click', addsolution);
         // document.getElementById('files').addEventListener('change', handleFileSelect, false);
         document.getElementById('files').addEventListener('change', function(e) {
+
             //Get files
+            if (changed == true) {
+                // delete older links
+                db.collection("Questions").doc(questionRef2).collection("URLs").get().then(function(querySnapshot2) {
+                    querySnapshot2.forEach(function(doc2) {
+                        doc2.ref.delete().then(function() {
+                            console.log("Document successfully deleted!");
+                        }).catch(function(error) {
+                            console.error("Error removing document: ", error);
+                        });
+                    });
+                });
+            }
             for (var i = 0; i < e.target.files.length; i++) {
                 var imageFile = e.target.files[i];
 
                 uploadImageAsPromise(imageFile);
+                console.log("count = " + i);
             }
+            changed = true;
         });
     }
 
@@ -142,20 +159,12 @@
                             var newRef2 = ref2.doc();
                             questionRef2 = newRef2.id;
                             newRef2.collection("URLs").add({ Image: "" + url });
+                            console.log(url);
                         } else {
-                            // delete older links
-                            ref2.doc(questionRef2).collection("URLs").get().then(function(querySnapshot2) {
-                                querySnapshot2.forEach(function(doc2) {
-                                    doc2.ref.delete().then(function() {
-                                        console.log("Document successfully deleted!");
-                                    }).catch(function(error) {
-                                        console.error("Error removing document: ", error);
-                                    });
-                                });
-                                // add new ones
-                                ref2.doc(questionRef2).collection("URLs").add({ Image: "" + url });
-                            });
+                            // add new ones
+                            ref2.doc(questionRef2).collection("URLs").add({ Image: "" + url });
 
+                            console.log(url);
                         }
                     });
                 });

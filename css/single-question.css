@@ -29,3 +29,16 @@
     text-align: right;
 
 }
+
+/* hide extra */
+div.b {
+    white-space: nowrap; 
+    width: 80%; 
+    max-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    /*border: 1px solid #000000;*/
+    
+    border-radius: 6px;
+}
+/* end of hiding extra */

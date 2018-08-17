@@ -42,6 +42,7 @@
                     ref.get().then(function(doc) {
                         // add all asked questions
                         count2++;
+                        document.getElementById("questionnumber").innerHTML = count2; 
                         var bigdic = doc.data();
                         var descrip = bigdic["Description"];
                         var number = bigdic["NumberOfAnswers"];
@@ -53,6 +54,7 @@
                         numberChild.innerHTML = "Number of Answers: " + number;
                         var ahref1 = document.createElement("a");
                         ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
+                        ahref1.style.color = "black";
                         var father1 = document.createElement("div");
                         father1.setAttribute('class', 'article');
                         var infoChild1 = document.createElement("div");
@@ -92,6 +94,7 @@
                                 var time = dic["Time"];
                                 var ahref = document.createElement("a");
                                 ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
+                                ahref.style.color = "black";
                                 var father = document.createElement("div");
                                 father.setAttribute('class', 'article');
                                 var infoChild = document.createElement("div");
@@ -166,7 +169,8 @@
                             document.getElementById("approvenumber").innerHTML = count1;
                         });
                     });
-                }).then(function() { document.getElementById("questionnumber").innerHTML = count2; });
+                });
+                 
 
             });
 
@@ -199,6 +203,7 @@
                 likeChild2.innerHTML = "Number of Likes: " + likes1;
                 var ahref2 = document.createElement("a");
                 ahref2.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + question);
+                ahref2.style.color = "black";
                 var father2 = document.createElement("div");
                 father2.setAttribute('class', 'article');
                 var infoChild2 = document.createElement("div");

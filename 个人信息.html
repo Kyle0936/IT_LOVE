@@ -179,9 +179,8 @@
                                 document.getElementById('imageform').style.display = 'none';
                                 var profileImg = document.createElement('img');
                                 profileImg.src = dic["Picture"];
-                                profileImg.setAttribute('width', '80');
-                                profileImg.setAttribute('height', '80');
                                 document.getElementById('profileImage').style.alignContent = "center";
+                                profileImg.setAttribute("class", "profile");
                                 document.getElementById('profileImage').appendChild(profileImg);
                             }
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];

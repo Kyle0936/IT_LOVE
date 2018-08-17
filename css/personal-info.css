@@ -6,3 +6,9 @@
 	border-radius: 10px 10px 0 0;
 	background-color: #D3D3D3;
 }
+
+.profile{
+	width: 80px;
+	height: 80px;
+	padding: 5px 5px 5px 5px;
+}
