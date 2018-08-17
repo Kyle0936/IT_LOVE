@@ -35,7 +35,29 @@
                     snapshot.ref.getDownloadURL().then(function(url) {
                         var db = firebase.firestore();
                         var ref = db.collection("user");
-                        ref.doc(email).set({ Picture: "" + url }, { merge: true });
+                        ref.doc(email).set({ Picture: "" + url }, { merge: true }).then(function(){console.log("refresh");
+            openProfile();});
+                        console.log("success");
+                    });
+                });
+            });
+        });
+    }
+
+    function updateImageAsPromise(imageFile) {
+        return new Promise(function(resolve, reject) {
+            console.log("TESTNEW");
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                var storageRef = firebase.storage().ref();
+                var email = "" + user.email;
+                //Upload file
+                var task = storageRef.child('user/' + email).child(new Date() + imageFile.name).put(imageFile).then(function(snapshot) {
+                    snapshot.ref.getDownloadURL().then(function(url) {
+                        var db = firebase.firestore();
+                        var ref = db.collection("user");
+                        ref.doc(email).update({ Picture: "" + url }).then(function(){console.log("refresh");
+            openProfile();});
                         console.log("success");
                     });
                 });
@@ -106,10 +128,16 @@
         <div class="gray">
             <strong>头像</strong>
         </div>
-        <div id="profileImage">
+        <div>
             <form id="imageform">
                 <h4 style="margin-top: 0px;">上传头像</h4>
                 <input type="file" id="file" name="file" />
+            </form>
+            <div id="profileImage">
+            </div>
+            <form id="changeform" style="display: none;">
+                <h5 style="display:inline-block;">修改头像</h4>
+                <input type="file" id="newfile" name="file" style="display:inline-block;"/>
             </form>
         </div>
     </div>
@@ -182,6 +210,7 @@
                                 document.getElementById('profileImage').style.alignContent = "center";
                                 profileImg.setAttribute("class", "profile");
                                 document.getElementById('profileImage').appendChild(profileImg);
+                                document.getElementById('changeform').style.display = 'inline-block';
                             }
                             document.getElementById('welcome').textContent = '欢迎 ' + dic["Name"];
                             document.getElementById('welcome').addEventListener('click', openProfile);
@@ -236,7 +265,14 @@
         document.getElementById('file').addEventListener('change', function(e) {
             var imageFile = e.target.files[0];
             uploadImageAsPromise(imageFile);
+
         });
+        document.getElementById('newfile').addEventListener('change', function(e) {
+            var imageFile = e.target.files[0];
+            updateImageAsPromise(imageFile);
+
+        });
+        
     }
 
     function openProfile(){

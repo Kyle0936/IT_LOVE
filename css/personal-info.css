@@ -12,3 +12,15 @@
 	height: 80px;
 	padding: 5px 5px 5px 5px;
 }
+
+#profileimage{
+	padding: -5px;
+	margin-bottom: -5px;
+}
+
+#changeform{
+	padding: -5px;
+	margin-top: -25px;
+	margin-left: 10px;
+	margin-bottom: -10px;
+}
