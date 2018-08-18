@@ -9,4 +9,5 @@ OPTIONAL - #3. 修改数据库中一些原有的数据，把Name统一成Author
 DONE - #6. 最火问题省略号
 DONE - #7. fix bug为什么每次上传都少一张图片 
 #8. 分享链接
+#9. tutorial
 

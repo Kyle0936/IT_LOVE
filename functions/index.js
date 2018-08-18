@@ -74,7 +74,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
     }
 
     function openProfile() {
-        window.open("个人信息.html", "_self");
+        window.open("../个人信息.html", "_self");
     }
 
     function toggleSignIn() {
@@ -268,8 +268,8 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                                 image.src = dic2["Image"];
                                 image.id = 'show' + countImage;
                                 image.setAttribute('width', '100');
-                                image.setAttribute('height', '80');
-                                image.setAttribute('margin', '5px');
+                                image.setAttribute('height', '100');
+                                image.setAttribute('margin', '7');
                                 imageFather.appendChild(image);
                                 document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
                             });
@@ -628,7 +628,7 @@ app.get('/questions/:questionid', (req, res) => {
             var imageFather = document.getElementById("images");
             var subRef = db.collection("Questions").doc("${req.params.questionid}").collection("URLs");
             // var subRef = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo").collection("URLs");
-            var countImage;
+            var countImage = 0;
             subRef.get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc2) {
                     dic2 = doc2.data();
@@ -636,10 +636,11 @@ app.get('/questions/:questionid', (req, res) => {
                     image.src = dic2["Image"];
                     image.id = 'show' + countImage;
                     image.setAttribute('width', '100');
-                    image.setAttribute('height', '80');
-                    image.setAttribute('margin', '5px');
+                    image.setAttribute('height', '100');
+                    image.setAttribute('margin', '10');
                     imageFather.appendChild(image);
                     document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
+                    countImage = countImage + 1;
                 });
             });
 
@@ -688,8 +689,10 @@ app.get('/questions/:questionid', (req, res) => {
                 // lineChild.setAttribute('class', 'style-three');
                 var father = document.createElement("div");
                 father.setAttribute('class', 'article-content');
+                // a answer is chosen and the question is considered as closed
                 if (dic1["Selected"] != undefined && dic1["Selected"] == true) {
                     father.id = "selected";
+                    document.getElementById("ursolution").style.display = "none";
                 }
                 var son = document.createElement("div");
                 son.setAttribute('class', 'article-comment-top');
@@ -908,7 +911,7 @@ app.get('/questions/:questionid', (req, res) => {
     }
 
     function openProfile() {
-        window.open("个人信息.html", "_self");
+        window.open("../个人信息.html", "_self");
     }
 
     function toggleSignIn() {

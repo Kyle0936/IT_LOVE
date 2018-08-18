@@ -36,3 +36,13 @@
 /* end of decoration bar */
 
 textarea { font-size: 18px; }
+
+#main{
+    -webkit-transform: translate(-50%,-30%);
+    transform: translate(-50%,-30%);
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 75%;
+    height: auto;
+}
