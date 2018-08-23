@@ -139,8 +139,9 @@
                             if (author1 == email) {
                                 alert("不可以给自己点赞哦 不要那么自恋嘛～");
                             } else {
-                                likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML(6,7)) + 1) ;
-                                console.log(likeChild.innerHTML);
+                                console.log(likeChild.innerHTML.charAt(6));
+                                likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) + 1) ;
+                                
                                 // add into current user's answers list to show what he chooses
                                 otherRef.get().then(function(doc3) {
                                     if (!doc3.exists) { // if it has not been chosen
