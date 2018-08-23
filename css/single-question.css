@@ -42,3 +42,12 @@ div.b {
     border-radius: 6px;
 }
 /* end of hiding extra */
+
+@media screen and (max-width: 720px) {
+    .sidenav {
+        display: none;
+    }
+    .questions{
+        width: 90%;
+    }
+}

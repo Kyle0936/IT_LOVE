@@ -109,7 +109,8 @@ div.b {
     margin-top: -5px;
 }
 input.search {
-    min-width: 80px;
+    min-width: 60px;
+    height: 15%;
 }
 
 @media screen and (max-width: 720px) {

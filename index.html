@@ -81,6 +81,11 @@
     window.onload = function() {
         initApp();
     };
+
+    function moreThanMyFunction(){
+        document.getElementById("icondiv").style.display = "none";
+        myFunction();
+    }
     </script>
 </head>
 
@@ -119,7 +124,7 @@
                     <i class="fa fa-file-text-o"></i> 回答</a>
             </li>
             <li class="icon">
-                <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+                <a href="javascript:void(0);" onclick="moreThanMyFunction()">&#9776;</a>
             </li>
         </ul>
     </div>

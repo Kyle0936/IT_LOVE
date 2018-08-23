@@ -214,11 +214,11 @@ ul.topnav li.icon {display: none;}
 /* BUTTON: class="btn" */
 .btn {
   display: inline-block;
-  padding: 6px 12px;
+/*   padding: 6px 12px; */
   margin: 5px;
   font-size: 14px;
   font-weight: normal;
-  line-height: 1.42857143;
+  line-height: normal;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -234,7 +234,7 @@ ul.topnav li.icon {display: none;}
   color: #333;
   background-color: #fff;
   border-color: #ccc;
-  min-width: 120px;
+  min-width: 32px;
 }
 .btn:focus,
 .btn:active:focus,

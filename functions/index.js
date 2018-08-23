@@ -83,7 +83,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {}
+        } else {window.open('../登录.html', "_self");}
     }
 
     window.onload = function() {
@@ -935,7 +935,7 @@ app.get('/questions/:questionid', (req, res) => {
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {}
+        } else {window.open('../登录.html', "_self");}
     }
 
     var numberOfSolutions = 1;
@@ -1547,7 +1547,7 @@ app2.get('/search/:searchcontent', (req, res) => {
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {}
+        } else {window.open('../登录.html', "_self");}
     }
 
     window.onload = function() {
@@ -1735,9 +1735,9 @@ app2.get('/search/:searchcontent', (req, res) => {
     </div>
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
-    <script src="js/jquery-2.2.4.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/jquery-2.2.4.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <script src='https://cdn.rawgit.com/VPenkov/okayNav/master/app/js/jquery.okayNav.js'></script>
     <script>
     function search() {

@@ -1,7 +1,8 @@
 /* SEARCHFIELD: class="searchfield"; */
 .searchfield {
-    padding: 20px 20px 20px 20px;
+    /* padding: 20px 20px 20px 20px; */
     width: 100%;
+    height: 45%;
     -webkit-transform: translate(-50%,-55%);
     transform: translate(-50%,-55%);
     position: absolute;
@@ -13,28 +14,33 @@
     text-align: center;
 }
 .searchfield input{
-    width: 50%;
+    position: absolute;
+    top: 40%;
+    width: 40%;
+    height: 10%;
     border: 1px solid #c6c6c6;
-    height: 40px;
-    padding: 0px 25px 0px 50px;
-    font-size: 18px;
+    padding: 0 5% 0 5%;
+    font-size: 16px;
     color: #5b5b5b;
-    background: #ffffff url(../images/search.png) no-repeat scroll 7px 10px;
-    margin: 0 auto;
+    background: #ffffff url(../images/search.png) no-repeat scroll 2% 50%;
+    left: 20%;
     display: inline-block;
 }
 .buttonsearch {
+    position: absolute;
+    top: 41%;
+    left: 71.5%;
     border-radius: 0;
-    height: 40px;
+    height: 10%;
     width: 10%;
     border-radius: 6px;
-    margin-top: -5px;
+    margin-top: -0.5%;
     display: inline-block;
 }
 
-input.search {
+/* input.search {
     min-width: 80px;
-}
+} */
 
 #icon{
     width: 100%;
@@ -51,13 +57,49 @@ input.search {
     left: 50%;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 180px) and (min-width:0px){
     #icondiv {
-        display: none;
+        width: 90%;
+    }
+    .buttonsearch{
+        font-size: 10px;
+    }
+    .searchfield input{
+        font-size: 10px;
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 300px) and (min-width:180px){
+    #icondiv {
+        width: 85%;
+    }
+    .buttonsearch{
+        font-size: 12px;
+    }
+    .searchfield input{
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) and (min-width:300px){
+    #icondiv {
+        width: 70%;
+    }
+    .buttonsearch{
+        font-size: 14px;
+    }
+    .searchfield input{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 680px) and (min-width:480px) {
+    #icondiv {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 900px) and (min-width:680px){
     #icondiv {
         width: 35%;
     }
