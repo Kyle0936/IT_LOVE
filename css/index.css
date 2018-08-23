@@ -1,7 +1,7 @@
 /* SEARCHFIELD: class="searchfield"; */
 .searchfield {
     padding: 20px 20px 20px 20px;
-    width: 60%;
+    width: 100%;
     -webkit-transform: translate(-50%,-55%);
     transform: translate(-50%,-55%);
     position: absolute;
@@ -10,9 +10,10 @@
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
+    text-align: center;
 }
 .searchfield input{
-    width: 70%;
+    width: 50%;
     border: 1px solid #c6c6c6;
     height: 40px;
     padding: 0px 25px 0px 50px;
@@ -30,6 +31,7 @@
     margin-top: -5px;
     display: inline-block;
 }
+
 input.search {
     min-width: 80px;
 }
@@ -47,4 +49,16 @@ input.search {
     position: absolute;
     top: 30%;
     left: 50%;
+}
+
+@media screen and (max-width: 680px) {
+    #icondiv {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #icondiv {
+        width: 35%;
+    }
 }

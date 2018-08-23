@@ -77,7 +77,7 @@
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {}
+        } else {window.open('../登录.html', "_self");}
     }
 
     window.onload = function() {
@@ -327,7 +327,7 @@
                 var count = 0;
                 ref.orderBy("Likes").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
-                        
+
                         console.log("success");
                         var dic1 = doc.data();
                         var author1 = dic1["Author"];
@@ -435,7 +435,7 @@
                     var dic = doc.data();
                     var link = dic["Ref"];
                     var ref3 = db.collection("Questions").doc(link);
-                    ref3.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
+                    ref3.collection("Answers").where("Approved", "==", true).orderBy("Likes").get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
                             console.log(typeof(doc.data()["Author"]));
                             console.log(typeof(doc.data()["Likes"]));
@@ -503,28 +503,34 @@
 
     function submit() {
         // 给提供建议的人加钱
-        var db = firebase.firestore();
-        db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").get().then(function(doc0) {
-            var dic0 = doc0.data();
-            var link = dic0["Ref"];
-            console.log("success" + link);
-            var ref = db.collection("Questions").doc(link);
-            if (selectedOption == undefined) {
-                alert("请先选择一个方案再提交");
-            } else {
-                var ref1 = ref.collection("Answers").doc(selectedOption);
-                ref1.set({
-                    Selected: true
-                }, { merge: true });
-                ref.update({
-                    Status: "已完结"
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").get().then(function(doc0) {
+                    var dic0 = doc0.data();
+                    var link = dic0["Ref"];
+                    console.log("success" + link);
+                    var ref = db.collection("Questions").doc(link);
+                    if (selectedOption == undefined) {
+                        alert("请先选择一个方案再提交");
+                    } else {
+                        var ref1 = ref.collection("Answers").doc(selectedOption);
+                        ref1.set({
+                            Selected: true
+                        }, { merge: true });
+                        ref.update({
+                            Status: "已完结"
+                        });
+                    }
+
                 });
-            }
 
+
+                alert("提交成功!");
+            } else {}
         });
-
-
-        alert("提交成功!");
     }
     </script>
 </body>

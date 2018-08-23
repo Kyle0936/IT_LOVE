@@ -73,7 +73,7 @@
         console.log("Error getting document:", error);
     });
     // add answers
-    ref.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
+    ref.collection("Answers").where("Approved", "==", true).orderBy("Likes").get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc1) {
             var dic1 = doc1.data();
             var author1 = dic1["Author"];
@@ -126,6 +126,7 @@
                 son.appendChild(contentChild);
                 son.appendChild(likeChild);
                 son.onclick = function() {
+                    likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) + 1);
                     firebase.auth().onAuthStateChanged(function(user) {
                         if (user) {
                             var email = "" + user.email;
@@ -141,9 +142,7 @@
                             } else {
                                 console.log(likeChild.innerHTML.charAt(6));
                                 // add into current user's answers list to show what he chooses
-                                otherRef.get().then(function() {
-                                    likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) + 1);
-                                }).then(function(doc3) {
+                                otherRef.get().then(function(doc3) {
                                     if (!doc3.exists) { // if it has not been chosen
                                         var questionLink = "${req.params.questionid}";
                                         // var questionLink = "K0orA8toMuCwKRTihTGo";
@@ -348,7 +347,7 @@
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {}
+        } else {window.open('../登录.html', "_self");}
     }
 
     var numberOfSolutions = 1;

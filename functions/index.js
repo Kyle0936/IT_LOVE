@@ -333,7 +333,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                 var count = 0;
                 ref.orderBy("Likes").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
-                        
+
                         console.log("success");
                         var dic1 = doc.data();
                         var author1 = dic1["Author"];
@@ -441,7 +441,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                     var dic = doc.data();
                     var link = dic["Ref"];
                     var ref3 = db.collection("Questions").doc(link);
-                    ref3.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
+                    ref3.collection("Answers").where("Approved", "==", true).orderBy("Likes").get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
                             console.log(typeof(doc.data()["Author"]));
                             console.log(typeof(doc.data()["Likes"]));
@@ -509,28 +509,34 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
     function submit() {
         // 给提供建议的人加钱
-        var db = firebase.firestore();
-        db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").get().then(function(doc0) {
-            var dic0 = doc0.data();
-            var link = dic0["Ref"];
-            console.log("success" + link);
-            var ref = db.collection("Questions").doc(link);
-            if (selectedOption == undefined) {
-                alert("请先选择一个方案再提交");
-            } else {
-                var ref1 = ref.collection("Answers").doc(selectedOption);
-                ref1.set({
-                    Selected: true
-                }, { merge: true });
-                ref.update({
-                    Status: "已完结"
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var email = "" + user.email;
+                var db = firebase.firestore();
+                db.collection("user").doc(email).collection("Questions").doc("${req.params.questionid}").get().then(function(doc0) {
+                    var dic0 = doc0.data();
+                    var link = dic0["Ref"];
+                    console.log("success" + link);
+                    var ref = db.collection("Questions").doc(link);
+                    if (selectedOption == undefined) {
+                        alert("请先选择一个方案再提交");
+                    } else {
+                        var ref1 = ref.collection("Answers").doc(selectedOption);
+                        ref1.set({
+                            Selected: true
+                        }, { merge: true });
+                        ref.update({
+                            Status: "已完结"
+                        });
+                    }
+
                 });
-            }
 
+
+                alert("提交成功!");
+            } else {}
         });
-
-
-        alert("提交成功!");
     }
     </script>
 </body>
@@ -655,7 +661,7 @@ app.get('/questions/:questionid', (req, res) => {
         console.log("Error getting document:", error);
     });
     // add answers
-    ref.collection("Answers").where("Approved", "==", true).get().then(function(querySnapshot) {
+    ref.collection("Answers").where("Approved", "==", true).orderBy("Likes").get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc1) {
             var dic1 = doc1.data();
             var author1 = dic1["Author"];
@@ -708,6 +714,7 @@ app.get('/questions/:questionid', (req, res) => {
                 son.appendChild(contentChild);
                 son.appendChild(likeChild);
                 son.onclick = function() {
+                    likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) + 1);
                     firebase.auth().onAuthStateChanged(function(user) {
                         if (user) {
                             var email = "" + user.email;
@@ -723,9 +730,7 @@ app.get('/questions/:questionid', (req, res) => {
                             } else {
                                 console.log(likeChild.innerHTML.charAt(6));
                                 // add into current user's answers list to show what he chooses
-                                otherRef.get().then(function() {
-                                    likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) + 1);
-                                }).then(function(doc3) {
+                                otherRef.get().then(function(doc3) {
                                     if (!doc3.exists) { // if it has not been chosen
                                         var questionLink = "${req.params.questionid}";
                                         // var questionLink = "K0orA8toMuCwKRTihTGo";

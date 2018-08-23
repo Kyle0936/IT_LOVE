@@ -99,6 +99,7 @@ ul.topnav li.icon {display: none;}
 .article{
 	border:1px solid #CDCDCD;
 	border-radius:10px;
+  height: auto;
 	margin-top: 20px;
 	margin-bottom: 15px;
 	margin-left: 25px;
@@ -108,9 +109,10 @@ ul.topnav li.icon {display: none;}
 
 /* ARTICLE-CONTENT: class="article-content" */
 .article-content {
-  min-height: 30px;
+  /* min-height: 30px; */
   margin-top: 10px: 
 	padding: 15px 35px 10px 15px;
+  height: auto;
 }
 /* end of ARTICLE-CONTENT */
 
@@ -121,6 +123,7 @@ ul.topnav li.icon {display: none;}
 	border-bottom: 1px solid #f0eeee; */
 	border-radius: 0 0 10px 10px;
 	background-color: #D3D3D3;
+  height: auto;
 }
 .article-info a {
 	margin-left: 5px;
@@ -169,19 +172,22 @@ ul.topnav li.icon {display: none;}
 
 /* PARAGRAPH: <p class="block-with-text"> */
 .block-with-text {
-  overflow: hidden;
+/*   white-space: normal; 
+  overflow: auto; */
+  height: auto;
   position: relative;
   text-indent: 30px;
   line-height: 1.2em;
-  max-height: 3.6em;
+/*   max-height: 3.6em; */
   text-align: justify;
   margin-right: 1em;
   padding-right: 1em;
   margin-top: -7px;
   margin-bottom: 3px;
   font-size: 18px;
+  background: white;
 }
-.block-with-text:before {
+/* .block-with-text:before {
   content: '...';
   position: absolute;
   right: 0;
@@ -195,7 +201,7 @@ ul.topnav li.icon {display: none;}
   height: 1em;
   margin-top: 0.2em;
   background: white;
-}
+} */
 /* end of PARAGRAPH */
 
 /* TAGS including number of comments, author, time: class="tag" */
@@ -356,6 +362,7 @@ hr.style-three {
 
 /* SOLUTIONS */
 .solution{
+  height: auto;
   border:1px solid #CDCDCD;
   border-radius:10px;
   margin-top: 20px;
