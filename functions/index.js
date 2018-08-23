@@ -504,7 +504,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
         //     console.log("Test");
         // }
         selectedOption = document.getElementById("inlineFormCustomSelect").value;
-        console.log("select " + value);
+        console.log("select " + selectedOption);
     }
 
     function submit() {
@@ -722,10 +722,10 @@ app.get('/questions/:questionid', (req, res) => {
                                 alert("不可以给自己点赞哦 不要那么自恋嘛～");
                             } else {
                                 console.log(likeChild.innerHTML.charAt(6));
-                                likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) + 1) ;
-                                
                                 // add into current user's answers list to show what he chooses
-                                otherRef.get().then(function(doc3) {
+                                otherRef.get().then(function() {
+                                    likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) + 1);
+                                }).then(function(doc3) {
                                     if (!doc3.exists) { // if it has not been chosen
                                         var questionLink = "${req.params.questionid}";
                                         // var questionLink = "K0orA8toMuCwKRTihTGo";
@@ -758,32 +758,35 @@ app.get('/questions/:questionid', (req, res) => {
                                         });
                                     } else {
                                         otherRef.delete().then(function() {
+                                            likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML.charAt(6)) - 2);
                                             console.log("Document successfully deleted!");
+                                        }).then(function() {
+                                            detailedRef.get().then(function(doc2) {
+                                                var newLike = doc2.data()["Likes"] - 1;
+                                                console.log("test" + newLike);
+                                                return detailedRef.update({
+                                                        Likes: newLike
+                                                    })
+                                                    .then(function() {
+                                                        console.log("Document successfully updated!");
+                                                    })
+                                                    .catch(function(error) {
+                                                        // The document probably doesn't exist.
+                                                        console.error("Error updating document: ", error);
+                                                    });
+                                                console.log("test2" + newLike);
+                                                // likeChild.innerHTML = "Number of people chose this: " + newLike;
+                                            })
                                         }).catch(function(error) {
                                             console.error("Error removing document: ", error);
                                         });
-                                        detailedRef.get().then(function(doc2) {
-                                            var newLike = doc2.data()["Likes"] - 1;
-                                            console.log("test" + newLike);
-                                            return detailedRef.update({
-                                                    Likes: newLike
-                                                })
-                                                .then(function() {
-                                                    console.log("Document successfully updated!");
-                                                })
-                                                .catch(function(error) {
-                                                    // The document probably doesn't exist.
-                                                    console.error("Error updating document: ", error);
-                                                });
-                                            console.log("test2" + newLike);
-                                            // likeChild.innerHTML = "Number of people chose this: " + newLike;
-                                        });
+
                                     }
                                 });
                                 console.log("test3");
-                                detailedRef.get().then(function(doc4) {
-                                    likeChild.innerHTML = "Number of people chose this: " + doc4.data()["Likes"];
-                                });
+                                // detailedRef.get().then(function(doc4) {
+                                //     likeChild.innerHTML = "赞的人数： " + doc4.data()["Likes"];
+                                // });
                             }
                             // User is signed in.
                         } else {
@@ -1049,7 +1052,7 @@ app.get('/questions/:questionid', (req, res) => {
                 // add numberOfAnswers
                 // var ref3 = db.collection("Questions").doc("K0orA8toMuCwKRTihTGo");
 
-                
+
                 // var ref3 = db.collection("Questions").doc("${req.params.questionid}");
                 // ref3.get().then(function(doc2) {
                 //     var newAnswers = doc2.data()["NumberOfAnswers"] + numberOfSolutions;
