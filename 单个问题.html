@@ -359,7 +359,7 @@
                             contentChild.innerHTML = content;
                             var likeChild = document.createElement("p");
                             likeChild.setAttribute('class', 'likes');
-                            likeChild.innerHTML = "Number of people chose this: " + likes;
+                            likeChild.innerHTML = "赞的人数 " + likes;
                             // var lineChild = document.createElement("hr");
                             // lineChild.setAttribute('class', 'style-three');
                             var father = document.createElement("div");
@@ -385,6 +385,7 @@
                             var grandson = document.createElement("option");
                             grandson.setAttribute('value', doc.id);
                             grandson.innerHTML = 'Solution #' + count;
+                            console.log(grandson.value);
 
                         });
 
@@ -439,7 +440,7 @@
                             data.addRow([doc.data()["Author"], doc.data()["Likes"]]);
                         });
                         var options = {
-                            'title': 'How many likes each solution has?',
+                            'title': '每个方案的赞同人数',
                             'width': 400,
                             'height': 300
                         };

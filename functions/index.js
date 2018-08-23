@@ -365,7 +365,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                             contentChild.innerHTML = content;
                             var likeChild = document.createElement("p");
                             likeChild.setAttribute('class', 'likes');
-                            likeChild.innerHTML = "Number of people chose this: " + likes;
+                            likeChild.innerHTML = "赞的人数 " + likes;
                             // var lineChild = document.createElement("hr");
                             // lineChild.setAttribute('class', 'style-three');
                             var father = document.createElement("div");
@@ -391,6 +391,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                             var grandson = document.createElement("option");
                             grandson.setAttribute('value', doc.id);
                             grandson.innerHTML = 'Solution #' + count;
+                            console.log(grandson.value);
 
                         });
 
@@ -445,7 +446,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                             data.addRow([doc.data()["Author"], doc.data()["Likes"]]);
                         });
                         var options = {
-                            'title': 'How many likes each solution has?',
+                            'title': '每个方案的赞同人数',
                             'width': 400,
                             'height': 300
                         };
@@ -637,7 +638,7 @@ app.get('/questions/:questionid', (req, res) => {
                     image.id = 'show' + countImage;
                     image.setAttribute('width', '100');
                     image.setAttribute('height', '100');
-                    image.setAttribute('margin', '10');
+                    image.setAttribute('margin', '7');
                     imageFather.appendChild(image);
                     document.getElementById(image.id).addEventListener("click", function() { showFullScreen(image.src) });
                     countImage = countImage + 1;
@@ -684,7 +685,7 @@ app.get('/questions/:questionid', (req, res) => {
                 contentChild.innerHTML = content;
                 var likeChild = document.createElement("p");
                 likeChild.setAttribute('class', 'likes');
-                likeChild.innerHTML = "Number of people chose this: " + likes;
+                likeChild.innerHTML = "赞的人数: " + likes;
                 // var lineChild = document.createElement("hr");
                 // lineChild.setAttribute('class', 'style-three');
                 var father = document.createElement("div");
@@ -717,6 +718,8 @@ app.get('/questions/:questionid', (req, res) => {
                             if (author1 == email) {
                                 alert("不可以给自己点赞哦 不要那么自恋嘛～");
                             } else {
+                                likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML(6,7)) + 1) ;
+                                console.log(likeChild.innerHTML);
                                 // add into current user's answers list to show what he chooses
                                 otherRef.get().then(function(doc3) {
                                     if (!doc3.exists) { // if it has not been chosen
@@ -746,7 +749,7 @@ app.get('/questions/:questionid', (req, res) => {
                                                     // The document probably doesn't exist.
                                                     console.error("Error updating document: ", error);
                                                 });
-                                            likeChild.innerHTML = "Number of people chose this: " + newLike;
+                                            // likeChild.innerHTML = "Number of people chose this: " + newLike;
 
                                         });
                                     } else {
@@ -769,7 +772,7 @@ app.get('/questions/:questionid', (req, res) => {
                                                     console.error("Error updating document: ", error);
                                                 });
                                             console.log("test2" + newLike);
-                                            likeChild.innerHTML = "Number of people chose this: " + newLike;
+                                            // likeChild.innerHTML = "Number of people chose this: " + newLike;
                                         });
                                     }
                                 });

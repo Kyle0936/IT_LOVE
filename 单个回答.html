@@ -106,7 +106,7 @@
                 contentChild.innerHTML = content;
                 var likeChild = document.createElement("p");
                 likeChild.setAttribute('class', 'likes');
-                likeChild.innerHTML = "Number of people chose this: " + likes;
+                likeChild.innerHTML = "赞的人数: " + likes;
                 // var lineChild = document.createElement("hr");
                 // lineChild.setAttribute('class', 'style-three');
                 var father = document.createElement("div");
@@ -139,6 +139,8 @@
                             if (author1 == email) {
                                 alert("不可以给自己点赞哦 不要那么自恋嘛～");
                             } else {
+                                likeChild.innerHTML = "赞的人数: " + (Number(likeChild.innerHTML(6,7)) + 1) ;
+                                console.log(likeChild.innerHTML);
                                 // add into current user's answers list to show what he chooses
                                 otherRef.get().then(function(doc3) {
                                     if (!doc3.exists) { // if it has not been chosen
@@ -168,7 +170,7 @@
                                                     // The document probably doesn't exist.
                                                     console.error("Error updating document: ", error);
                                                 });
-                                            likeChild.innerHTML = "Number of people chose this: " + newLike;
+                                            // likeChild.innerHTML = "Number of people chose this: " + newLike;
 
                                         });
                                     } else {
@@ -191,7 +193,7 @@
                                                     console.error("Error updating document: ", error);
                                                 });
                                             console.log("test2" + newLike);
-                                            likeChild.innerHTML = "Number of people chose this: " + newLike;
+                                            // likeChild.innerHTML = "Number of people chose this: " + newLike;
                                         });
                                     }
                                 });
