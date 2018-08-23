@@ -169,7 +169,8 @@ app1.get('/myQuestions/:questionid', (req, res) => {
         </div>
         <form>
             <div id="add-solutions" style="margin-bottom:10px;">
-                <select id="inlineFormCustomSelect" onchange="scheduleA.call(this.event,this.value)">
+                <!-- <select id="inlineFormCustomSelect" onchange="scheduleA.call(this.event,this.value)"> -->
+                <select id="inlineFormCustomSelect" onchange="scheduleA()">
                     <option selected>Choose...</option>
                     <!--                         <option value="1">One</option>
                         <option value="2">Two</option>
@@ -332,7 +333,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                 var count = 0;
                 ref.orderBy("Likes").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
-                        count++;
+                        
                         console.log("success");
                         var dic1 = doc.data();
                         var author1 = dic1["Author"];
@@ -390,9 +391,10 @@ app1.get('/myQuestions/:questionid', (req, res) => {
                             var grand2 = document.getElementById("inlineFormCustomSelect");
                             var grandson = document.createElement("option");
                             grandson.setAttribute('value', doc.id);
+                            count++;
                             grandson.innerHTML = 'Solution #' + count;
                             console.log(grandson.value);
-
+                            grand2.appendChild(grandson);
                         });
 
 
@@ -482,7 +484,8 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
     var selectedOption;
 
-    function scheduleA(event, value) {
+    // function scheduleA(event, value) {
+    function scheduleA() {
         // if (event == "1") return;
         // if (event == "2") return;
         // if (event == "3") return;
@@ -500,7 +503,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
         //     document.getElementById("add-solutions").appendChild(div);
         //     console.log("Test");
         // }
-        selectedOption = value;
+        selectedOption = document.getElementById("inlineFormCustomSelect").value;
         console.log("select " + value);
     }
 

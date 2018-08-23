@@ -319,10 +319,10 @@
                                     });
                                 }
                             }
-                            alert("提交成功!");
-                            window.open('回答.html', "_self");
-                        })
-                        .catch(function(error) {
+                        }).then(function() {
+                                alert("提交成功!");
+                                window.open('回答.html', "_self");
+                        }).catch(function(error) {
                             console.error("Error writing document: ", error);
                         });
 
@@ -552,33 +552,33 @@
     </div>
     <!-- END TOP NAVIGATION -->
     <div id="main">
-    <h1 class="pageheader text-center" style="margin-bottom:2%;">提问</h1>
-    <!-- MAIN SECTION -->
-    <div class="text-center">
-        <div class="bar">&nbsp;</div>
-        <form>
-            <textarea rows="5" name="text" placeholder="问题描述" class="desc" id="description"></textarea>
-            <!-- Container for the demo -->
-            <!--       <input type='file' onchange="readURL(this);" />
+        <h1 class="pageheader text-center" style="margin-bottom:2%;">提问</h1>
+        <!-- MAIN SECTION -->
+        <div class="text-center">
+            <div class="bar">&nbsp;</div>
+            <form>
+                <textarea rows="5" name="text" placeholder="问题描述" class="desc" id="description"></textarea>
+                <!-- Container for the demo -->
+                <!--       <input type='file' onchange="readURL(this);" />
                            <img id="blah" src=# alt="your image" /> -->
-            <div class="drop">
-                <h4 style="margin-top: 0px;">上传聊天截图</h4>
-                <!-- <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button> -->
-                <!--  <div id="messagesDiv"> -->
-                <input type="file" id="files" name="files[]" multiple />
-            </div>
-            <!-- </div> -->
-            <!--   <input type="file" id="file" name="file"/> -->
-            <input type="checkbox" value="" id="defaultCheck1">
-            <label for="defaultCheck1">
-                发布到公共社区
-            </label>
-        </form>
-        <button class="btn" id="addsolution">添加解决方案</button>
-        <div id="solutions"></div>
-        <button class="btn" id="submit">提交</button>
+                <div class="drop">
+                    <h4 style="margin-top: 0px;">上传聊天截图</h4>
+                    <!-- <button type="button" onclick="addAnotherFile()" class="btn">添加聊天记录</button> -->
+                    <!--  <div id="messagesDiv"> -->
+                    <input type="file" id="files" name="files[]" multiple />
+                </div>
+                <!-- </div> -->
+                <!--   <input type="file" id="file" name="file"/> -->
+                <input type="checkbox" value="" id="defaultCheck1">
+                <label for="defaultCheck1">
+                    发布到公共社区
+                </label>
+            </form>
+            <button class="btn" id="addsolution">添加解决方案</button>
+            <div id="solutions"></div>
+            <button class="btn" id="submit">提交</button>
+        </div>
     </div>
-</div>
     <!-- END MAIN SECTION -->
     <!-- LOADING MAIN JAVASCRIPT -->
     <script src="js/jquery-2.2.4.min.js"></script>
