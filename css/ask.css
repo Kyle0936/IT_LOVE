@@ -9,8 +9,8 @@
   margin: 0 auto;
   padding-bottom: 10px;
   padding-top: -30px;
-  width: 40%;
-  height: 20%;
+  width: 100%;
+  height: auto;
   border: 4px dashed #000;
 }
 
@@ -18,7 +18,7 @@
 
 /* description zone */
 .desc{
-  width: 40%;
+  width: 100%;
   margin: 0 auto;
   height: auto;
 }
@@ -26,9 +26,9 @@
 
 /* decoration bar */
 .bar{
-  width: 40.5%;
+  width: 100%;
   margin: 0 auto;
-  height: 20%;
+  height: auto;
   background-color: #A9A6B1;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
@@ -37,12 +37,30 @@
 
 textarea { font-size: 18px; }
 
+form{
+  width: 100%;
+}
+
 #main{
     -webkit-transform: translate(-50%,-30%);
     transform: translate(-50%,-30%);
     position: absolute;
     top: 30%;
     left: 50%;
-    width: 75%;
+    width: 35%;
     height: auto;
+}
+
+@media screen and (max-width: 750px) and (min-width:300px){
+    #main{
+        width: 50%;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 300px) and (min-width:0px){
+   #main{
+        width: 60%;
+        font-size: 12px;
+    }
 }
