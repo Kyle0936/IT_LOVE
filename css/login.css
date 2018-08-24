@@ -83,4 +83,20 @@ input.search {
    /*  margin: 0 auto; */
 }
 
+@media screen and (max-width: 750px) and (min-width:300px){
+   .login {
+        width: 60%;
+        left: 20%;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 300px) and (min-width:0px){
+   .login {
+        width: 75%;
+        left: 12.5%;
+        font-size: 12px;
+    }
+}
+
 
