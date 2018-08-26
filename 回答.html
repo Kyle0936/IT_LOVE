@@ -48,11 +48,12 @@
             var number = dic["NumberOfAnswers"];
 
             //add html
-            var ahref = document.createElement("a");
-            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
-            ahref.style.color = "black";
+            // var ahref = document.createElement("a");
+            // ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            // ahref.style.color = "black";
             var father = document.createElement("div");
             father.setAttribute('class', 'article');
+            father.setAttribute("onclick", "link('doc.id')");
             // var authorChild = document.createElement("p");
             // authorChild.innerHTML = author;
             // authorChild.setAttribute('class', 'article');
@@ -85,10 +86,10 @@
 
             father.appendChild(contentChild);
             father.appendChild(infoChild);
-            ahref.appendChild(father);
+            // ahref.appendChild(father);
 
             var grandfather = document.getElementById("allQ");
-            grandfather.appendChild(ahref);
+            grandfather.appendChild(father);
 
 
             // <div class="article">
@@ -119,6 +120,11 @@
             // });
         });
     });
+
+    function link(id){
+        var url = 'https://it-love1.firebaseapp.com/questions/' + id;
+        var ref = cordova.InAppBrowser.open(url, "_self", "location=yes");
+    }
     </script>
     <script>
     /**
@@ -193,19 +199,19 @@
             console.log(description);
 
             //add html
-            var ahref = document.createElement("a");
+            // var ahref = document.createElement("a");
 
-            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
-            ahref.style.color = "black";
+            // ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            // ahref.style.color = "black";
             var father = document.createElement("div");
             father.setAttribute("class", "b");
-
+            father.setAttribute("onclick", "link('doc.id')");
             //var descChild = document.createElement("div");
             father.innerHTML = description;
             //father.appendChild(descChild);
-            ahref.appendChild(father);
+            // ahref.appendChild(father);
             var li = document.createElement("li");
-            li.appendChild(ahref);
+            li.appendChild(father);
             //var father = document.getElement("mostPopular");
             //father.setAttribute('class', 'article');
             
@@ -245,6 +251,11 @@
 
         });
     });
+    
+    function link(id){
+        var url = 'https://it-love1.firebaseapp.com/questions/' + id;
+        var ref = cordova.InAppBrowser.open(url, "_self", "location=yes");
+    }
     </script>
 </head>
 

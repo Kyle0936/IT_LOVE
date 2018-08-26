@@ -935,7 +935,7 @@ app.get('/questions/:questionid', (req, res) => {
             firebase.auth().signOut();
             window.open('../登录.html', "_self");
             // [END signout]
-        } else {window.open('../登录.html', "_self");}
+        } else { window.open('../登录.html', "_self"); }
     }
 
     var numberOfSolutions = 1;
@@ -1081,6 +1081,10 @@ app.get('/questions/:questionid', (req, res) => {
     };
     </script>
     <script type="text/javascript">
+    function link(id) {
+        var url = 'https://it-love1.firebaseapp.com/questions/' + id;
+        var ref = cordova.InAppBrowser.open(url, "_self", "location=yes");
+    }
     // script for SIDEBAR
     var db = firebase.firestore();
     var ref = db.collection("Questions");
@@ -1096,19 +1100,19 @@ app.get('/questions/:questionid', (req, res) => {
             console.log(description);
 
             //add html
-            var ahref = document.createElement("a");
+            // var ahref = document.createElement("a");
 
-            ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
-            ahref.style.color = "black";
+            // ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + doc.id);
+            // ahref.style.color = "black";
             var father = document.createElement("div");
             father.setAttribute("class", "b");
-
+            father.setAttribute("onclick", "link('doc.id')");
             //var descChild = document.createElement("div");
             father.innerHTML = description;
             //father.appendChild(descChild);
-            ahref.appendChild(father);
+            // ahref.appendChild(father);
             var li = document.createElement("li");
-            li.appendChild(ahref);
+            li.appendChild(father);
             //var father = document.getElement("mostPopular");
             //father.setAttribute('class', 'article');
 

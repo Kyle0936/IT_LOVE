@@ -52,11 +52,12 @@
                         publicChild.innerHTML = "Public? : " + public;
                         var numberChild = document.createElement("div");
                         numberChild.innerHTML = "Number of Answers: " + number;
-                        var ahref1 = document.createElement("a");
-                        ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
-                        ahref1.style.color = "black";
+                        // var ahref1 = document.createElement("a");
+                        // ahref1.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
+                        // ahref1.style.color = "black";
                         var father1 = document.createElement("div");
                         father1.setAttribute('class', 'article');
+                        father1.setAttribute("onclick", "link('doc.id')");
                         var infoChild1 = document.createElement("div");
                         infoChild1.setAttribute('class', 'article-info');
                         var descChild1 = document.createElement("div");
@@ -75,9 +76,9 @@
                         descChild1.appendChild(contentChild1);
                         father1.appendChild(descChild1);
                         father1.appendChild(infoChild1);
-                        ahref1.appendChild(father1);
+                        // ahref1.appendChild(father1);
                         var fafather1 = document.createElement("div");
-                        fafather1.appendChild(ahref1);
+                        fafather1.appendChild(father1);
                         var grandfather1 = document.getElementById("history");
                         grandfather1.appendChild(fafather1);
                         // add all unapproved proposals
@@ -92,11 +93,12 @@
                                 var author = dic["Author"];
                                 var content = dic["Content"];
                                 var time = dic["Time"];
-                                var ahref = document.createElement("a");
-                                ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
-                                ahref.style.color = "black";
+                                // var ahref = document.createElement("a");
+                                // ahref.setAttribute('href', 'https://it-love1.firebaseapp.com/myQuestions/' + doc00.id);
+                                // ahref.style.color = "black";
                                 var father = document.createElement("div");
                                 father.setAttribute('class', 'article');
+                                father.setAttribute("onclick", "link('doc.id')");
                                 var infoChild = document.createElement("div");
                                 infoChild.setAttribute('class', 'article-info');
                                 var authorChild = document.createElement("div");
@@ -157,9 +159,9 @@
                                 descChild.appendChild(contentChild);
                                 father.appendChild(descChild);
                                 father.appendChild(infoChild);
-                                ahref.appendChild(father);
+                                // ahref.appendChild(father);
                                 var fafather = document.createElement("div");
-                                fafather.appendChild(ahref);
+                                fafather.appendChild(father);
                                 fafather.appendChild(buttonsChild);
 
                                 var grandfather = document.getElementById("solutions");
@@ -201,11 +203,12 @@
 
                 var likeChild2 = document.createElement("div");
                 likeChild2.innerHTML = "Number of Likes: " + likes1;
-                var ahref2 = document.createElement("a");
-                ahref2.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + question);
-                ahref2.style.color = "black";
+                // var ahref2 = document.createElement("a");
+                // ahref2.setAttribute('href', 'https://it-love1.firebaseapp.com/questions/' + question);
+                // ahref2.style.color = "black";
                 var father2 = document.createElement("div");
                 father2.setAttribute('class', 'article');
+                father2.setAttribute("onclick", "link('doc.id')");
                 var infoChild2 = document.createElement("div");
                 infoChild2.setAttribute('class', 'article-info');
                 var descChild2 = document.createElement("div");
@@ -226,9 +229,9 @@
                 descChild2.appendChild(contentChild2);
                 father2.appendChild(descChild2);
                 father2.appendChild(infoChild2);
-                ahref2.appendChild(father2);
+                // ahref2.appendChild(father2);
                 var fafather2 = document.createElement("div");
-                fafather2.appendChild(ahref2);
+                fafather2.appendChild(father2);
                 var grandfather2 = document.getElementById("answers");
                 grandfather2.appendChild(fafather2);
 
@@ -239,6 +242,11 @@
 
 
     });
+
+    function link(id) {
+        var url = 'https://it-love1.firebaseapp.com/questions/' + id;
+        var ref = cordova.InAppBrowser.open(url, "_self", "location=yes");
+    }
     </script>
     <script>
     /**
