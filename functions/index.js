@@ -530,7 +530,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
             // ahref.style.color = "black";
             var father = document.createElement("div");
             father.setAttribute("class", "b");
-            father.setAttribute("onclick", "link(\""+doc.id+"\")");
+            father.setAttribute("onclick", "link(\`+doc.id+"\`)");
             //var descChild = document.createElement("div");
             father.innerHTML = description;
             //father.appendChild(descChild);
