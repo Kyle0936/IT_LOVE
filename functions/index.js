@@ -415,7 +415,7 @@ app1.get('/myQuestions/:questionid', (req, res) => {
 
     // work on cordova
     function showFullScreen(url) {
-        FullScreenImage.showImageURL(url);
+        PhotoViewer.show(url, '');
     }
     </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -886,7 +886,7 @@ app.get('/questions/:questionid', (req, res) => {
 
     // Show image in full screen when clicked, worked for Cordova
     function showFullScreen(url) {
-        FullScreenImage.showImageURL(url);
+        PhotoViewer.show(url, '');
     }
     /**
      * init firestone
@@ -1090,6 +1090,7 @@ app.get('/questions/:questionid', (req, res) => {
 
     function onDeviceReady() {
         document.addEventListener("link", link, false);
+        document.addEventListener("showFull", showFullScreen, false);
         console.log("ready!");
     // Add similar listeners for other events
     }

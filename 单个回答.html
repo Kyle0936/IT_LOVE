@@ -290,7 +290,7 @@
 
     // Show image in full screen when clicked, worked for Cordova
     function showFullScreen(url) {
-        FullScreenImage.showImageURL(url);
+        PhotoViewer.show(url, '');
     }
     /**
      * init firestone
@@ -494,6 +494,7 @@
 
     function onDeviceReady() {
         document.addEventListener("link", link, false);
+        document.addEventListener("showFull", showFullScreen, false);
         console.log("ready!");
     // Add similar listeners for other events
     }
