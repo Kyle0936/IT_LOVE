@@ -11,6 +11,7 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/newstyle.css" rel="stylesheet">
     <link href="../css/single-question.css" rel="stylesheet">
+    <script src="../cordova.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -291,8 +292,6 @@
     function showFullScreen(url) {
         FullScreenImage.showImageURL(url);
     }
-    </script>
-    <script>
     /**
      * init firestone
      */
@@ -489,8 +488,15 @@
     }
 
     window.onload = function() {
+        document.addEventListener("deviceready", onDeviceReady, false);
         initApp();
     };
+
+    function onDeviceReady() {
+        document.addEventListener("link", link, false);
+        console.log("ready!");
+    // Add similar listeners for other events
+    }
     </script>
     <script type="text/javascript">
     function link(id) {
@@ -518,7 +524,7 @@
             // ahref.style.color = "black";
             var father = document.createElement("div");
             father.setAttribute("class", "b");
-            father.setAttribute("onclick", "link('doc.id')");
+            father.setAttribute("onclick", "link(\""+doc.id+"\")");
             //var descChild = document.createElement("div");
             father.innerHTML = description;
             //father.appendChild(descChild);

@@ -23,6 +23,7 @@
     };
     firebase.initializeApp(config);
     </script>
+    <script src="../cordova.js"></script>
     <script>
     function check(des, string) {
         var index = 0;
@@ -250,10 +251,16 @@
     }
 
     window.onload = function() {
+        document.addEventListener("deviceready", onDeviceReady, false);
         initApp();
     };
-    </script>
-    <script type="text/javascript">
+
+    function onDeviceReady() {
+        document.addEventListener("link", link, false);
+        console.log("ready!");
+    // Add similar listeners for other events
+    }
+
     var db = firebase.firestore();
     var ref = db.collection("Questions");
     var newRef = ref.orderBy("NumberOfAnswers","desc").limit(5);
@@ -274,7 +281,7 @@
             // ahref.style.color = "black";
             var father = document.createElement("div");
             father.setAttribute("class", "b");
-            father.setAttribute("onclick", "link('doc.id')");
+            father.setAttribute("onclick", "link(\""+doc.id+"\")");
             //var descChild = document.createElement("div");
             father.innerHTML = description;
             //father.appendChild(descChild);

@@ -12,6 +12,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/newstyle.css" rel="stylesheet">
     <link href="css/system.css" rel="stylesheet">
+    <script src="cordova.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script>
     var config = {
@@ -57,7 +58,7 @@
                         // ahref1.style.color = "black";
                         var father1 = document.createElement("div");
                         father1.setAttribute('class', 'article');
-                        father1.setAttribute("onclick", "link('doc.id')");
+                        father1.setAttribute("onclick", "link(\""+doc.id+"\")");
                         var infoChild1 = document.createElement("div");
                         infoChild1.setAttribute('class', 'article-info');
                         var descChild1 = document.createElement("div");
@@ -98,7 +99,7 @@
                                 // ahref.style.color = "black";
                                 var father = document.createElement("div");
                                 father.setAttribute('class', 'article');
-                                father.setAttribute("onclick", "link('doc.id')");
+                                father.setAttribute("onclick", "link(\""+doc.id+"\")");
                                 var infoChild = document.createElement("div");
                                 infoChild.setAttribute('class', 'article-info');
                                 var authorChild = document.createElement("div");
@@ -208,7 +209,7 @@
                 // ahref2.style.color = "black";
                 var father2 = document.createElement("div");
                 father2.setAttribute('class', 'article');
-                father2.setAttribute("onclick", "link('doc.id')");
+                father2.setAttribute("onclick", "link(\""+doc.id+"\")");
                 var infoChild2 = document.createElement("div");
                 infoChild2.setAttribute('class', 'article-info');
                 var descChild2 = document.createElement("div");
@@ -247,8 +248,6 @@
         var url = 'https://it-love1.firebaseapp.com/questions/' + id;
         var ref = cordova.InAppBrowser.open(url, "_self", "location=yes");
     }
-    </script>
-    <script>
     /**
      * init firestone
      */
@@ -309,8 +308,15 @@
     }
 
     window.onload = function() {
+        document.addEventListener("deviceready", onDeviceReady, false);
         initApp();
     };
+
+    function onDeviceReady() {
+        document.addEventListener("link", link, false);
+        console.log("ready!");
+    // Add similar listeners for other events
+    }
     </script>
     <!--                         <div class="panel panel-default">
                         <div class="article-heading-abb">
